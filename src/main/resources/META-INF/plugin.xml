@@ -1,0 +1,25 @@
+<idea-plugin>
+    <id>com.github.vgramer.opa-idea-plugin</id>
+    <name>Open Policy Agent</name>
+    <vendor email="1167539+vgramer@users.noreply.github.com" url="https://github.com/vgramer/opa-idea-plugin">
+        https://github.com/vgramer/opa-idea-plugin
+    </vendor>
+
+    <description><![CDATA[
+    Idea plugin for Open Policy Agent<br/>
+    Main features are:
+    <ul>
+        <el>Syntax Highlighting</el>
+        <el>Opa eval</el>
+        <el>Opa test</el>
+    </ul>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.lang</depends>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
