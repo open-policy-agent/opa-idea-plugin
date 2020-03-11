@@ -19,6 +19,15 @@
          on how to target different products -->
     <depends>com.intellij.modules.lang</depends>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- File-type Factory -->
+        <fileType name="Rego file"
+                  implementationClass="com.github.vgramer.opaplugin.lang.RegoFileType"
+                  fieldName="INSTANCE"
+                  language="rego"
+                  extensions="rego"/>
+    </extensions>
+
     <actions>
         <!-- Add your actions here -->
     </actions>
