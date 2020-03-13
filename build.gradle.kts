@@ -6,6 +6,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 
+
+val ideaVersion = prop("ideaVersion")
+val psiViewerPluginVersion = prop("psiViewerPluginVersion")
+
 plugins {
     idea
     kotlin("jvm") version "1.3.50"
@@ -47,7 +51,11 @@ idea {
 }
 
 intellij {
-    version = prop("ideaVersion")
+    version = ideaVersion
+    val plugins = mutableListOf(
+        "PsiViewer:$psiViewerPluginVersion"
+    )
+    setPlugins(*plugins.toTypedArray())
 }
 
 sourceSets {
@@ -82,6 +90,28 @@ tasks {
     }
 }
 
+val generateRegoLexer = task<GenerateLexer>("generateRegoLexer") {
+    source = "src/main/grammar/RegoLexer.flex"
+    targetDir = "src/main/gen/com/github/vgramer/opaplugin/lang/lexer"
+    targetClass = "_RegoLexer"
+    purgeOldFiles = true
+}
+
+
+val generateRegoParser = task<GenerateParser>("generateRegoParser") {
+    source = "src/main/grammar/Rego.bnf"
+    targetRoot = "src/main/gen"
+    pathToParser =  "/com/github/vgramer/opaplugin/lang/parser/RegoParser.java"
+    pathToPsiRoot = "/com/github/vgramer/opaplugin/lang/psi"
+    purgeOldFiles = true
+}
+
+tasks.withType<KotlinCompile> {
+    dependsOn(
+        generateRegoLexer,
+        generateRegoParser
+    )
+}
 
 
 fun prop(name: String): String =
