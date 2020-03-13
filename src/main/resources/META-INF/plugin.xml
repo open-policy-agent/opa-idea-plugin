@@ -26,6 +26,9 @@
                   fieldName="INSTANCE"
                   language="rego"
                   extensions="rego"/>
+
+        <lang.parserDefinition language="rego"
+                               implementationClass="com.github.vgramer.opaplugin.lang.parser.RegoParserDefinition"/>
     </extensions>
 
     <actions>
