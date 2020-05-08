@@ -27,8 +27,8 @@
                   language="rego"
                   extensions="rego"/>
 
-        <lang.parserDefinition language="rego"
-                               implementationClass="com.github.vgramer.opaplugin.lang.parser.RegoParserDefinition"/>
+        <lang.parserDefinition language="rego"  implementationClass="com.github.vgramer.opaplugin.lang.parser.RegoParserDefinition"/>
+        <lang.commenter language="rego" implementationClass="com.github.vgramer.opaplugin.ide.commenter.RegoCommenter"/>
     </extensions>
 
     <actions>
