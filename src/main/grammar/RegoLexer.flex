@@ -54,6 +54,7 @@ COMMENT=[ \t]*#[^\r\n]*
   ";"                 { return SEMICOLON; }
   "some"              { return SOME; }
   ","                 { return COMMA; }
+  "."                 { return DOT; }
   "not"               { return NOT; }
   "with"              { return WITH; }
   ":"                 { return COLLON; }

@@ -31,6 +31,7 @@
         SEMICOLON           = ';'
         SOME                = 'some'
         COMMA               = ','
+        DOT                 = '.'
         NOT                 = 'not'
         WITH                = 'with'
         COLLON              = ':'
