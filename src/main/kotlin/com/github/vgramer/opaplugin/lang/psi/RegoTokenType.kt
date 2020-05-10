@@ -2,5 +2,36 @@ package com.github.vgramer.opaplugin.lang.psi
 
 import com.github.vgramer.opaplugin.lang.RegoLanguage
 import com.intellij.psi.tree.IElementType
+import com.intellij.psi.tree.TokenSet
 
 class RegoTokenType(debugName: String) : IElementType(debugName, RegoLanguage)
+
+
+fun tokenSetOf(vararg tokens: IElementType) = TokenSet.create(*tokens)
+
+val REGO_KEYWORDS = tokenSetOf(
+    RegoTypes.PACKAGE_TOKEN,
+    RegoTypes.IMPORT_TOKEN,
+    RegoTypes.AS,
+    RegoTypes.DEFAULT,
+    RegoTypes.ELSE,
+    RegoTypes.SOME,
+    RegoTypes.NOT,
+    RegoTypes.WITH
+)
+
+val REGO_OPERATOR = tokenSetOf(
+    RegoTypes.PLUS,
+    RegoTypes.MINUS,
+    RegoTypes.MUL,
+    RegoTypes.QUOTIENT,
+    RegoTypes.REMAINDER,
+    RegoTypes.BIT_OR,
+    RegoTypes.BIT_AND,
+    RegoTypes.EQ,
+    RegoTypes.NOT_EQ,
+    RegoTypes.LESS,
+    RegoTypes.LESS_OR_EQUAL,
+    RegoTypes.GREATHER,
+    RegoTypes.GREATER_OR_EQUAL
+)
