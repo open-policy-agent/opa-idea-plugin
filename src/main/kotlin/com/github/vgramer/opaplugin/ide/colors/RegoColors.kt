@@ -8,6 +8,7 @@ enum class RegoColor(humanName: String, val default: TextAttributesKey? = null) 
 
     KEYWORD("Keywords//Keyword", DefaultLanguageHighlighterColors.KEYWORD),
     NUMBER("Literals//Number", DefaultLanguageHighlighterColors.NUMBER),
+    BOOLEAN("Literals//Boolean", DefaultLanguageHighlighterColors.NUMBER),
     STRING("Literals//Strings//String", DefaultLanguageHighlighterColors.STRING),
     LINE_COMMENT("Comments//Line comment", DefaultLanguageHighlighterColors.LINE_COMMENT),
 
