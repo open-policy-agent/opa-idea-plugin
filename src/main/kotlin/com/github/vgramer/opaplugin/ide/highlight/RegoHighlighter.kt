@@ -10,6 +10,12 @@ import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
 
+/**
+ * Handle the Syntax Highlighting of the a file.
+ *
+ * Color can be customize be the user thank the [com.github.vgramer.opaplugin.ide.colors.RegoColorSettingsPage]
+ * If you want let the user customize a color, you must update the [com.github.vgramer.opaplugin.ide.colors.RegoColor]
+ */
 class RegoHighlighter : SyntaxHighlighterBase() {
     override fun getHighlightingLexer(): Lexer = RegoLexerAdapter()
 

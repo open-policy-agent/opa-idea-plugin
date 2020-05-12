@@ -10,10 +10,16 @@ import com.intellij.openapi.options.colors.ColorSettingsPage
 import com.intellij.openapi.util.io.StreamUtil
 import javax.swing.Icon
 
+/**
+ * Settings page where user can customize the highlighting for the Rego language.
+ */
 class RegoColorSettingsPage : ColorSettingsPage {
     private val attributes = RegoColor.values().map { it.attributesDescriptor }.toTypedArray()
     private val tags = mutableMapOf<String, TextAttributesKey>()
 
+    /**
+     * Demo text shown in the preview pane.
+     */
     private val regoDemoText by lazy {
         val stream = javaClass.classLoader.getResourceAsStream("com/github/vgramer/opaplugin/ide/colors/RegoDemo.rego")
         StreamUtil.convertSeparators(StreamUtil.readText(stream, "UTF-8"))
