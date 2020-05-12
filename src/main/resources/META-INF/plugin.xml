@@ -29,6 +29,7 @@
 
         <lang.parserDefinition language="rego"  implementationClass="com.github.vgramer.opaplugin.lang.parser.RegoParserDefinition"/>
         <lang.syntaxHighlighterFactory language="rego" implementationClass="com.github.vgramer.opaplugin.ide.highlight.RegoHighlighterFactory"/>
+        <colorSettingsPage implementation="com.github.vgramer.opaplugin.ide.colors.RegoColorSettingsPage"/>
         <lang.commenter language="rego" implementationClass="com.github.vgramer.opaplugin.ide.commenter.RegoCommenter"/>
     </extensions>
 
