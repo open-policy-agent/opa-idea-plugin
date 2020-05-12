@@ -1,10 +1,10 @@
 import org.gradle.api.JavaVersion.VERSION_1_8
 import org.gradle.api.internal.HasConvention
+import org.jetbrains.grammarkit.tasks.GenerateLexer
+import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.grammarkit.tasks.GenerateLexer
-import org.jetbrains.grammarkit.tasks.GenerateParser
 
 
 val ideaVersion = prop("ideaVersion")
@@ -39,6 +39,7 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    testImplementation("org.assertj:assertj-core:3.16.1")
 }
 
 idea {
