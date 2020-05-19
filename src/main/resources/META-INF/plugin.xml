@@ -39,6 +39,14 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+
+        <action id="com.github.vgramer.opaplugin.actions.FmtAction"
+                class="com.github.vgramer.opaplugin.ide.actions.FmtAction"
+                text="Reformat with Opa Fmt"
+                description="Reformat current file with Opa Fmt"
+                icon="AllIcons.Actions.RealIntentionBulb">
+            <add-to-group group-id="CodeMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl I"/>
+        </action>
     </actions>
 </idea-plugin>
