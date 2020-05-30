@@ -8,9 +8,9 @@ package com.github.vgramer.opaplugin.opa.tool
 import com.github.vgramer.opaplugin.OpaTestBase
 
 // TODO : probably need to use a real fs in the future (when opa ftm project and opa eval will implemented)
-class OpaFmtTest : OpaTestBase() {
+class FmtActionTest : OpaTestBase() {
 
-    override val dataPath = "com/github/vgramer/opaplugin/opa/tool/fixtures"
+    override val dataPath = "com/github/vgramer/opaplugin/ide/actions/fmt/fixtures"
 
     private fun doTest() {
         myFixture.configureByFile(fileName)
