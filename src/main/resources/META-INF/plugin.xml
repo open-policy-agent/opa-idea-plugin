@@ -31,6 +31,7 @@
                   fieldName="INSTANCE"
                   language="rego"
                   extensions="rego"/>
+        <internalFileTemplate name="Rego File"/>
 
         <lang.parserDefinition language="rego"  implementationClass="com.github.vgramer.opaplugin.lang.parser.RegoParserDefinition"/>
         <lang.syntaxHighlighterFactory language="rego" implementationClass="com.github.vgramer.opaplugin.ide.highlight.RegoHighlighterFactory"/>
@@ -47,6 +48,13 @@
                 icon="AllIcons.Actions.RealIntentionBulb">
             <add-to-group group-id="CodeMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl I"/>
+        </action>
+
+        <action id="com.github.vgramer.opaplugin.ide.actions.RegoCreateFileAction"
+                class="com.github.vgramer.opaplugin.ide.actions.RegoCreateFileAction"
+                text="Rego File"
+                description="Create new Rego file">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
         </action>
     </actions>
 </idea-plugin>
