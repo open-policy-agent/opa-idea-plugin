@@ -3,7 +3,7 @@
  * found in the LICENSE file.
  */
 
-package com.github.vgramer.opaplugin.opa.tool
+package com.github.vgramer.opaplugin.ide.actions
 
 import com.github.vgramer.opaplugin.OpaTestBase
 

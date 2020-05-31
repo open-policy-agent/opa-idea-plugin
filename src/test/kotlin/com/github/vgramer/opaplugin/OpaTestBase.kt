@@ -5,9 +5,7 @@
 
 package com.github.vgramer.opaplugin
 
-import com.intellij.openapi.util.io.StreamUtil
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
-import junit.framework.AssertionFailedError
 
 abstract class OpaTestBase : BasePlatformTestCase(), OpaTestCase {
 

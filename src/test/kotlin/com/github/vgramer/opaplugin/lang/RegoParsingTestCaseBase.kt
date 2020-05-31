@@ -8,12 +8,7 @@ package com.github.vgramer.opaplugin.lang
 import com.github.vgramer.opaplugin.OpaTestBase
 import com.github.vgramer.opaplugin.OpaTestCase
 import com.github.vgramer.opaplugin.lang.parser.RegoParserDefinition
-import com.intellij.openapi.fileEditor.impl.LoadTextUtil
-import com.intellij.testFramework.LightVirtualFile
 import com.intellij.testFramework.ParsingTestCase
-import junit.framework.Assert
-import java.io.IOException
-import java.util.*
 
 
 abstract class RegoParsingTestCaseBase() : ParsingTestCase(
