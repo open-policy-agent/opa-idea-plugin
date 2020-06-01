@@ -37,6 +37,8 @@
         <lang.syntaxHighlighterFactory language="rego" implementationClass="com.github.vgramer.opaplugin.ide.highlight.RegoHighlighterFactory"/>
         <colorSettingsPage implementation="com.github.vgramer.opaplugin.ide.colors.RegoColorSettingsPage"/>
         <lang.commenter language="rego" implementationClass="com.github.vgramer.opaplugin.ide.commenter.RegoCommenter"/>
+
+        <configurationType implementation="com.github.vgramer.opaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
     </extensions>
 
     <actions>
