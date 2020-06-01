@@ -48,7 +48,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.reflect.KProperty
 
-// This file is borrow from https://github.com/intellij-rust/intellij-rust/blob/master/src/main/kotlin/org/rust/openapiext/utils.kt
+// This file has been borrowed from https://github.com/intellij-rust/intellij-rust/blob/master/src/main/kotlin/org/rust/openapiext/utils.kt
 
 fun <T> Project.runWriteCommandAction(command: () -> T): T {
     return WriteCommandAction.runWriteCommandAction(this, Computable<T> { command() })

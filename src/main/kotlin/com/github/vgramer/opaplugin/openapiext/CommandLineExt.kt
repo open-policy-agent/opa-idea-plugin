@@ -3,12 +3,7 @@
  * found in the LICENSE file.
  */
 
-/*
- * Use of this source code is governed by the MIT license that can be
- * found in the LICENSE file.
- */
-
-// This file is borrow from https://github.com/intellij-rust/intellij-rust/blob/master/src/main/kotlin/org/rust/openapiext/CommandLineExt.kt
+// This file has been borrowed from https://github.com/intellij-rust/intellij-rust/blob/master/src/main/kotlin/org/rust/openapiext/CommandLineExt.kt
 package com.github.vgramer.opaplugin.openapiext
 
 
