@@ -5,7 +5,6 @@
 
 package com.github.vgramer.opaplugin.ide.runconfig
 
-import com.github.vgramer.opaplugin.OpaWithRealProjectTestBase
 import com.github.vgramer.opaplugin.openapiext.toXmlString
 import com.intellij.execution.configurations.RuntimeConfigurationError
 import com.intellij.execution.executors.DefaultRunExecutor
@@ -17,7 +16,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 
-class OpaEvalRunConfigurationTest : OpaWithRealProjectTestBase() {
+class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
     fun `test checkConfiguration throw exception when query is Null`() =
         doCheckConfigError(null, validInput(), validBundleDir(), validAdditionalArgs(), "Query can not be empty")
 
@@ -104,8 +103,7 @@ class OpaEvalRunConfigurationTest : OpaWithRealProjectTestBase() {
 
 
     fun `test read external`() {
-        val runConfig = OpaConfigurationFactory(OpaEvalRunConfigurationType())
-            .createTemplateConfiguration(myFixture.project) as OpaEvalRunConfiguration
+        val runConfig = createConfiguration()
 
         val data = Element("root")
         data.writeString("query", validQuery())
@@ -122,8 +120,7 @@ class OpaEvalRunConfigurationTest : OpaWithRealProjectTestBase() {
     }
 
     fun `test write external`() {
-        val runConfig = OpaConfigurationFactory(OpaEvalRunConfigurationType())
-            .createTemplateConfiguration(myFixture.project) as OpaEvalRunConfiguration
+        val runConfig = createConfiguration()
 
         runConfig.query = validQuery()
         runConfig.bundleDir = validBundleDir()
@@ -184,8 +181,7 @@ class OpaEvalRunConfigurationTest : OpaWithRealProjectTestBase() {
         }
 
 
-        val runConfig = OpaConfigurationFactory(OpaEvalRunConfigurationType())
-            .createTemplateConfiguration(myFixture.project) as OpaEvalRunConfiguration
+        val runConfig = createConfiguration()
 
         runConfig.query = query
         runConfig.input = input

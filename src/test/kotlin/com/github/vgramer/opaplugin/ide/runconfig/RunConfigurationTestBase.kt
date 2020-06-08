@@ -22,10 +22,10 @@ import java.nio.file.Path
 // TODO probably generalize this class when add more runConfiguration...
 abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
     protected fun createConfiguration(
-        query: String?,
-        input: Path?,
-        bundleDir: Path?,
-        additionalArgs: String?
+        query: String? = null,
+        input: Path? = null,
+        bundleDir: Path? = null,
+        additionalArgs: String? = null
     ): OpaEvalRunConfiguration {
         val runConfig = OpaConfigurationFactory(OpaEvalRunConfigurationType())
             .createTemplateConfiguration(myFixture.project) as OpaEvalRunConfiguration
@@ -40,7 +40,7 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
     }
 
 
-    protected fun execute(configuration: RunConfiguration): ExecutionResult {
+    private fun execute(configuration: RunConfiguration): ExecutionResult {
         val executor = DefaultRunExecutor.getRunExecutorInstance()
         val state = ExecutionEnvironmentBuilder
             .create(executor, configuration)
