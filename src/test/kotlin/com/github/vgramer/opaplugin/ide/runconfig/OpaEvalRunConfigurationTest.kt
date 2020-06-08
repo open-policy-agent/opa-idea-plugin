@@ -105,7 +105,7 @@ class OpaEvalRunConfigurationTest : OpaWithRealProjectTestBase() {
 
     fun `test read external`() {
         val runConfig = OpaConfigurationFactory(OpaEvalRunConfigurationType())
-            .createTemplateConfiguration(myFixture.project)
+            .createTemplateConfiguration(myFixture.project) as OpaEvalRunConfiguration
 
         val data = Element("root")
         data.writeString("query", validQuery())
@@ -123,7 +123,7 @@ class OpaEvalRunConfigurationTest : OpaWithRealProjectTestBase() {
 
     fun `test write external`() {
         val runConfig = OpaConfigurationFactory(OpaEvalRunConfigurationType())
-            .createTemplateConfiguration(myFixture.project)
+            .createTemplateConfiguration(myFixture.project) as OpaEvalRunConfiguration
 
         runConfig.query = validQuery()
         runConfig.bundleDir = validBundleDir()
@@ -185,7 +185,7 @@ class OpaEvalRunConfigurationTest : OpaWithRealProjectTestBase() {
 
 
         val runConfig = OpaConfigurationFactory(OpaEvalRunConfigurationType())
-            .createTemplateConfiguration(myFixture.project)
+            .createTemplateConfiguration(myFixture.project) as OpaEvalRunConfiguration
 
         runConfig.query = query
         runConfig.input = input

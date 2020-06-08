@@ -28,7 +28,7 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
         additionalArgs: String?
     ): OpaEvalRunConfiguration {
         val runConfig = OpaConfigurationFactory(OpaEvalRunConfigurationType())
-            .createTemplateConfiguration(myFixture.project)
+            .createTemplateConfiguration(myFixture.project) as OpaEvalRunConfiguration
 
         runConfig.query = query
         runConfig.bundleDir = bundleDir
