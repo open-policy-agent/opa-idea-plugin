@@ -6,6 +6,8 @@
 package com.github.vgramer.opaplugin.ide.runconfig
 
 import com.github.vgramer.opaplugin.openapiext.toXmlString
+import com.github.vgramer.opaplugin.openapiext.writePath
+import com.github.vgramer.opaplugin.openapiext.writeString
 import com.intellij.execution.configurations.RuntimeConfigurationError
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.runners.ExecutionEnvironment
