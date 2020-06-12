@@ -1,0 +1,1 @@
+data.test.main.test_rule1_should_raise_error: ERROR \([^)]+\)  [^:]+:8: eval_builtin_error: to_number: strconv.ParseFloat: parsing "rule1": invalid syntax

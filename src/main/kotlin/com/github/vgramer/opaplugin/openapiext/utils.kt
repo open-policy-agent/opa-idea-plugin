@@ -8,10 +8,7 @@ package com.github.vgramer.opaplugin.openapiext
 import com.intellij.concurrency.SensitiveProgressWrapper
 import com.intellij.ide.plugins.IdeaPluginDescriptor
 import com.intellij.ide.plugins.PluginManager
-import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.ModalityState
-import com.intellij.openapi.application.TransactionGuard
 import com.intellij.openapi.application.ex.ApplicationUtil
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Document
@@ -44,7 +41,6 @@ import org.jdom.input.SAXBuilder
 import java.lang.reflect.Field
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.concurrent.Executor
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.reflect.KProperty
 
@@ -242,17 +238,6 @@ fun <T : Any> executeUnderProgressWithWriteActionPriorityWithRetries(indicator: 
 fun runWithWriteActionPriority(indicator: ProgressIndicator, action: () -> Unit): Boolean =
     ProgressIndicatorUtils.runWithWriteActionPriority(action, indicator)
 
-fun submitTransaction(parentDisposable: Disposable, runnable: Runnable) {
-    ApplicationManager.getApplication().invokeLater(Runnable {
-        TransactionGuard.submitTransaction(parentDisposable, runnable)
-    }, ModalityState.any(), Condition.FALSE)
-}
-
-class TransactionExecutor(val project: Project) : Executor {
-    override fun execute(command: Runnable) {
-        submitTransaction(project, command)
-    }
-}
 
 fun <T> executeUnderProgress(indicator: ProgressIndicator, action: () -> T): T {
     var result: T? = null

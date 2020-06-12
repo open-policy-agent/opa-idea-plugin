@@ -4,6 +4,8 @@
  */
 package com.github.vgramer.opaplugin.ide.runconfig
 
+import com.github.vgramer.opaplugin.ide.runconfig.test.OpaTestRunConfiguration
+import com.github.vgramer.opaplugin.ide.runconfig.test.OpaTestRunConfigurationType
 import com.intellij.execution.configurations.ConfigurationFactory
 import com.intellij.execution.configurations.ConfigurationType
 import com.intellij.openapi.project.Project
@@ -16,6 +18,7 @@ import com.intellij.openapi.project.Project
 class OpaConfigurationFactory(type: ConfigurationType) : ConfigurationFactory(type) {
     override fun createTemplateConfiguration(project: Project) = when (type) {
         is OpaEvalRunConfigurationType -> OpaEvalRunConfiguration(project, this, "Opa eval")
+        is OpaTestRunConfigurationType -> OpaTestRunConfiguration(project, this, "Opa test")
         else -> throw IllegalArgumentException("No Opa run configuration type, but ${type.id} was received instead.")
     }
 

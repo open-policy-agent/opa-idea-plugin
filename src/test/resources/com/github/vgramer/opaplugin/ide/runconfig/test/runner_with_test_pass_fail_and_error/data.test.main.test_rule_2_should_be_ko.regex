@@ -1,0 +1,6 @@
+data.test.main.test_rule_2_should_be_ko: FAIL \(.+\)
+  query:1                                                              Enter data.test.main.test_rule_2_should_be_ko = _
+  [^:]+:9      \| Enter data.test.main.test_rule_2_should_be_ko
+  [^:]+:11     \| \| Fail msg = \{"another message in order to put the test in FAIL state"}
+  query:1                                                              \| Fail data.test.main.test_rule_2_should_be_ko = _
+

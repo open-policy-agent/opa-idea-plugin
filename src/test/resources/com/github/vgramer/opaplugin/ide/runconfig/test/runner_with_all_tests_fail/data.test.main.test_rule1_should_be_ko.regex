@@ -1,0 +1,6 @@
+data.test.main.test_rule1_should_be_ko: FAIL \([^)]+\)
+  query:1                                                              Enter data.test.main.test_rule1_should_be_ko = _
+  [^:]+:5     \| Enter data.test.main.test_rule1_should_be_ko
+  [^:]+:7     \| \| Fail msg = \{"should fail test 1"}
+  query:1                                                              \| Fail data.test.main.test_rule1_should_be_ko = _
+

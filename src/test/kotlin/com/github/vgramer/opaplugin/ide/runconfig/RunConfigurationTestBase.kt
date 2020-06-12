@@ -40,7 +40,12 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
     }
 
 
-    private fun execute(configuration: RunConfiguration): ExecutionResult {
+    /**
+     * Utility method to execute a RunConfiguration. Should not used in test.
+     * use [executeAndGetOutput] or [com.github.vgramer.opaplugin.ide.runconfig.test.OpaTestRunConfigurationBase.executeAndGetTestRoot]
+     * instead
+     */
+    protected fun execute(configuration: RunConfiguration): ExecutionResult {
         val executor = DefaultRunExecutor.getRunExecutorInstance()
         val state = ExecutionEnvironmentBuilder
             .create(executor, configuration)
@@ -49,6 +54,11 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
         return state.execute(executor, ProgramRunner.getRunner(executor.id, configuration)!!)!!
     }
 
+    /**
+     * execute the RunConfiguration and return the captured output
+     *
+     * this method has been borrowed to IntelliJ runt plugin
+     */
     protected fun executeAndGetOutput(configuration: RunConfiguration): ProcessOutput {
         val result = execute(configuration)
         val listener = AnsiAwareCapturingProcessAdapter()
@@ -62,7 +72,9 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
     }
 }
 
-
+/**
+ * this class has been borrowed to IntelliJ runt plugin
+ */
 class AnsiAwareCapturingProcessAdapter : ProcessAdapter() {
     val output = ProcessOutput()
 

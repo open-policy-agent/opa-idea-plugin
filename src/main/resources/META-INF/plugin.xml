@@ -39,6 +39,7 @@
         <lang.commenter language="rego" implementationClass="com.github.vgramer.opaplugin.ide.commenter.RegoCommenter"/>
 
         <configurationType implementation="com.github.vgramer.opaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
+        <configurationType implementation="com.github.vgramer.opaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>
     </extensions>
 
     <actions>

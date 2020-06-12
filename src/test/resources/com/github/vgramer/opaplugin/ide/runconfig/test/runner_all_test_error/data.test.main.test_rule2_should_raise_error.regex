@@ -1,0 +1,1 @@
+data.test.main.test_rule2_should_raise_error: ERROR \([^)]+\)  [^:]+:12: eval_builtin_error: to_number: strconv.ParseFloat: parsing "rule2": invalid syntax

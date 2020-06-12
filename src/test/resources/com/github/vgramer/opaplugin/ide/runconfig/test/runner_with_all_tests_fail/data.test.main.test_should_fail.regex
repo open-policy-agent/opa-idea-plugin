@@ -1,0 +1,6 @@
+data.test.main.test_should_fail: FAIL \([^)]+\)
+  query:1                                                              Enter data.test.main.test_should_fail = _
+  [^:]+:15     \| Enter data.test.main.test_should_fail
+  [^:]+:16     \| \| Fail 2 = 1
+  query:1                                                              \| Fail data.test.main.test_should_fail = _
+
