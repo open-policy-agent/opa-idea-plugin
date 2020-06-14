@@ -61,6 +61,13 @@ intellij {
     val plugins = mutableListOf(
         "PsiViewer:$psiViewerPluginVersion"
     )
+
+    tasks{
+        withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
+            sinceBuild(prop("sinceBuild"))
+            untilBuild(prop("untilBuild"))
+        }
+    }
     setPlugins(*plugins.toTypedArray())
 }
 
