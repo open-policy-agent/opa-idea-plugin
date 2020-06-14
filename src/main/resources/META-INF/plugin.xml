@@ -4,7 +4,7 @@
   -->
 
 <idea-plugin>
-    <id>com.github.vgramer.opa-idea-plugin</id>
+    <id>org.opa.opa-idea-plugin</id>
     <name>Open Policy Agent</name>
     <vendor email="1167539+vgramer@users.noreply.github.com" url="https://github.com/vgramer/opa-idea-plugin">
         https://github.com/vgramer/opa-idea-plugin
@@ -28,25 +28,25 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- File-type Factory -->
         <fileType name="Rego file"
-                  implementationClass="com.github.vgramer.opaplugin.lang.RegoFileType"
+                  implementationClass="org.opa.ideaplugin.lang.RegoFileType"
                   fieldName="INSTANCE"
                   language="rego"
                   extensions="rego"/>
         <internalFileTemplate name="Rego File"/>
 
-        <lang.parserDefinition language="rego"  implementationClass="com.github.vgramer.opaplugin.lang.parser.RegoParserDefinition"/>
-        <lang.syntaxHighlighterFactory language="rego" implementationClass="com.github.vgramer.opaplugin.ide.highlight.RegoHighlighterFactory"/>
-        <colorSettingsPage implementation="com.github.vgramer.opaplugin.ide.colors.RegoColorSettingsPage"/>
-        <lang.commenter language="rego" implementationClass="com.github.vgramer.opaplugin.ide.commenter.RegoCommenter"/>
+        <lang.parserDefinition language="rego"  implementationClass="org.opa.ideaplugin.lang.parser.RegoParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="rego" implementationClass="org.opa.ideaplugin.ide.highlight.RegoHighlighterFactory"/>
+        <colorSettingsPage implementation="org.opa.ideaplugin.ide.colors.RegoColorSettingsPage"/>
+        <lang.commenter language="rego" implementationClass="org.opa.ideaplugin.ide.commenter.RegoCommenter"/>
 
-        <configurationType implementation="com.github.vgramer.opaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
-        <configurationType implementation="com.github.vgramer.opaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>
+        <configurationType implementation="org.opa.ideaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
+        <configurationType implementation="org.opa.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>
     </extensions>
 
     <actions>
 
-        <action id="com.github.vgramer.opaplugin.actions.FmtAction"
-                class="com.github.vgramer.opaplugin.ide.actions.FmtAction"
+        <action id="org.opa.ideaplugin.actions.FmtAction"
+                class="org.opa.ideaplugin.ide.actions.FmtAction"
                 text="Reformat with Opa Fmt"
                 description="Reformat current file with Opa Fmt"
                 icon="AllIcons.Actions.RealIntentionBulb">
@@ -54,8 +54,8 @@
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl I"/>
         </action>
 
-        <action id="com.github.vgramer.opaplugin.ide.actions.RegoCreateFileAction"
-                class="com.github.vgramer.opaplugin.ide.actions.RegoCreateFileAction"
+        <action id="org.opa.ideaplugin.ide.actions.RegoCreateFileAction"
+                class="org.opa.ideaplugin.ide.actions.RegoCreateFileAction"
                 text="Rego File"
                 description="Create new Rego file">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>

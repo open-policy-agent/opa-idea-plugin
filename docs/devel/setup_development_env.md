@@ -39,7 +39,7 @@ Constructing NFA : 193 states in NFA
 Converting NFA to DFA : 
 ........................................................................................................
 106 states before minimization, 96 states in minimized DFA
-Writing code to "/tmp/a/opa-idea-plugin/src/main/gen/com/github/vgramer/opaplugin/lang/lexer/_RegoLexer.java"
+Writing code to "/tmp/a/opa-idea-plugin/src/main/gen/org/opa/ideaplugin/lang/lexer/_RegoLexer.java"
 
 > Task :generateRegoParser
 Rego.bnf parser generated to /tmp/a/opa-idea-plugin/src/main/gen

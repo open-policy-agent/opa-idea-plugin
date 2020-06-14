@@ -34,7 +34,7 @@ apply {
 
 }
 
-group = "com.github.vgramer"
+group = "org.opa"
 version = "1.0.0-SNAPSHOT"
 
 
@@ -105,7 +105,7 @@ tasks {
 
 val generateRegoLexer = task<GenerateLexer>("generateRegoLexer") {
     source = "src/main/grammar/RegoLexer.flex"
-    targetDir = "src/main/gen/com/github/vgramer/opaplugin/lang/lexer"
+    targetDir = "src/main/gen/org/opa/ideaplugin/lang/lexer"
     targetClass = "_RegoLexer"
     purgeOldFiles = true
 }
@@ -114,8 +114,8 @@ val generateRegoLexer = task<GenerateLexer>("generateRegoLexer") {
 val generateRegoParser = task<GenerateParser>("generateRegoParser") {
     source = "src/main/grammar/Rego.bnf"
     targetRoot = "src/main/gen"
-    pathToParser =  "/com/github/vgramer/opaplugin/lang/parser/RegoParser.java"
-    pathToPsiRoot = "/com/github/vgramer/opaplugin/lang/psi"
+    pathToParser =  "/org/opa/ideaplugin/lang/parser/RegoParser.java"
+    pathToPsiRoot = "/org/opa/ideaplugin/lang/psi"
     purgeOldFiles = true
 }
 

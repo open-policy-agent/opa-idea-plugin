@@ -4,18 +4,18 @@
  */
 
 {
-  parserClass="com.github.vgramer.opaplugin.lang.parser.RegoParser"
+  parserClass="org.opa.ideaplugin.lang.parser.RegoParser"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
   psiClassPrefix="Rego"
   psiImplClassSuffix="Impl"
-  psiPackage= "com.github.vgramer.opaplugin.lang.psi"
-  psiImplPackage="com.github.vgramer.opaplugin.lang.psi.impl"
+  psiPackage= "org.opa.ideaplugin.lang.psi"
+  psiImplPackage="org.opa.ideaplugin.lang.psi.impl"
 
-  elementTypeHolderClass="com.github.vgramer.opaplugin.lang.psi.RegoTypes"
-  elementTypeClass="com.github.vgramer.opaplugin.lang.psi.RegoElementType"
-  tokenTypeClass="com.github.vgramer.opaplugin.lang.psi.RegoTokenType"
+  elementTypeHolderClass="org.opa.ideaplugin.lang.psi.RegoTypes"
+  elementTypeClass="org.opa.ideaplugin.lang.psi.RegoElementType"
+  tokenTypeClass="org.opa.ideaplugin.lang.psi.RegoTokenType"
 
   tokens = [
         PACKAGE_TOKEN       = 'package'
