@@ -152,11 +152,11 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
         query: String?,
         input: Path?,
         bundleDir: Path?,
-        additionalsArgs: String?,
+        additionalArgs: String?,
         errorMsg: String
     ) {
 
-        val runConfig = buildProjectAndGetRunConfig(query, input, bundleDir, additionalsArgs)
+        val runConfig = buildProjectAndGetRunConfig(query, input, bundleDir, additionalArgs)
 
         try {
             runConfig.checkConfiguration()
@@ -193,7 +193,7 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
     }
 
 
-    companion object {
+    private companion object {
         const val bundleDirName = "src"
         const val inputFileName = "input.json"
     }

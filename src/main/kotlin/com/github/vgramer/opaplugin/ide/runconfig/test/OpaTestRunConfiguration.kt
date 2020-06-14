@@ -53,24 +53,33 @@ class OpaTestRunConfiguration(
 
 
     private fun checkConfig() {
-        // TODO add check to ensure pretty format and -v option in additional args
-
         val args = ParametersListUtil.parse(additionalArgs ?: "")
 
-        // TODO allow empty if last args is path
-        val noDataArgs = !(args.contains("--data") || args.contains("-d"))
-        val noBundleDir = bundleDir == null || bundleDir!!.toString().isEmpty()
 
-        if (noDataArgs && noBundleDir) {
-            throw RuntimeConfigurationError("You must either defined a bundle directory or data through Additional args (option -d <path> or --data <path>)")
+        val formatOrdinal = getFormatOptionIndex(args)
+        if (formatOrdinal != -1 && formatOrdinal + 1 < args.size && args[formatOrdinal + 1] != "pretty") {
+            throw RuntimeConfigurationError("Only format option (-f or --format) = pretty is handle by plugin")
         }
 
+        // TODO check that if bundle dir is null, a path is provided to command
         bundleDir?.let {
             if (it.isFile()) {
                 throw RuntimeConfigurationError("Bundle directory must be a directory")
             }
         }
+    }
 
+    // TODO may be move logic to another class and pass an already valid configuration( with all necessary options) to
+    // [ com.github.vgramer.opaplugin.ide.runconfig.test.OpaTestRunProfileState]
+    /**
+     * Return the index of the format option (-f or --format) in [args] or -1 if the option is not present
+     */
+    fun getFormatOptionIndex(args: MutableList<String>): Int {
+        val index = args.indexOf("-f")
+        if (index == -1) {
+            return args.indexOf("--format")
+        }
+        return index
     }
 
     override fun getState(executor: Executor, executionEnvironment: ExecutionEnvironment): RunProfileState {

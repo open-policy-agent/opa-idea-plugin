@@ -42,6 +42,14 @@ class OpaTestRunProfileState(
             args.add(runConfiguration.bundleDir.toString())
         }
 
+        if(! args.contains("-v")){
+            args.add("-v")
+        }
+
+        if(runConfiguration.getFormatOptionIndex(args) == -1){
+            args.add("-f")
+            args.add("pretty")
+        }
 
         val cmd = GeneralCommandLine(OpaBaseTool.opaBinary)
             .withParameters("test")
@@ -53,7 +61,6 @@ class OpaTestRunProfileState(
 
         return processHandler
     }
-
 
 
     override fun execute(executor: Executor, runner: ProgramRunner<*>): ExecutionResult {
