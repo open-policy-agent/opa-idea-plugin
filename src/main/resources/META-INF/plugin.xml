@@ -4,7 +4,7 @@
   -->
 
 <idea-plugin>
-    <id>org.opa.opa-idea-plugin</id>
+    <id>org.openpolicyagent.opa-idea-plugin</id>
     <name>Open Policy Agent</name>
     <vendor email="1167539+vgramer@users.noreply.github.com" url="https://github.com/vgramer/opa-idea-plugin">
         https://github.com/vgramer/opa-idea-plugin
@@ -28,25 +28,25 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- File-type Factory -->
         <fileType name="Rego file"
-                  implementationClass="org.opa.ideaplugin.lang.RegoFileType"
+                  implementationClass="org.openpolicyagent.ideaplugin.lang.RegoFileType"
                   fieldName="INSTANCE"
                   language="rego"
                   extensions="rego"/>
         <internalFileTemplate name="Rego File"/>
 
-        <lang.parserDefinition language="rego"  implementationClass="org.opa.ideaplugin.lang.parser.RegoParserDefinition"/>
-        <lang.syntaxHighlighterFactory language="rego" implementationClass="org.opa.ideaplugin.ide.highlight.RegoHighlighterFactory"/>
-        <colorSettingsPage implementation="org.opa.ideaplugin.ide.colors.RegoColorSettingsPage"/>
-        <lang.commenter language="rego" implementationClass="org.opa.ideaplugin.ide.commenter.RegoCommenter"/>
+        <lang.parserDefinition language="rego"  implementationClass="org.openpolicyagent.ideaplugin.lang.parser.RegoParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterFactory"/>
+        <colorSettingsPage implementation="org.openpolicyagent.ideaplugin.ide.colors.RegoColorSettingsPage"/>
+        <lang.commenter language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.commenter.RegoCommenter"/>
 
-        <configurationType implementation="org.opa.ideaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
-        <configurationType implementation="org.opa.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>
+        <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
+        <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>
     </extensions>
 
     <actions>
 
-        <action id="org.opa.ideaplugin.actions.FmtAction"
-                class="org.opa.ideaplugin.ide.actions.FmtAction"
+        <action id="org.openpolicyagent.ideaplugin.actions.FmtAction"
+                class="org.openpolicyagent.ideaplugin.ide.actions.FmtAction"
                 text="Reformat with Opa Fmt"
                 description="Reformat current file with Opa Fmt"
                 icon="AllIcons.Actions.RealIntentionBulb">
@@ -54,8 +54,8 @@
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl I"/>
         </action>
 
-        <action id="org.opa.ideaplugin.ide.actions.RegoCreateFileAction"
-                class="org.opa.ideaplugin.ide.actions.RegoCreateFileAction"
+        <action id="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"
+                class="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"
                 text="Rego File"
                 description="Create new Rego file">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
