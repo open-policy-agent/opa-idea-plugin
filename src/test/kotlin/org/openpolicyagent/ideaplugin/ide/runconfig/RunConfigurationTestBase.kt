@@ -41,7 +41,7 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
 
 
     /**
-     * Utility method to execute a RunConfiguration. Should not used in test.
+     * Utility method to execute a RunConfiguration. Should not be used in test.
      * use [executeAndGetOutput] or [org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationBase.executeAndGetTestRoot]
      * instead
      */
@@ -57,7 +57,7 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
     /**
      * execute the RunConfiguration and return the captured output
      *
-     * this method has been borrowed to IntelliJ runt plugin
+     * this method has been borrowed from IntelliJ rust plugin
      */
     protected fun executeAndGetOutput(configuration: RunConfiguration): ProcessOutput {
         val result = execute(configuration)
@@ -73,7 +73,7 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
 }
 
 /**
- * this class has been borrowed to IntelliJ runt plugin
+ * this class has been borrowed from IntelliJ rust plugin
  */
 class AnsiAwareCapturingProcessAdapter : ProcessAdapter() {
     val output = ProcessOutput()

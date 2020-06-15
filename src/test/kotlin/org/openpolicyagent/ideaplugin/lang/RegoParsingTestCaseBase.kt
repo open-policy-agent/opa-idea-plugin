@@ -8,6 +8,7 @@ package org.openpolicyagent.ideaplugin.lang
 import com.intellij.testFramework.ParsingTestCase
 import org.openpolicyagent.ideaplugin.OpaTestBase
 import org.openpolicyagent.ideaplugin.OpaTestCase
+import org.openpolicyagent.ideaplugin.OpaTestCase.Companion.testResourcesPath
 import org.openpolicyagent.ideaplugin.lang.parser.RegoParserDefinition
 
 
@@ -18,7 +19,7 @@ abstract class RegoParsingTestCaseBase() : ParsingTestCase(
     RegoParserDefinition()
 ), OpaTestCase {
 
-    override fun getTestDataPath(): String = "src/test/resources"
+    override fun getTestDataPath(): String = testResourcesPath
 
     override fun getTestName(lowercaseFirstLetter: Boolean): String {
         val camelCase = super.getTestName(lowercaseFirstLetter)
@@ -28,12 +29,11 @@ abstract class RegoParsingTestCaseBase() : ParsingTestCase(
     /**
      * Test that parsing does not return error
      *
-     * This test is very basic bacic, it's does not check the generated psi match the expected one.
+     * This test is very basic basic, it's does not check the generated psi match the expected one.
      * At this time the grammar / psi is not finish; this test ensure no regressions are introduce when modifying grammar
      */
     fun doTestNoError() {
         super.doTest(false, false)
         ensureNoErrorElements()
-
     }
 }

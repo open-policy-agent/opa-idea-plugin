@@ -48,8 +48,8 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
     }
 
     /**
-     * return the test tree as string in order to be easily compared to an expected output (because it's a string,
-     * Intellij can generate a diff view if the test fail
+     * return the test tree as string for easy comparison with an expected output
+     * ( because it's a string, Intellij can generate a diff view if the test fail)
      *
      * Example:
      * [root](-)
@@ -85,12 +85,12 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
     }
 
     /**
-     * check the error message (correspond to the key "message" in [org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestEventsConverter.fireFailedTest])
-     * of each node match the desired pattern
+     * check that the error message of each node matches the desired pattern
+     * the error message should correspond to the key "message" in [org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestEventsConverter.fireFailedTest])
      *
-     * Desired patterns in file named "${node.name}.regex" in  are stored in the folder in "src/test/resources/${dataPath}/{testName}"
+     * Desired patterns in file named "${node.name}.regex" are stored in the folder at "src/test/resources/${dataPath}/{testName}"
      *
-     * see [org.openpolicyagent.ideaplugin.ide.runconfig.test.TestRunConfigurationExecutionOpaTest] for example
+     * eg. see [org.openpolicyagent.ideaplugin.ide.runconfig.test.TestRunConfigurationExecutionOpaTest] for example
      *
      */
     protected fun checkTreeErrorMsg(root: SMTestProxy) {
@@ -101,14 +101,14 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
                     Paths.get("${OpaTestCase.testResourcesPath}/${dataPath}/${testName}/${node.name}.regex").toFile())
 
             assertThat(node.errorMessage ?: "")
-                .describedAs("test node '${node.name}' has not the  expecting error message")
+                .describedAs("test node '${node.name}' does not contain the expected error message")
                 .matches(Regex(pattern, RegexOption.MULTILINE).toPattern())
         }
 
     }
 
     /**
-     * the name of test currently executed
+     * name of the test currently being executed
      */
     private val testName: String
         get() = camelOrWordsToSnake(getTestName(true))

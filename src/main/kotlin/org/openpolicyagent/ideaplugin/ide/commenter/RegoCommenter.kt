@@ -9,7 +9,7 @@ import com.intellij.lang.Commenter
 
 /**
  * Defines the support for "Comment with Line Comment" (eg '//' in java)  and "Comment with Block Comment" (eg '/* */')
- * Thanks to this clas user can comment / uncomment code with ide
+ * Thanks to this class user can comment / uncomment code with ide
  *
  * note: Rego has only one type of comment: LineComment ( you can only comment code with '#')
  */

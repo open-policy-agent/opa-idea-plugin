@@ -8,7 +8,7 @@
 // Original Copyright:
 //
 // Copyright 2010 The Go Authors. All rights reserved.
-// license that can be found in the doc/golang/golang-license.md file.
+// license that can be found in the doc/devel/golang/golang-license.md file.
 package org.openpolicyagent.ideaplugin.ide.runconfig.test.go
 
 private const val Nanosecond: Long = 1

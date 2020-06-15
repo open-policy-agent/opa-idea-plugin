@@ -10,7 +10,7 @@ import com.intellij.testFramework.builders.ModuleFixtureBuilder
 import com.intellij.testFramework.fixtures.CodeInsightFixtureTestCase
 
 /**
- * This class create the Test project in the FS in order be able to execute opa commands in tests. The conter part is that
+ * This class create the Test project in the FS in order be able to execute opa commands in tests. The counter part is that
  * is slower that [org.openpolicyagent.ideaplugin.OpaTestBase] which create testProject in memory
  */
 abstract class OpaWithRealProjectTestBase : CodeInsightFixtureTestCase<ModuleFixtureBuilder<*>>() {
