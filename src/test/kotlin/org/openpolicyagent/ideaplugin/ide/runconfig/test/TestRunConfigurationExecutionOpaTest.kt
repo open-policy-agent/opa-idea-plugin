@@ -16,7 +16,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
         buildProject {
             dir("src") {
                 rego(
-                    "main.rego", """
+                        "main.rego", """
                         package main
 
                         rule1[msg] {
@@ -29,7 +29,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                     """.trimIndent()
                 )
                 rego(
-                    "test_main.rego", """
+                        "test_main.rego", """
                         package test.main
                         import data.main
                         
@@ -57,8 +57,8 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
 
 
         val config = createTestConfig(
-            Paths.get("${myFixture.tempDirPath}/src"),
-            "-f pretty -v"
+                Paths.get("${myFixture.tempDirPath}/src"),
+                "-f pretty -v"
         )
 
         val expectedFormattedTestTree = """
@@ -79,7 +79,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
         buildProject {
             dir("src") {
                 rego(
-                    "main.rego", """
+                        "main.rego", """
                         package main
 
                         rule1[msg] {
@@ -92,7 +92,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                     """.trimIndent()
                 )
                 rego(
-                    "test_main.rego", """
+                        "test_main.rego", """
                         package test.main
                         import data.main
                         
@@ -119,8 +119,8 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
         }
 
         val config = createTestConfig(
-            Paths.get("${myFixture.tempDirPath}/src"),
-            "-f pretty -v"
+                Paths.get("${myFixture.tempDirPath}/src"),
+                "-f pretty -v"
         )
 
         val expectedFormattedTestTree = """
@@ -143,7 +143,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
         buildProject {
             dir("src") {
                 rego(
-                    "main.rego", """
+                        "main.rego", """
                         package main
 
                         rule1[msg] {
@@ -156,7 +156,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                     """.trimIndent()
                 )
                 rego(
-                    "test_main.rego", """
+                        "test_main.rego", """
                         package test.main
                         import data.main
                         
@@ -180,8 +180,8 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
         }
 
         val config = createTestConfig(
-            Paths.get("${myFixture.tempDirPath}/src"),
-            "-f pretty -v"
+                Paths.get("${myFixture.tempDirPath}/src"),
+                "-f pretty -v"
         )
 
         val expectedFormattedTestTree = """
@@ -202,7 +202,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
         buildProject {
             dir("src") {
                 rego(
-                    "main.rego", """
+                        "main.rego", """
                         package main
 
                         rule1[msg] {
@@ -215,7 +215,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                     """.trimIndent()
                 )
                 rego(
-                    "test_main.rego", """
+                        "test_main.rego", """
                         package test.main
                         import data.main
                         
@@ -240,8 +240,8 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
         }
 
         val config = createTestConfig(
-            Paths.get("${myFixture.tempDirPath}/src"),
-            "-f pretty -v"
+                Paths.get("${myFixture.tempDirPath}/src"),
+                "-f pretty -v"
         )
 
         val expectedFormattedTestTree = """
@@ -262,7 +262,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
         buildProject {
             dir("src") {
                 rego(
-                    "main.rego", """
+                        "main.rego", """
                         package main
 
                         rule1[msg] {
@@ -275,7 +275,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                     """.trimIndent()
                 )
                 rego(
-                    "test_main.rego", """
+                        "test_main.rego", """
                         package test.main
                         import data.main
                         
@@ -298,8 +298,8 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
         }
 
         val config = createTestConfig(
-            Paths.get("${myFixture.tempDirPath}/src"),
-            "-f pretty -v"
+                Paths.get("${myFixture.tempDirPath}/src"),
+                "-f pretty -v"
         )
 
         val expectedFormattedTestTree = """
