@@ -29,7 +29,7 @@ abstract class RegoParsingTestCaseBase() : ParsingTestCase(
     /**
      * Test that parsing does not return error
      *
-     * This test is very basic basic, it's does not check the generated psi match the expected one.
+     * This test is very basic, it does not check whether the generated PSI matches the expected one.
      * At this time the grammar / psi is not finish; this test ensure no regressions are introduce when modifying grammar
      */
     fun doTestNoError() {

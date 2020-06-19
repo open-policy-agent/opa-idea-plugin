@@ -49,7 +49,7 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
 
     /**
      * return the test tree as string for easy comparison with an expected output
-     * ( because it's a string, Intellij can generate a diff view if the test fail)
+     * ( because it's a string, Intellij can generate a diff view if the test fails).
      *
      * Example:
      * [root](-)
@@ -90,7 +90,7 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
      *
      * Desired patterns in file named "${node.name}.regex" are stored in the folder at "src/test/resources/${dataPath}/{testName}"
      *
-     * eg. see [org.openpolicyagent.ideaplugin.ide.runconfig.test.TestRunConfigurationExecutionOpaTest] for example
+     * eg. [org.openpolicyagent.ideaplugin.ide.runconfig.test.TestRunConfigurationExecutionOpaTest]
      *
      */
     protected fun checkTreeErrorMsg(root: SMTestProxy) {

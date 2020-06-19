@@ -8,7 +8,7 @@
 // Original Copyright:
 //
 // Copyright 2010 The Go Authors. All rights reserved.
-// license that can be found in the doc/devel/golang/golang-license.md file.
+// license that can be found in the docs/devel/golang/golang-license.md file.
 package org.openpolicyagent.ideaplugin.ide.runconfig.test.go
 
 private const val Nanosecond: Long = 1
@@ -217,4 +217,3 @@ private fun leadingFraction(s: String): Triple<Long, Long, String> {
     }
     return Triple(x, scale, s.substring(i))
 }
-

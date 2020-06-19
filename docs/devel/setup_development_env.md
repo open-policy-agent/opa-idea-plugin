@@ -13,7 +13,7 @@
 To build the project, you will need the following requirement
 
 * jdk 1.8
-* Opa binary (must be in the path, check version in [the readme](../../README.md))
+* OPA binary (must be in the path, check version in [the readme](../../README.md))
 * IntelliJ (community or ultimate version)
 
 It's optional but we recommend you to install the following intelliJ plugin:
@@ -72,4 +72,3 @@ The code is generated in the [gen folder](../../src/main/gen). If you want to re
 content of the gen folder and launch tasks `generateRegoLexer` and `generateRegoParser`.
 
  
-
