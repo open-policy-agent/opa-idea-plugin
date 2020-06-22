@@ -9,8 +9,8 @@ The action is implemented by the class [RegoCreateFileAction](../../../src/main/
 and registered under the `actions` section in the `plugin.xml`
 
 The default template used to create the file is defined by 2 files:
-*[resources/fileTemplates/internal/Rego File.rego.ft](../../../src/main/resources/fileTemplates/internal/Rego%20File.rego.ft) the template file used to create the rego file
-*[resources/fileTemplates/internal/Rego File.rego.html](../../../src/main/resources/fileTemplates/internal/Rego%20File.rego.html) the description that appears in the template editor (`Settings` ->`Editor` -> `File and Code Templates`)
+* [resources/fileTemplates/internal/Rego File.rego.ft](../../../src/main/resources/fileTemplates/internal/Rego%20File.rego.ft) the template file used to create the rego file
+* [resources/fileTemplates/internal/Rego File.rego.html](../../../src/main/resources/fileTemplates/internal/Rego%20File.rego.html) the description that appears in the template editor (`Settings` ->`Editor` -> `File and Code Templates`)
 
 The template must also be registered in the `plugin.xml`
 ```xml

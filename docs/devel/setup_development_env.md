@@ -12,7 +12,7 @@
 # Requirements
 To build the project, you will need the following requirement
 
-* jdk 1.8
+* JDK 1.8
 * OPA binary (must be in the path, check version in [the readme](../../README.md))
 * IntelliJ (community or ultimate version)
 
