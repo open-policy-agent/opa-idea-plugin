@@ -3,7 +3,7 @@
  * found in the LICENSE file.
  */
 
-// Important NOTE: Theses methods been borrowed to IntelliJ rust plugin
+// Important NOTE: Theses methods been borrowed from IntelliJ rust plugin
 
 package org.openpolicyagent.ideaplugin.openapiext
 
