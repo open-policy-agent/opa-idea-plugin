@@ -20,12 +20,15 @@ import com.intellij.openapi.options.colors.AttributesDescriptor
  */
 enum class RegoColor(humanName: String, val default: TextAttributesKey? = null) {
 
+
+    CALL("Identifiers//Builtin", DefaultLanguageHighlighterColors.FUNCTION_CALL),
+    VAR("Identifiers// Local Var", DefaultLanguageHighlighterColors.LOCAL_VARIABLE),
+    HEAD("Identifiers// Rule Head", DefaultLanguageHighlighterColors.CLASS_REFERENCE),
     KEYWORD("Keywords//Keyword", DefaultLanguageHighlighterColors.KEYWORD),
     NUMBER("Literals//Number", DefaultLanguageHighlighterColors.NUMBER),
     BOOLEAN("Literals//Boolean", DefaultLanguageHighlighterColors.NUMBER),
     STRING("Literals//Strings//String", DefaultLanguageHighlighterColors.STRING),
     LINE_COMMENT("Comments//Line comment", DefaultLanguageHighlighterColors.LINE_COMMENT),
-
 
     BRACES("Braces and Operators//Braces", DefaultLanguageHighlighterColors.BRACES),
     BRACKETS("Braces and Operators//Brackets", DefaultLanguageHighlighterColors.BRACKETS),

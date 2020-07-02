@@ -24,8 +24,14 @@
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+
+        <!-- Project Generation -->
+        <moduleType id="Rego" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleType"/>
+        <moduleBuilder id="Rego" builderClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleBuilder" order="first"/>
+
         <!-- File-type Factory -->
         <fileType name="Rego file"
                   implementationClass="org.openpolicyagent.ideaplugin.lang.RegoFileType"
@@ -38,6 +44,8 @@
         <lang.syntaxHighlighterFactory language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterFactory"/>
         <colorSettingsPage implementation="org.openpolicyagent.ideaplugin.ide.colors.RegoColorSettingsPage"/>
         <lang.commenter language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.commenter.RegoCommenter"/>
+        <annotator language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoHighlightorAnnotator"/>
+
 
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>

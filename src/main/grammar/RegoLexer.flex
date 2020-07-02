@@ -28,9 +28,10 @@ WHITE_SPACE=\s+
 ASCII_LETTER=[A-Za-z_][A-Za-z_0-9]*
 NUMBER=-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]*)?
 WHITE_SPACE=[ \t\n\x0B\f\r]+
-STRING_TOKEN=\"[^\"]*\"
-RAW_STRING=`[^`]*`
+STRING_TOKEN=\"([^\"\\]|\\.)*\"
+RAW_STRING=`[a-zA-Z_]\w*`
 COMMENT=[ \t]*#[^\r\n]*
+
 
 %%
 <YYINITIAL> {
