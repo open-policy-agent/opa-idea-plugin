@@ -22,8 +22,7 @@ enum class RegoColor(humanName: String, val default: TextAttributesKey? = null) 
 
 
     CALL("Identifiers//Builtin", DefaultLanguageHighlighterColors.FUNCTION_CALL),
-    VAR("Identifiers// Local Var", DefaultLanguageHighlighterColors.LOCAL_VARIABLE),
-    HEAD("Identifiers// Rule Head", DefaultLanguageHighlighterColors.CLASS_REFERENCE),
+    HEAD("Identifiers//Rule Head", DefaultLanguageHighlighterColors.CLASS_REFERENCE),
     KEYWORD("Keywords//Keyword", DefaultLanguageHighlighterColors.KEYWORD),
     NUMBER("Literals//Number", DefaultLanguageHighlighterColors.NUMBER),
     BOOLEAN("Literals//Boolean", DefaultLanguageHighlighterColors.NUMBER),

@@ -24,6 +24,8 @@
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+
+    <!-- todo: make compatible with non-IntelliJ platforms -->
     <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -44,7 +46,7 @@
         <lang.syntaxHighlighterFactory language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterFactory"/>
         <colorSettingsPage implementation="org.openpolicyagent.ideaplugin.ide.colors.RegoColorSettingsPage"/>
         <lang.commenter language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.commenter.RegoCommenter"/>
-        <annotator language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoHighlightorAnnotator"/>
+        <annotator language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoHighlighterAnnotator"/>
 
 
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>

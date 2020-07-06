@@ -29,7 +29,7 @@ ASCII_LETTER=[A-Za-z_][A-Za-z_0-9]*
 NUMBER=-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]*)?
 WHITE_SPACE=[ \t\n\x0B\f\r]+
 STRING_TOKEN=\"([^\"\\]|\\.)*\"
-RAW_STRING=`[a-zA-Z_]\w*`
+RAW_STRING=`[^`]*`
 COMMENT=[ \t]*#[^\r\n]*
 
 

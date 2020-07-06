@@ -20,7 +20,8 @@ import javax.swing.Icon
  */
 class RegoColorSettingsPage : ColorSettingsPage {
     private val attributes = RegoColor.values().map { it.attributesDescriptor }.toTypedArray()
-    private val tags = mutableMapOf<String, TextAttributesKey>()
+    private val tags = RegoColor.values().associateBy({ it.name }, { it.textAttributesKey })
+
 
     /**
      * Demo text shown in the preview pane.
@@ -33,7 +34,7 @@ class RegoColorSettingsPage : ColorSettingsPage {
     override fun getDisplayName(): String = "Rego"
     override fun getIcon(): Icon = RegoIcons.OPA
     override fun getHighlighter(): SyntaxHighlighter = RegoHighlighter()
-    override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey> = tags
+    override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey> = tags
     override fun getAttributeDescriptors(): Array<AttributesDescriptor> = attributes
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
     override fun getDemoText(): String = regoDemoText

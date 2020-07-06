@@ -4,7 +4,6 @@ import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.module.ModuleType
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider
-import org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleBuilder
 import org.openpolicyagent.ideaplugin.lang.RegoIcons
 import javax.swing.Icon
 
