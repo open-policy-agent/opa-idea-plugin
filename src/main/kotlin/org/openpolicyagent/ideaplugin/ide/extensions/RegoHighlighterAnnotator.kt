@@ -27,28 +27,29 @@ class RegoHighlighterAnnotator : Annotator {
                 annotation.textAttributes = style.textAttributesKey
             }
         }
+
         if (element is RegoExprCall){
             val style = styleForDeclType(element)
-            val varlist = element.varList
-            if (varlist.size > 1){
-                val annotation = holder.createInfoAnnotation(varlist[1].textRange, null)
+            val varlist = element.refArgDotList
+            if (varlist.size >= 1) {
+                val annotation = holder.createInfoAnnotation(varlist[varlist.size - 1].`var`.textRange, null)
                 if (style != null){
                     annotation.textAttributes = style.textAttributesKey
                 }
             } else {
-                val annotation = holder.createInfoAnnotation(varlist[0], null)
+                val annotation = holder.createInfoAnnotation(element.`var`.textRange, null)
                 if (style != null){
                     annotation.textAttributes = style.textAttributesKey
                 }
             }
         }
+
         if (element is RegoEmptySet){
             val style = styleForDeclType(element)
             val annotation = holder.createInfoAnnotation(element, null)
             if (style != null){
                 annotation.textAttributes = style.textAttributesKey
             }
-
         }
 
     }
