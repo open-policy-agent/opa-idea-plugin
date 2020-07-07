@@ -25,62 +25,59 @@ import static org.opa.ideaplugin.lang.psi.RegoTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-ASCII_LETTER=[A-Za-z_][A-Za-z_0-9]*
-NUMBER=-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]*)?
-WHITE_SPACE=[ \t\n\x0B\f\r]+
-STRING_TOKEN=\"[^\"]*\"
-RAW_STRING=`[^`]*`
-COMMENT=[ \t]*#[^\r\n]*
+STRING_LITERAL=(\"[^\"\\]*(\\.[^\"\\]*)*\")|(`[^`]*`)
+NUMBER=-?(0|([1-9][0-9]*))(\.[0-9]+)?([eE][+-]?[0-9]+)?
+COMMENT=#.*
+VAR=[\p{Alpha}_][\p{Alnum}_]*
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}       { return WHITE_SPACE; }
+  {WHITE_SPACE}         { return WHITE_SPACE; }
 
-  "package"           { return PACKAGE_TOKEN; }
-  "import"            { return IMPORT_TOKEN; }
-  "as"                { return AS; }
-  "default"           { return DEFAULT; }
-  ":="                { return VAR_ASSIGN; }
-  "="                 { return UNIFICATION; }
-  "true"              { return TRUE; }
-  "false"             { return FALSE; }
-  "("                 { return LPAREN; }
-  ")"                 { return RPAREN; }
-  "["                 { return LBRACK; }
-  "]"                 { return RBRACK; }
-  "else"              { return ELSE; }
-  "{"                 { return LBRACE; }
-  "}"                 { return RBRACE; }
-  ";"                 { return SEMICOLON; }
-  "some"              { return SOME; }
-  ","                 { return COMMA; }
-  "."                 { return DOT; }
-  "not"               { return NOT; }
-  "with"              { return WITH; }
-  ":"                 { return COLLON; }
-  "=="                { return EQ; }
-  "!="                { return NOT_EQ; }
-  "<="                { return LESS_OR_EQUAL; }
-  ">="                { return GREATER_OR_EQUAL; }
-  ">"                 { return GREATHER; }
-  "<"                 { return LESS; }
-  "|"                 { return BIT_OR; }
-  "&"                 { return BIT_AND; }
-  "+"                 { return PLUS; }
-  "-"                 { return MINUS; }
-  "*"                 { return MUL; }
-  "/"                 { return QUOTIENT; }
-  "%"                 { return REMAINDER; }
-  "set("              { return SET_OPEN; }
-  "`"                 { return BACKSTRICK; }
-  "null"              { return NULL; }
+  "true"                { return TRUE_KW; }
+  "false"               { return FALSE_KW; }
+  "null"                { return NULL_KW; }
+  "package"             { return PACKAGE_KW; }
+  "import"              { return IMPORT_KW; }
+  "as"                  { return AS_KW; }
+  "default"             { return DEFAULT_KW; }
+  "else"                { return ELSE_KW; }
+  "not"                 { return NOT_KW; }
+  "with"                { return WITH_KW; }
+  "some"                { return SOME_KW; }
+  ":="                  { return ASSIGN; }
+  "="                   { return UNIFY; }
+  "|"                   { return OR; }
+  "&"                   { return AND; }
+  "+"                   { return PLUS; }
+  "-"                   { return MINUS; }
+  "*"                   { return MULTIPLY; }
+  "/"                   { return DIVIDE; }
+  "%"                   { return REMAINDER; }
+  "=="                  { return EQ; }
+  "!="                  { return NEQ; }
+  "<"                   { return LT; }
+  ">"                   { return GT; }
+  "<="                  { return LTE; }
+  ">="                  { return GTE; }
+  "("                   { return LPAREN; }
+  ")"                   { return RPAREN; }
+  "{"                   { return LBRACE; }
+  "}"                   { return RBRACE; }
+  "["                   { return LBRACK; }
+  "]"                   { return RBRACK; }
+  "set"                 { return SET_KW; }
+  ","                   { return COMMA; }
+  ";"                   { return SEMIC; }
+  ":"                   { return COLON; }
+  "`"                   { return BACKTICK; }
+  "."                   { return DOT; }
+  "_"                   { return UNDER; }
 
-  {ASCII_LETTER}      { return ASCII_LETTER; }
-  {NUMBER}            { return NUMBER; }
-  {WHITE_SPACE}       { return WHITE_SPACE; }
-  {STRING_TOKEN}      { return STRING_TOKEN; }
-  {RAW_STRING}        { return RAW_STRING; }
-  {COMMENT}           { return COMMENT; }
+  {STRING_LITERAL}      { return STRING_LITERAL; }
+  {NUMBER}              { return NUMBER; }
+  {COMMENT}             { return COMMENT; }
+  {VAR}                 { return VAR; }
 
 }
 

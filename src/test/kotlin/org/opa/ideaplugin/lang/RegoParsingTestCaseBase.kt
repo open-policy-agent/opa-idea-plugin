@@ -34,6 +34,14 @@ abstract class RegoParsingTestCaseBase() : ParsingTestCase(
     fun doTestNoError() {
         super.doTest(false, false)
         ensureNoErrorElements()
+    }
 
+    fun ignore() {
+        super.doTest(false)
+    }
+
+    fun doTestNoErrorAndCheckResult() {
+        super.doTest(true, false)
+        ensureNoErrorElements()
     }
 }
