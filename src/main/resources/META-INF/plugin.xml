@@ -59,13 +59,22 @@
 
     <actions>
 
-        <action id="org.openpolicyagent.ideaplugin.actions.FmtAction"
+        <action id="FmtAction"
                 class="org.openpolicyagent.ideaplugin.ide.actions.FmtAction"
                 text="Reformat with Opa Fmt"
                 description="Reformat current file with Opa Fmt"
                 icon="AllIcons.Actions.RealIntentionBulb">
             <add-to-group group-id="CodeMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl I"/>
+        </action>
+
+        <action id="org.openpolicyagent.ideaplugin.actions.CheckAction"
+                class="org.openpolicyagent.ideaplugin.ide.actions.CheckAction"
+                text="Check with Opa Check"
+                description="Check current file with Opa Check"
+                icon="AllIcons.Actions.RealIntentionBulb">
+            <add-to-group group-id="CodeMenu" anchor="before" relative-to-action="FmtAction"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl C"/>
         </action>
 
         <action id="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"
