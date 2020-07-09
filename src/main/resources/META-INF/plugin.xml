@@ -42,12 +42,19 @@
                   extensions="rego"/>
         <internalFileTemplate name="Rego File"/>
 
+        <!-- Highlighting -->
         <lang.parserDefinition language="rego"  implementationClass="org.openpolicyagent.ideaplugin.lang.parser.RegoParserDefinition"/>
         <lang.syntaxHighlighterFactory language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterFactory"/>
         <colorSettingsPage implementation="org.openpolicyagent.ideaplugin.ide.colors.RegoColorSettingsPage"/>
         <lang.commenter language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.commenter.RegoCommenter"/>
         <annotator language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoHighlighterAnnotator"/>
 
+        <!-- OPA Console -->
+        <toolWindow id="OPA Console"
+                    icon="AllIcons.Actions.RealIntentionBulb"
+                    anchor="bottom"
+                    canCloseContents="true"
+                    factoryClass="org.openpolicyagent.ideaplugin.ide.extensions.OPAActionToolWindowFactory"/>
 
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>
@@ -74,7 +81,7 @@
                 description="Check current file with Opa Check"
                 icon="AllIcons.Actions.RealIntentionBulb">
             <add-to-group group-id="CodeMenu" anchor="before" relative-to-action="FmtAction"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl C"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl k"/>
         </action>
 
         <action id="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"

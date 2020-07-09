@@ -1,32 +1,20 @@
 package org.openpolicyagent.ideaplugin.ide.actions
 
-import com.intellij.execution.ExecutionException
-import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.editor.Document
-import com.intellij.openapi.project.DumbAwareAction
-import com.intellij.openapi.project.Project
-import org.openpolicyagent.ideaplugin.opa.tool.OpaCheck
-import org.openpolicyagent.ideaplugin.openapiext.isUnitTestMode
 
+import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.project.DumbAwareAction
+import org.openpolicyagent.ideaplugin.opa.tool.OpaCheck
 
 
 class CheckAction : DumbAwareAction() {
-    override fun actionPerformed(e: AnActionEvent) {
-        val (project, document) = getProjectAndDocument(e) ?: return
-        val error = checkDocumentSafe(project, document)
-        //if (error != null)
+    override fun update(e: AnActionEvent) {
+        super.update(e)
+        e.presentation.isEnabledAndVisible = getProjectAndDocument(e) != null
     }
 
-    /**
-     * Runs OpaCheck.checkDocument, catching errors
-     */
-    private fun checkDocumentSafe(project: Project, document: Document): String? {
-        return try {
-            OpaCheck().checkDocument(project, document)
-        } catch (e: ExecutionException) {
-            // Just easy way to know that something wrong happened
-            if (isUnitTestMode) throw e
-            null
-        }
+    override fun actionPerformed(e: AnActionEvent) {
+        val (project, document) = getProjectAndDocument(e) ?: return
+        val editor = getEditor(e) ?: return
+        OpaCheck().checkDocument(project, document, editor)
     }
 }

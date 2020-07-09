@@ -1,12 +1,12 @@
 package org.openpolicyagent.ideaplugin.opa.tool
 
-import com.intellij.execution.ExecutionException
-import com.intellij.execution.configurations.GeneralCommandLine
+import com.intellij.codeInsight.hint.HintManager
 import com.intellij.openapi.editor.Document
+import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
-import org.openpolicyagent.ideaplugin.lang.psi.isNotRegoFile
-import org.openpolicyagent.ideaplugin.openapiext.execute
-import org.openpolicyagent.ideaplugin.openapiext.isUnitTestMode
+import com.intellij.openapi.wm.ToolWindowManager
+import org.openpolicyagent.ideaplugin.ide.extensions.OPAActionToolWindow
+import org.openpolicyagent.ideaplugin.lang.psi.isRegoFile
 import org.openpolicyagent.ideaplugin.openapiext.virtualFile
 
 /**
@@ -19,32 +19,26 @@ class OpaCheck : OpaBaseTool() {
     /**
      * Returns the errors produced by opa check on [document]  or null if there are no errors
      */
-    @Throws(ExecutionException::class)
-    fun checkDocument(project: Project, document: Document): String? {
-        val file = document.virtualFile ?: return null
 
-        if (file.isNotRegoFile || !file.isValid) {
-            return null
+    fun checkDocument(project: Project, document: Document, editor: Editor) {
+        val file = document.virtualFile
+
+        if (file != null && file.isRegoFile && file.isValid) {
+            checkFile(project, file.name)
+        } else {
+            //todo: currently it appears this does nothing :(
+            HintManager.getInstance().showErrorHint(editor, "Current file not valid or not Rego file")
         }
 
-        return checkFile(project, document.text)
     }
 
     /**
      * Returns the errors produced by opa check or null if opa check is successful
      */
-    @Throws(ExecutionException::class)
-    private fun checkFile(project: Project, text: String): String? {
-        val processOutput = try {
-            GeneralCommandLine(opaBinary) //todo: still haven't verified opa binary is in path
-                    .withWorkDirectory(project.basePath)
-                    .withParameters("check")
-                    .withCharset(Charsets.UTF_8)
-                    .execute(project, false, stdIn = text.toByteArray())
-        } catch (e: ExecutionException) {
-            if (isUnitTestMode) throw e else return null
-        }
-        // if the file is all set, return null, else processOutput
-        return processOutput.stdout.ifEmpty { null }
+    private fun checkFile(project: Project, name: String) {
+        val window = ToolWindowManager.getInstance(project).getToolWindow("OPA Console")
+        val opaWindow = OPAActionToolWindow(window)
+        val args = mutableListOf<String>("check", name)
+        opaWindow.runProcessInConsole(project, args, "Opa Check")
     }
 }

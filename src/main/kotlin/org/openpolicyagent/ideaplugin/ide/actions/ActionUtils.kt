@@ -26,6 +26,12 @@ fun getProjectAndDocument(e: AnActionEvent): Pair<Project, Document>? {
 
     }
 
+fun getEditor (e: AnActionEvent): Editor? {
+    val project = e.project ?: return null
+    return e.getData(CommonDataKeys.EDITOR_EVEN_IF_INACTIVE) ?: getSelectedEditor(project) ?: return null
+}
+
 fun getSelectedEditor(project: Project): Editor? =
         FileEditorManager.getInstance(project).selectedTextEditor
+
 
