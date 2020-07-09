@@ -1,8 +1,3 @@
-/*
- * Use of this source code is governed by the MIT license that can be
- * found in the LICENSE file.
- */
-
 {
   parserClass="org.opa.ideaplugin.lang.parser.RegoParser"
 
@@ -17,88 +12,106 @@
   elementTypeClass="org.opa.ideaplugin.lang.psi.RegoElementType"
   tokenTypeClass="org.opa.ideaplugin.lang.psi.RegoTokenType"
 
-  tokens = [
-        PACKAGE_TOKEN       = 'package'
-        IMPORT_TOKEN        = 'import'
-        AS                  = 'as'
-        DEFAULT             = 'default'
-        VAR_ASSIGN          = ':='
-        UNIFICATION         = '='
-        TRUE                = 'true'
-        FALSE               = 'false'
-        LPAREN              = '('
-        RPAREN              = ')'
-        LBRACK              = '['
-        RBRACK              = ']'
-        ELSE                = 'else'
-        LBRACE              = '{'
-        RBRACE              = '}'
-        SEMICOLON           = ';'
-        SOME                = 'some'
-        COMMA               = ','
-        DOT                 = '.'
-        NOT                 = 'not'
-        WITH                = 'with'
-        COLLON              = ':'
-        EQ                  = '=='
-        NOT_EQ              = '!='
-        LESS_OR_EQUAL       = '<='
-        GREATER_OR_EQUAL    = '>='
-        GREATHER            = '>'
-        LESS                = '<'
-        BIT_OR              = '|'
-        BIT_AND             = '&'
-        PLUS                = '+'
-        MINUS               = '-'
-        MUL                 = '*'
-        QUOTIENT            = '/'
-        REMAINDER           = '%'
-        SET_OPEN            = 'set('
-        BACKSTRICK          = '`'
-        NULL                = 'null'
-        ASCII_LETTER         = 'regexp:[A-Za-z_][A-Za-z_0-9]*'
-        NUMBER              = 'regexp:-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d*)?'
-        WHITE_SPACE               = 'regexp:\s+'
-        STRING_TOKEN        = 'regexp:"[^"]*"' // todo fix me
-        RAW_STRING          = 'regexp:`[^`]*`'
-        COMMENT             = 'regexp:[ \t]*#[^\r\n]*'
-    ]
-}
-module          ::= package import*  policy
-package         ::= "package" ref
-import          ::= "import" ref ( "as" var )?
-policy          ::=  rule*
-rule            ::=  "default"?  rule-head  rule-body*
-rule-head       ::= var ( "(" rule-args ")" )? ("[" term "]" )? ( ( ":=" | "=" ) term )?
-rule-args       ::= term ( "," term )*
-rule-body       ::= ( else ( "=" term )? )? "{" query "}"
-query           ::=( literal |';' )+
-literal         ::= ( some-decl | expr | "not" expr )  with-modifier*
-with-modifier   ::= "with" term "as" term
-some-decl       ::= "some" var ( "," var )*
-expr            ::=  expr2  ((':=' | '=') expr2)?
-expr2           ::=  expr-infix | expr-call   | term
-expr-call       ::= var ( "." var )? "(" ( term ( "," term )* )? ")"
-expr-infix      ::= ( term "=" )? term infix-operator term
-term            ::= ref | var | scalar | array | object | set | array-compr | object-compr | set-compr
-array-compr     ::= "[" term "|" query "]"
-set-compr       ::= "{" term "|" query "}"
-object-compr    ::= "{" object-item "|" query "}"
-infix-operator  ::= bool-operator | arith-operator | bin-operator
-bool-operator   ::= "==" | "!=" | "<" | ">" | ">=" | "<="
-arith-operator  ::= "+" | "-" | "*" | "/"
-bin-operator    ::= "&" | "|"
-ref             ::= ( expr-call  | array | object | set | array-compr | object-compr | set-compr |var  )  ref-arg*
-ref-arg         ::= ref-arg-dot | ref-arg-brack
-ref-arg-brack   ::= "[" ( scalar | var | array | object | set | "_" ) "]"
-ref-arg-dot     ::= "." var
-var             ::= ASCII_LETTER
-scalar          ::= string | NUMBER | TRUE | FALSE | NULL
-string          ::= STRING_TOKEN| RAW_STRING
-array           ::= '[' term? ( ',' term )* ','? ']'
-object          ::= '{' object-item? ( ',' object-item )* ','? '}'
-object-item     ::= ( scalar | ref | var ) ":" term
-set             ::= empty-set | non-empty-set
-non-empty-set   ::= "{" term ( "," term )* ','?  "}"
-empty-set       ::= "set(" ")"
+   tokens = [
+       // literals
 
+       TRUE_KW = 'true'
+       FALSE_KW = 'false'
+       NULL_KW = 'null'
+       PACKAGE_KW = 'package'
+       IMPORT_KW = 'import'
+       AS_KW = 'as'
+       DEFAULT_KW = 'default'
+       ELSE_KW = 'else'
+       NOT_KW = 'not'
+       WITH_KW = 'with'
+       SOME_KW = 'some'
+
+       // operators
+       ASSIGN = ':='
+       UNIFY = '='
+       OR = '|'
+       AND = '&'
+       PLUS = '+'
+       MINUS = '-'
+       MULTIPLY = '*'
+       DIVIDE = '/'
+       REMAINDER = '%'
+
+       EQ = '=='
+       NEQ = '!='
+       LT = '<'
+       GT = '>'
+       LTE = '<='
+       GTE = '>='
+
+       // parentheses
+       LPAREN = '('
+       RPAREN = ')'
+       LBRACE = '{'
+       RBRACE = '}'
+       LBRACK = '['
+       RBRACK = ']'
+
+       // other
+       SET_KW = 'set'
+       COMMA = ','
+       SEMIC = ';'
+       COLON = ':'
+       BACKTICK = '`'
+       DOT = '.'
+       UNDER = '_'
+
+       STRING_LITERAL = 'regexp:("[^"\\]*(\\.[^"\\]*)*")|(`[^`]*`)'
+       NUMBER = "regexp:-?(0|([1-9][0-9]*))(\.[0-9]+)?([eE][+-]?[0-9]+)?"
+       COMMENT = "regexp:#.*"
+       VAR = "regexp:[\p{Alpha}_][\p{Alnum}_]*"
+       SPACE "regexp:[\s]"
+   ]
+
+}
+
+root                ::= package import* policy
+
+package             ::= PACKAGE_KW ref
+import              ::= IMPORT_KW ref ( AS_KW  VAR)?
+policy              ::= rule*
+rule                ::= DEFAULT_KW? rule-head rule-body*
+rule-head           ::= object-assign | assignment | function | parametrization | simple
+
+//Head types
+function            ::= rule-name ( LPAREN rule-args? RPAREN ) assignment-operator? function-body?
+function-body       ::= assignment | term | (calculation? ref-arg*)
+parametrization     ::= calculation? ref-arg* rule-name ( LBRACK term ( COMMA term )* RBRACK )
+assignment          ::= rule-name assignment-operator term with-modifier?
+simple              ::= rule-name
+object-assign       ::= rule-name UNIFY object
+rule-name           ::= ref
+calculation         ::= arith-operator? (LPAREN? NUMBER? arith-operator NUMBER RPAREN?)*
+
+rule-args           ::= term ( COMMA term )*
+rule-body           ::= ( ELSE_KW ( UNIFY term )? )? object
+some-decl           ::= SOME_KW VAR ( "," VAR )*
+object              ::= LBRACE object-body? RBRACE
+object-body         ::= ( assignment | object-item | condition | rule-body | SEMIC | COMMA )*
+object-item         ::= ( scalar | ref | VAR ) COLON term
+
+term                ::= function | ref | VAR | scalar | object | comprehension | array-type | set-type
+ref                 ::= VAR ref-arg*
+scalar              ::= STRING_LITERAL | NUMBER | TRUE_KW | FALSE_KW | NULL_KW | UNDER
+comprehension       ::= LBRACK VAR OR (assignment | some-decl) (SEMIC condition) (SEMIC assignment)? RBRACK
+array-type          ::= LBRACK array-body RBRACK
+array-body          ::= (term | rule-body)? (COMMA (term | rule-body)?)*
+set-type            ::= LBRACE (term | rule-body)? (COMMA (term | rule-body))* RBRACE
+ref-arg             ::= ref-arg-dot | ref-arg-brack
+ref-arg-brack       ::= LBRACK ( scalar | VAR | UNDER | DOT )* RBRACK
+ref-arg-dot         ::= DOT VAR
+
+condition           ::= NOT_KW? expr (infix-operator expr)*
+with-modifier       ::= WITH_KW term AS_KW term
+expr                ::= ( some-decl | function | ref | term | object | NUMBER) with-modifier?
+infix-operator      ::= bool-operator | arith-operator | bin-operator | assignment-operator
+bool-operator       ::= "==" | "!=" | "<" | ">" | ">=" | "<="
+arith-operator      ::= "+" | "-" | "*" | "/"
+bin-operator        ::= "&" | "|"
+assignment-operator ::= ":=" | "="

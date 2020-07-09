@@ -32,7 +32,7 @@ class RegoParserDefinition : ParserDefinition {
 
     override fun getCommentTokens(): TokenSet = COMMENTS
 
-    override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
+    override fun getStringLiteralElements(): TokenSet = LITERALS
 
     override fun getFileNodeType(): IFileElementType = FILE
 
@@ -46,5 +46,6 @@ class RegoParserDefinition : ParserDefinition {
         val WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE)
         val COMMENTS = TokenSet.create(RegoTypes.COMMENT)
         val FILE = IFileElementType(RegoLanguage)
+        val LITERALS = TokenSet.create(RegoTypes.STRING_LITERAL)
     }
 }

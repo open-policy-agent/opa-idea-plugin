@@ -31,7 +31,7 @@ class RegoHighlighter : SyntaxHighlighterBase() {
     init {
         fillMap(tokenToColorMap, LINE_COMMENT.textAttributesKey, RegoTypes.COMMENT)
         // TODO Handle raw String ?
-        fillMap(tokenToColorMap, STRING.textAttributesKey, RegoTypes.STRING_TOKEN)
+        fillMap(tokenToColorMap, STRING.textAttributesKey, RegoTypes.STRING_LITERAL)
 
         fillMap(tokenToColorMap, BRACES.textAttributesKey, RegoTypes.RBRACE)
         fillMap(tokenToColorMap, BRACES.textAttributesKey, RegoTypes.LBRACE)
@@ -43,12 +43,12 @@ class RegoHighlighter : SyntaxHighlighterBase() {
         fillMap(tokenToColorMap, PARENTHESES.textAttributesKey, RegoTypes.LPAREN)
 
         fillMap(tokenToColorMap, COMMA.textAttributesKey, RegoTypes.COMMA)
-        fillMap(tokenToColorMap, SEMICOLON.textAttributesKey, RegoTypes.SEMICOLON)
+        fillMap(tokenToColorMap, SEMICOLON.textAttributesKey, RegoTypes.SEMIC)
         fillMap(tokenToColorMap, DOT.textAttributesKey, RegoTypes.DOT)
 
         fillMap(tokenToColorMap, NUMBER.textAttributesKey, RegoTypes.NUMBER)
-        fillMap(tokenToColorMap, BOOLEAN.textAttributesKey, RegoTypes.TRUE)
-        fillMap(tokenToColorMap, BOOLEAN.textAttributesKey, RegoTypes.FALSE)
+        fillMap(tokenToColorMap, BOOLEAN.textAttributesKey, RegoTypes.TRUE_KW)
+        fillMap(tokenToColorMap, BOOLEAN.textAttributesKey, RegoTypes.FALSE_KW)
 
         fillMap(tokenToColorMap, REGO_OPERATOR, OPERATOR.textAttributesKey)
         fillMap(tokenToColorMap, REGO_KEYWORDS, KEYWORD.textAttributesKey)

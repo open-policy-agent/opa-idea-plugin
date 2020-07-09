@@ -15,28 +15,28 @@ class RegoTokenType(debugName: String) : IElementType(debugName, RegoLanguage)
 fun tokenSetOf(vararg tokens: IElementType) = TokenSet.create(*tokens)
 
 val REGO_KEYWORDS = tokenSetOf(
-    RegoTypes.PACKAGE_TOKEN,
-    RegoTypes.IMPORT_TOKEN,
-    RegoTypes.AS,
-    RegoTypes.DEFAULT,
-    RegoTypes.ELSE,
-    RegoTypes.SOME,
-    RegoTypes.NOT,
-    RegoTypes.WITH
+    RegoTypes.PACKAGE_KW,
+    RegoTypes.IMPORT_KW,
+    RegoTypes.AS_KW,
+    RegoTypes.DEFAULT_KW,
+    RegoTypes.ELSE_KW,
+    RegoTypes.SOME_KW,
+    RegoTypes.NOT_KW,
+    RegoTypes.WITH_KW
 )
 
 val REGO_OPERATOR = tokenSetOf(
     RegoTypes.PLUS,
     RegoTypes.MINUS,
-    RegoTypes.MUL,
-    RegoTypes.QUOTIENT,
+    RegoTypes.MULTIPLY,
+    RegoTypes.DIVIDE,
     RegoTypes.REMAINDER,
-    RegoTypes.BIT_OR,
-    RegoTypes.BIT_AND,
+    RegoTypes.OR,
+    RegoTypes.AND,
     RegoTypes.EQ,
-    RegoTypes.NOT_EQ,
-    RegoTypes.LESS,
-    RegoTypes.LESS_OR_EQUAL,
-    RegoTypes.GREATHER,
-    RegoTypes.GREATER_OR_EQUAL
+    RegoTypes.NEQ,
+    RegoTypes.LT,
+    RegoTypes.LTE,
+    RegoTypes.GT,
+    RegoTypes.GTE
 )
