@@ -1,55 +1,75 @@
-//todo: this solution is currently causing a race
-// (occasionally get java.lang.Throwable: Synchronous execution on EDT
-// in internal IDE Error log) but it works....
-
 package org.openpolicyagent.ideaplugin.ide.extensions
 
+import com.intellij.execution.actions.StopProcessAction
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.filters.TextConsoleBuilderFactory
 import com.intellij.execution.process.OSProcessHandler
-import com.intellij.execution.ui.ConsoleViewContentType
+import com.intellij.execution.process.ProcessTerminatedListener
+import com.intellij.icons.AllIcons
+import com.intellij.openapi.actionSystem.ActionManager
+import com.intellij.openapi.actionSystem.DefaultActionGroup
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.wm.ToolWindow
-import com.intellij.ui.content.ContentFactory
+import com.intellij.openapi.wm.ToolWindowAnchor
+import com.intellij.openapi.wm.ToolWindowManager
+import com.intellij.ui.content.impl.ContentImpl
 import org.openpolicyagent.ideaplugin.opa.tool.OpaBaseTool
-import org.openpolicyagent.ideaplugin.openapiext.execute
+import java.awt.BorderLayout
+import java.util.concurrent.ExecutionException
+import javax.swing.JPanel
 
-class OPAActionToolWindow(toolWindow: ToolWindow) {
+class OPAActionToolWindow {
 
-    val window = toolWindow
+    val OPA_CONSOLE_ID = "OPA Console"
+    val OPA_CONSOLE_NAME = OPA_CONSOLE_ID
 
-    /**
-     * Runs a command line process in OPA Console Tool Window logging process output
-     */
-    fun runProcessInConsole(project: Project, args: MutableList<String>, title: String) {
-        val process = GeneralCommandLine(OpaBaseTool.opaBinary) //todo: still haven't verified opa binary is in path
+    fun runProcessInConsole(project: Project, parameters: MutableList<String>, title: String) {
+        val commandLine = GeneralCommandLine()
+                .withExePath(OpaBaseTool.opaBinary)
                 .withWorkDirectory(project.basePath)
-                .withParameters(args)
+                .withParameters(parameters)
                 .withCharset(Charsets.UTF_8)
-        val handler = OSProcessHandler(process)
 
+        try {
+            val processHandler = OSProcessHandler(commandLine)
+            ProcessTerminatedListener.attach(processHandler)
 
-        val consoleWindow = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
+            ApplicationManager.getApplication().invokeLater {
+                val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
+                consoleView.clear()
+                consoleView.attachToProcess(processHandler)
+                processHandler.startNotify()
 
-        consoleWindow.attachToProcess(handler)
+                val toolWindowManager = ToolWindowManager.getInstance(project)
+                var toolWindow = toolWindowManager.getToolWindow(OPA_CONSOLE_ID)
+                if (toolWindow != null) {
+                    toolWindow.show(null)
+                    return@invokeLater
+                }
 
-        val contentFactory = ContentFactory.SERVICE.getInstance()
-        val content = contentFactory.createContent(consoleWindow.component, title, false)
-        content.isCloseable = true
-        window.contentManager.removeAllContents(true)
-        window.contentManager.addContent(content)
+                // Create and register the OPA window
+                toolWindow = toolWindowManager.registerToolWindow(OPA_CONSOLE_ID, true, ToolWindowAnchor.BOTTOM)
+                toolWindow.title = OPA_CONSOLE_NAME
+                toolWindow.stripeTitle = OPA_CONSOLE_NAME
+                toolWindow.isShowStripeButton = true
+                toolWindow.icon = AllIcons.Toolwindows.ToolWindowMessages
 
-        handler.startNotify()
+                val panel = JPanel(BorderLayout())
+                panel.add(consoleView.component, "Center")
+                val toolbarActions = DefaultActionGroup()
+                toolbarActions.addAll(consoleView.createConsoleActions().copyOf().toList())
+                toolbarActions.add(StopProcessAction("Stop Process", "Stop Process", processHandler))
+                val toolbar = ActionManager.getInstance().createActionToolbar("unknown", toolbarActions, false)
+                toolbar.setTargetComponent(consoleView.component)
 
-        val output = try {
-            process.execute(project, false)
-            "SUCCESS"
-        } catch (e: Exception) {
-            "FAIL"
-        }
-        window.show {
-            consoleWindow.print(output, ConsoleViewContentType.NORMAL_OUTPUT)
+                val consoleContent = ContentImpl(panel, title, false)
+                consoleContent.manager = toolWindow.contentManager
+
+                toolWindow.contentManager.addContent(consoleContent)
+                toolWindow.show(null)
+            }
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
         }
     }
-
 }

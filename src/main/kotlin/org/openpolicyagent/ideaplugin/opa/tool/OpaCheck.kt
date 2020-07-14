@@ -36,9 +36,8 @@ class OpaCheck : OpaBaseTool() {
      * Returns the errors produced by opa check or null if opa check is successful
      */
     private fun checkFile(project: Project, name: String) {
-        val window = ToolWindowManager.getInstance(project).getToolWindow("OPA Console")
-        val opaWindow = OPAActionToolWindow(window)
-        val args = mutableListOf<String>("check", name)
+        val opaWindow = OPAActionToolWindow()
+        val args = mutableListOf("check", name)
         opaWindow.runProcessInConsole(project, args, "Opa Check")
     }
 }
