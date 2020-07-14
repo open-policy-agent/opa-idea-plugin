@@ -11,7 +11,7 @@ Prerequisites:
 * internet access to download tools
 
 ### verify-toc.sh
-This script check if the `table of content` (a.k.a `toc`) of all documents in the repo  must be updated. If any change is needed it will prompt the new toc.
+This script checks if the `table of content` (a.k.a `toc`) of all documents in the repository must be updated. If any change is needed it will prompt the new toc.
 
 *note: This script can be run from any folder within the repository*
 
@@ -25,7 +25,7 @@ $ ./hack/verify-toc.sh
 Cleanning...
 
 ```
-Example with document that does not need update:
+Example with a document that does not need an update:
 
 ```bash
 $ ./hack/verify-toc.sh

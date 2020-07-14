@@ -1,6 +1,6 @@
 # Create rego file
 ## Description
-This action allows creation of a new `rego file` from a template.
+This action allows the creation of a new `rego file` from a template.
 
 See action usage [here](../../user/features/create_rego_file.md)
 
