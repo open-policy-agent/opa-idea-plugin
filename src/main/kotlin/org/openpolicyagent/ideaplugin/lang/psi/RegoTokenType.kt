@@ -40,3 +40,5 @@ val REGO_OPERATOR = tokenSetOf(
     RegoTypes.GREATHER,
     RegoTypes.GREATER_OR_EQUAL
 )
+
+val REGO_COMMENT = tokenSetOf(RegoTypes.COMMENT)
