@@ -22,7 +22,6 @@ class OPAActionToolWindow {
 
     val OPA_CONSOLE_ID = "OPA Console"
     val OPA_CONSOLE_NAME = OPA_CONSOLE_ID
-
     fun runProcessInConsole(project: Project, parameters: MutableList<String>, title: String) {
         val commandLine = GeneralCommandLine()
                 .withExePath(OpaBaseTool.opaBinary)
@@ -42,7 +41,26 @@ class OPAActionToolWindow {
 
                 val toolWindowManager = ToolWindowManager.getInstance(project)
                 var toolWindow = toolWindowManager.getToolWindow(OPA_CONSOLE_ID)
+
+                val panel = JPanel(BorderLayout())
+                panel.add(consoleView.component, "Center")
+                val toolbarActions = DefaultActionGroup()
+                toolbarActions.addAll(consoleView.createConsoleActions().copyOf().toList())
+                toolbarActions.add(StopProcessAction("Stop Process", "Stop Process", processHandler))
+                val toolbar = ActionManager.getInstance().createActionToolbar("unknown", toolbarActions, false)
+                toolbar.setTargetComponent(consoleView.component)
+
+                val consoleContent = ContentImpl(panel, title, false)
+
+
                 if (toolWindow != null) {
+                    val existing = toolWindow.contentManager.findContent(title) ?: null
+                    if (existing != null) {
+                        toolWindow.contentManager.removeContent(existing, true)
+                    }
+                    consoleContent.manager = toolWindow.contentManager
+                    toolWindow.contentManager.addContent(consoleContent)
+
                     toolWindow.show(null)
                     return@invokeLater
                 }
@@ -54,17 +72,7 @@ class OPAActionToolWindow {
                 toolWindow.isShowStripeButton = true
                 toolWindow.icon = AllIcons.Toolwindows.ToolWindowMessages
 
-                val panel = JPanel(BorderLayout())
-                panel.add(consoleView.component, "Center")
-                val toolbarActions = DefaultActionGroup()
-                toolbarActions.addAll(consoleView.createConsoleActions().copyOf().toList())
-                toolbarActions.add(StopProcessAction("Stop Process", "Stop Process", processHandler))
-                val toolbar = ActionManager.getInstance().createActionToolbar("unknown", toolbarActions, false)
-                toolbar.setTargetComponent(consoleView.component)
-
-                val consoleContent = ContentImpl(panel, title, false)
                 consoleContent.manager = toolWindow.contentManager
-
                 toolWindow.contentManager.addContent(consoleContent)
                 toolWindow.show(null)
             }
