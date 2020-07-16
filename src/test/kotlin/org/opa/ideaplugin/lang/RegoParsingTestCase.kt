@@ -13,7 +13,7 @@ class RegoParsingTestCase: RegoParsingTestCaseBase() {
 
     fun `test array comprehension`() = doTestNoError()
     fun `test set comprehension`() = doTestNoError()
-    fun `test object comprehension`() = ignore() //FIXME
+    fun `test object comprehension`() = doTestNoError()
 
     fun `test implicit or`() = doTestNoError()
 

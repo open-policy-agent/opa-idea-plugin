@@ -73,6 +73,7 @@ VAR=[\p{Alpha}_][\p{Alnum}_]*
   "`"                   { return BACKTICK; }
   "."                   { return DOT; }
   "_"                   { return UNDER; }
+  "term"                { return TERM; }
 
   {STRING_LITERAL}      { return STRING_LITERAL; }
   {NUMBER}              { return NUMBER; }
