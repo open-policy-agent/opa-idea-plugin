@@ -34,6 +34,8 @@ class OPAActionToolWindow {
             ProcessTerminatedListener.attach(processHandler)
 
             ApplicationManager.getApplication().invokeLater {
+
+                //create console listening to new process every time
                 val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
                 consoleView.clear()
                 consoleView.attachToProcess(processHandler)
@@ -52,12 +54,14 @@ class OPAActionToolWindow {
 
                 val consoleContent = ContentImpl(panel, title, false)
 
-
                 if (toolWindow != null) {
+                    //if a previous window showing the same action is still open, remove it
                     val existing = toolWindow.contentManager.findContent(title) ?: null
                     if (existing != null) {
                         toolWindow.contentManager.removeContent(existing, true)
                     }
+
+                    //attach new console showing current newest invocaiton of the action
                     consoleContent.manager = toolWindow.contentManager
                     toolWindow.contentManager.addContent(consoleContent)
 
@@ -65,7 +69,7 @@ class OPAActionToolWindow {
                     return@invokeLater
                 }
 
-                // Create and register the OPA window
+                //Create and register the OPA window
                 toolWindow = toolWindowManager.registerToolWindow(OPA_CONSOLE_ID, true, ToolWindowAnchor.BOTTOM)
                 toolWindow.title = OPA_CONSOLE_NAME
                 toolWindow.stripeTitle = OPA_CONSOLE_NAME
