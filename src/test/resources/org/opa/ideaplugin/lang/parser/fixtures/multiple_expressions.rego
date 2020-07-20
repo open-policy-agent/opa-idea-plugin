@@ -1,6 +1,8 @@
 package test
 
 apps_and_hostnames[[name, hostname]] {
+    apps:={}
+    sites:={}
     some i, j, k
     name := apps[i].name
     server := apps[i].servers[_]
