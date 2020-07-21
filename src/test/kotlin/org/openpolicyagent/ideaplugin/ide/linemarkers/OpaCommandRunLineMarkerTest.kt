@@ -8,7 +8,7 @@ package org.openpolicyagent.ideaplugin.ide.linemarkers
 
 class OpaCommandRunLineMarkerTest : OpaLineMarkerProviderTestBase() {
 
-    fun `test eval markers on rego file`() = doTestByText("main.rego","""
+    fun `test 'eval' markers on rego file`() = doTestByText("main.rego","""
        package main # - eval package
         hello { # - eval rule
             m == "world"
@@ -19,7 +19,7 @@ class OpaCommandRunLineMarkerTest : OpaLineMarkerProviderTestBase() {
         }
     """)
 
-    fun `test test makers on rego test file`() = doTestByText("test_main.rego" , """
+    fun `test 'test' makers on rego test file`() = doTestByText("test_main.rego" , """
         package test.main # - test package
         test_main { # - test rule
             a==b

@@ -52,6 +52,11 @@
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>
 
+        <runConfigurationProducer implementation="org.openpolicyagent.ideaplugin.ide.runconfig.producer.OpaEvalRunConfigurationProducer" />
+        <runConfigurationProducer implementation="org.openpolicyagent.ideaplugin.ide.runconfig.test.producer.OpaTestRunConfigurationProducer" />
+
+        <runLineMarkerContributor language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.linemarkers.OpaCommandRunLineMarker"/>
+
         <!-- TODOs -->
         <todoIndexer filetype="Rego file" implementationClass="org.openpolicyagent.ideaplugin.ide.todo.RegoLexerBasedTodoIndexer"/>
         <indexPatternBuilder implementation="org.openpolicyagent.ideaplugin.ide.todo.RegoTodoIndexPatternBuilder"/>

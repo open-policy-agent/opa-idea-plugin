@@ -3,6 +3,7 @@
 - [Project structure](#project-structure)
 - [Lexer](#lexer)
 - [Parser](#parser)
+- [Useful methods](#useful-methods)
 - [Testing strategy](#testing-strategy)
   - [Tests resources](#tests-resources)
     - [Example](#example)
@@ -65,6 +66,14 @@ format. It looks like a `bnf` grammar. `Grammar kit` also generates the [PSI](ht
 Once the PSI is generated, some features like commenting code are really straightforward to implement.
 
 Code can be generated thanks to `generateRegoParser` gradle tasks.
+
+# Useful methods
+Some useful extension methods has been coded under:
+* [PsiElementExt.kt](../../src/main/kotlin/org/openpolicyagent/ideaplugin/lang/psi/PsiElementExt.kt)
+* [PsiFileExt.kt](../../src/main/kotlin/org/openpolicyagent/ideaplugin/lang/psi/PsiFileExt.kt)
+* [openapiext](../../src/main/kotlin/org/openpolicyagent/ideaplugin/openapiext)
+
+Please take a look.
 
 # Testing strategy
 As an introduction, we recommend reading the official [documentation](https://www.jetbrains.org/intellij/sdk/docs/basics/testing_plugins/testing_plugins.html).

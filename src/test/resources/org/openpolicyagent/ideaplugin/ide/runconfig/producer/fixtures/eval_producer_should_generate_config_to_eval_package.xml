@@ -1,0 +1,6 @@
+<configurations>
+  <configuration name="data.main" class="OpaEvalRunConfiguration">
+    <option name="query" value="data.main" />
+    <option name="addtionalargs" value="-f pretty --metrics" />
+  </configuration>
+</configurations>
