@@ -1,6 +1,6 @@
 # Create rego file
 ## Description
-This action allows creation of a new `rego file` from a template.
+This action allows the creation of a new `rego file` from a template.
 
 ## Trigger the action
 In the project tree: right click -> `New` -> `Rego File`. 
@@ -11,7 +11,7 @@ The result should look like this:
 
 
 ## Edit the template 
-You can edit template using the template editor:
+You can edit the template using the template editor:
 1) click to `File` menu
 1) click on `Settings`
 1) under `Editor` click on `File and Code Template`

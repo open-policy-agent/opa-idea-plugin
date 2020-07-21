@@ -1,4 +1,4 @@
-#Table of Content
+# Table of Content
 <!-- toc -->
 - [Introduction](#introduction)
 - [Contribution](#contribution)
@@ -7,8 +7,8 @@
 *to update toc, please read [this page](../../hack/README.md).*
 
 # Introduction 
-The project is code in [kotlin](https://kotlinlang.org/) because handle `NullPointerException` is a nightmare. Moreover
-kotlin brings lot's of cool features. If you are a `Java` developer leaning curve is really smooth. [JetBrains](https://www.jetbrains.org/) 
+The project is code in [Kotlin](https://kotlinlang.org/) because handle `NullPointerException` is a nightmare. Moreover,
+Kotlin brings lots of cool features. If you are a `Java` developer learning curve is really smooth. [JetBrains](https://www.jetbrains.org/) 
 has published a really good [MOOC](https://www.coursera.org/learn/kotlin-for-java-developers)
 
 You can setup your environment by following this [guide](docs/devel/setup_development_env.md). 
@@ -16,9 +16,9 @@ To learn more about the project architecture please read this [document](docs/de
 
 # Contribution
 If you are contributing code, please consider the following:
-* code should be accompanied with test when possible
+* code should be accompanied by test when possible
 * all tests must passed
-* add link to intellij sdk documentation in javadoc, if the sdk documentation does not exist, please write a section in project architecture.
+* add link to IntelliJ SDK documentation in JavaDoc, if the SDK documentation does not exist, please write a section in project architecture.
 
 
 # Helpful resources

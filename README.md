@@ -12,7 +12,7 @@ Main features are:
 - OPA `0.20.5`
 
 # Status
-Not ready yet to be used by  end users
+Not ready yet to be used by  end-users
 
 # Installation 
 OPA binary must be in the path.
