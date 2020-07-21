@@ -1,10 +1,7 @@
 package test
 
 #producing set
-hostnames[name] {
-    sites:={}
-
-name := sites[_].servers[_].hostname }
+hostnames[name] { sites:={}; name := sites[_].servers[_].hostname }
 
 #producing object
 apps_by_hostname[hostname] = app {
