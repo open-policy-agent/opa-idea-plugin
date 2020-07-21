@@ -56,10 +56,10 @@
         SET_OPEN            = 'set('
         BACKSTRICK          = '`'
         NULL                = 'null'
-        ASCII_LETTER         = 'regexp:[A-Za-z_][A-Za-z_0-9]*'
+        ASCII_LETTER        = 'regexp:[A-Za-z_][A-Za-z_0-9]*'
         NUMBER              = 'regexp:-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d*)?'
-        WHITE_SPACE               = 'regexp:\s+'
-        STRING_TOKEN        = 'regexp:"[^"]*"' // todo fix me
+        WHITE_SPACE         = 'regexp:\s+'
+        STRING_TOKEN        = 'regexp:"([^"\]|\\.)*"'
         RAW_STRING          = 'regexp:`[^`]*`'
         COMMENT             = 'regexp:[ \t]*#[^\r\n]*'
     ]
@@ -78,7 +78,7 @@ with-modifier   ::= "with" term "as" term
 some-decl       ::= "some" var ( "," var )*
 expr            ::=  expr2  ((':=' | '=') expr2)?
 expr2           ::=  expr-infix | expr-call   | term
-expr-call       ::= var ( "." var )? "(" ( term ( "," term )* )? ")"
+expr-call       ::= var ref-arg-dot* "(" ( term ( "," term )* )? ")"
 expr-infix      ::= ( term "=" )? term infix-operator term
 term            ::= ref | var | scalar | array | object | set | array-compr | object-compr | set-compr
 array-compr     ::= "[" term "|" query "]"

@@ -22,7 +22,6 @@ plugins {
     id("org.jetbrains.grammarkit") version "2020.1"
     id("de.undercouch.download") version "3.4.3"
     id("net.saliman.properties") version "1.4.6"
-
 }
 
 
@@ -59,8 +58,10 @@ idea {
 intellij {
     version = ideaVersion
     val plugins = mutableListOf(
-        "PsiViewer:$psiViewerPluginVersion"
+        "PsiViewer:$psiViewerPluginVersion",
+            "java"
     )
+
 
     tasks{
         withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
@@ -69,6 +70,7 @@ intellij {
         }
     }
     setPlugins(*plugins.toTypedArray())
+
 }
 
 sourceSets {
