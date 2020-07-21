@@ -1,6 +1,6 @@
 package test
 
-import someOther.policy
+import data.policy
 
 default allow = false
 allow {
