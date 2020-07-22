@@ -9,7 +9,7 @@ withFalseKeyword {
 }
 
 withFunction {
-    isTrue()
+    isTrue
 }
 
 withFunctionAllowingParam {
@@ -34,4 +34,12 @@ withLtOperator {
 
 withLteOperator {
     input.something <= 1
+}
+
+isTrue(){
+ true
+}
+
+isCorrect(in){
+    true
 }

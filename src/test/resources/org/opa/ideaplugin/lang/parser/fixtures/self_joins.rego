@@ -1,6 +1,8 @@
 package test
 
 same_site[apps[k].name] {
+    apps:={}
+    sites:={}
     some i, j, k
     apps[i].name == "mysql"
     server := apps[i].servers[_]

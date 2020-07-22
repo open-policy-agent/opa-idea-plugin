@@ -1,5 +1,7 @@
 package test
 
+x:=1
+
 sites := [
     {"name": "prod"},
     {"name": "smoke1"},
