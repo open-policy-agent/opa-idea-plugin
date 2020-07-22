@@ -4,9 +4,13 @@ allow {
     input.user == "bob"
 }
 
-allow with input as {"user": "bob", "method": "GET"}
+rule_name(){
+    allow with input as {"user": "bob", "method": "GET"}
+}
 
-not allow with input as {"user": "bob", "method": "GET"}
+rule_name_2(){
+    not allow with input as {"user": "bob", "method": "GET"}
+}
 
 inner := [x, y] {
     x := input.foo
