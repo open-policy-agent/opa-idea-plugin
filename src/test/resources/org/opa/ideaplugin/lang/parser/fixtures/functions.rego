@@ -13,9 +13,10 @@ foo([x, {"bar": y}]) = z {
     z := {x: y}
 }
 
-z := foo(a)
-z := foo(["5", {"bar": "hello"}])
-z := foo(["5", {"bar": [1, 2, 3, ["foo", "bar"]]}])
+a:={}
+z := foo([a,a])
+x := foo(["5", {"bar": "hello"}])
+y := foo(["5", {"bar": [1, 2, 3, ["foo", "bar"]]}])
 
 f(x) {
     x == "foo"

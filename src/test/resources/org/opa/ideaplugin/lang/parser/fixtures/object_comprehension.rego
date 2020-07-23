@@ -1,5 +1,7 @@
 package main
 
+apps:={}
+sites:={}
 
 app_to_hostnames := {app.name: hostnames |
     app := apps[_]
