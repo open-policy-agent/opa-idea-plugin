@@ -86,7 +86,7 @@ args-function       ::= LPAREN !RPAREN rule-args? RPAREN
 empty-function      ::= LPAREN RPAREN
 function-body       ::= assignment | assignment-body | (calculation? ref-arg*)
 
-parametrization     ::= calculation? ref-arg* rule-name ( LBRACK term ( COMMA term )* RBRACK )
+parametrization     ::= calculation? ref-arg* rule-name ( LBRACK object-body ( COMMA object-body )* RBRACK )
 assignment          ::= rule-name assignment-operator assignment-body with-modifier?
 simple              ::= rule-name
 object-assign       ::= rule-name UNIFY assignment-body? object
