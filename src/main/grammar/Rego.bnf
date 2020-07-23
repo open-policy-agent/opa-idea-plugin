@@ -80,37 +80,52 @@ rule                ::= DEFAULT_KW? rule-head rule-body*
 rule-head           ::= object-assign | assignment | function | parametrization | simple
 
 //Head types
-function            ::= rule-name ( LPAREN rule-args? RPAREN ) assignment-operator? function-body?
-function-body       ::= assignment | term | (calculation? ref-arg*)
-parametrization     ::= calculation? ref-arg* rule-name ( LBRACK term ( COMMA term )* RBRACK )
-assignment          ::= rule-name assignment-operator term with-modifier?
+function            ::= function-head (assignment-operator function-body)?
+function-head       ::= rule-name (empty-function | args-function)
+args-function       ::= LPAREN !RPAREN rule-args? RPAREN
+empty-function      ::= LPAREN RPAREN
+function-body       ::= assignment | assignment-body | (calculation? ref-arg*)
+
+parametrization     ::= calculation? ref-arg* rule-name ( LBRACK object-body ( COMMA object-body )* RBRACK )
+assignment          ::= rule-name assignment-operator assignment-body with-modifier?
 simple              ::= rule-name
-object-assign       ::= rule-name UNIFY object
-rule-name           ::= ref
-calculation         ::= arith-operator? (LPAREN? NUMBER? arith-operator NUMBER RPAREN?)*
+object-assign       ::= rule-name UNIFY assignment-body? object
+rule-name           ::= ref | array-type | UNDER
 
-rule-args           ::= term ( COMMA term )*
-rule-body           ::= ( ELSE_KW ( UNIFY term )? )? object
-some-decl           ::= SOME_KW VAR ( "," VAR )*
+calculation         ::= LPAREN? calc-operation+ RPAREN?
+calc-operation      ::= calc-arg (arith-operator calc-arg)+
+calc-arg            ::= LPAREN? (ref | NUMBER) RPAREN?
+
+rule-args           ::= assignment-body ( COMMA assignment-body )*
+rule-body           ::= (ELSE_KW ( UNIFY assignment-body )? )? object
+
+some-decl           ::= SOME_KW VAR ( COMMA VAR )*
 object              ::= LBRACE object-body? RBRACE
-object-body         ::= ( assignment | object-item | condition | rule-body | SEMIC | COMMA )*
-object-item         ::= ( scalar | ref | VAR ) COLON term
+object-body         ::= ( assignment | object-item | condition | standalone | negation | rule-body | SEMIC | COMMA)*
+object-item         ::= scalar COLON? assignment-body?
+assignment-body     ::= function | calculation | object | standalone | scalar | ref
 
-term                ::= function | ref | VAR | scalar | object | comprehension | array-type | set-type
+standalone          ::= some-decl | comprehension | comprehension-head | array-type | set-type
+
+negation            ::= NOT_KW? (function | ref)
 ref                 ::= VAR ref-arg*
 scalar              ::= STRING_LITERAL | NUMBER | TRUE_KW | FALSE_KW | NULL_KW | UNDER
-comprehension       ::= LBRACK VAR OR (assignment | some-decl) (SEMIC condition) (SEMIC assignment)? RBRACK
+comprehension       ::= LBRACK comprehension-head comprehension-body* RBRACK
+comprehension-head  ::= ref (COLON ref)? OR ((condition | assignment | some-decl) SEMIC)?
+comprehension-body  ::= (assignment | condition) SEMIC?
+
 array-type          ::= LBRACK array-body RBRACK
-array-body          ::= (term | rule-body)? (COMMA (term | rule-body)?)*
-set-type            ::= LBRACE (term | rule-body)? (COMMA (term | rule-body))* RBRACE
+array-body          ::= (assignment-body | rule-body)? (COMMA (assignment-body | rule-body)?)*
+set-type            ::= LBRACE (assignment-body | rule-body)? (COMMA (assignment-body | rule-body))* RBRACE
 ref-arg             ::= ref-arg-dot | ref-arg-brack
 ref-arg-brack       ::= LBRACK ( scalar | VAR | UNDER | DOT )* RBRACK
-ref-arg-dot         ::= DOT VAR
+ref-arg-dot         ::= DOT (function-head | VAR)
 
-condition           ::= NOT_KW? expr (infix-operator expr)*
-with-modifier       ::= WITH_KW term AS_KW term
-expr                ::= ( some-decl | function | ref | term | object | NUMBER) with-modifier?
-infix-operator      ::= bool-operator | arith-operator | bin-operator | assignment-operator
+
+condition           ::= NOT_KW? expr infix-operator expr
+with-modifier       ::= WITH_KW assignment-body AS_KW assignment-body
+expr                ::= assignment-body with-modifier?
+infix-operator      ::= bool-operator | bin-operator
 bool-operator       ::= "==" | "!=" | "<" | ">" | ">=" | "<="
 arith-operator      ::= "+" | "-" | "*" | "/"
 bin-operator        ::= "&" | "|"

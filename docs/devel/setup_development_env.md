@@ -13,7 +13,7 @@
 To build the project, you will need the following requirement
 
 * jdk 1.8
-* Opa binary (must be in the path)
+* Opa binary (must be in the path at least version 0.21.1)
 * IntelliJ (community or ultimate version)
 
 It's optional but we recommend you to install the following intelliJ plugin:

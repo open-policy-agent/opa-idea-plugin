@@ -13,20 +13,22 @@ class RegoParsingTestCase: RegoParsingTestCaseBase() {
 
     fun `test array comprehension`() = doTestNoError()
     fun `test set comprehension`() = doTestNoError()
-    fun `test object comprehension`() = ignore() //FIXME
+    fun `test set comprehensions 2`() = doTestNoError()
+    fun `test set comprehensions 3`() = ignore()
+    fun `test object comprehension`() = doTestNoError()
 
     fun `test implicit or`() = doTestNoError()
 
     fun `test default keyword`() = doTestNoError()
     fun `test else keyword`() = doTestNoError()
-    fun `test with keyword`() = ignore() //FIXME
+    fun `test with keyword`() = doTestNoError()
 
     fun `test complex rule 1`() = doTestNoError()
     fun `test complex rule 2`() = doTestNoError()
-    fun `test complex rule 3`() = ignore() //FIXME
+    fun `test complex rule 3`() = doTestNoError()
 
 
-    fun `test array comprehensions 2`() = ignore() //FIXME
+    fun `test array comprehensions 2`() = doTestNoError()
     fun `test built in functions`() = ignore() //FIXME
     fun `test functions`() = ignore() //FIXME
     fun `test multiple expressions`() = doTestNoError()
@@ -44,7 +46,6 @@ class RegoParsingTestCase: RegoParsingTestCaseBase() {
     fun `test references`() = doTestNoError()
     fun `test rules with single predicates`() = doTestNoError()
     fun `test scalars assignment`() = doTestNoError()
-    fun `test set comprehensions 2`() = doTestNoError()
     fun `test sets`() = doTestNoError()
     fun `test strings`() = doTestNoError()
     fun `test variables`() = doTestNoError()
