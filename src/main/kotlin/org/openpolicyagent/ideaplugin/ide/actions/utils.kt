@@ -15,6 +15,12 @@ import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiManager
+import com.intellij.psi.search.FilenameIndex
+import com.intellij.psi.search.GlobalSearchScope
+import org.openpolicyagent.ideaplugin.lang.RegoLanguage
+import org.openpolicyagent.ideaplugin.lang.psi.RegoImport
+import org.openpolicyagent.ideaplugin.lang.psi.RegoPackage
 import org.openpolicyagent.ideaplugin.lang.psi.isNotRegoFile
 import org.openpolicyagent.ideaplugin.openapiext.virtualFile
 
@@ -42,3 +48,47 @@ fun getEditor(e: AnActionEvent): Editor? {
 
 fun getSelectedEditor(project: Project): Editor? =
     FileEditorManager.getInstance(project).selectedTextEditor
+
+fun getPackageAsString(document: Document, project: Project): String {
+    val file = document.virtualFile ?: return ""
+    val fileView = PsiManager.getInstance(project).findViewProvider(file) ?: return ""
+    val psiTree = fileView.getPsi(RegoLanguage)
+    val children = psiTree.children
+    for (child in children) {
+        if (child is RegoPackage) {
+            return child.ref.text
+        }
+    }
+    return ""
+}
+
+fun getImportsAsString(document: Document, project: Project): MutableList<String> {
+    val file = document.virtualFile ?: return mutableListOf<String>()
+    val fileView = PsiManager.getInstance(project).findViewProvider(file) ?: return mutableListOf<String>()
+    val psiTree = fileView.getPsi(RegoLanguage)
+    val children = psiTree.children
+    var imports = mutableListOf<String>()
+    for (child in children) {
+        if (child is RegoImport) {
+            var str = child.ref.text
+            val v = child.`var`
+            if (v != null) {
+                str += " as "
+                str += v.text
+            }
+            imports.add(str)
+        }
+    }
+    return imports
+}
+
+fun fileDirectChildOfRoot(project: Project, name: String): Boolean {
+    val allfiles = FilenameIndex.getVirtualFilesByName(project, name, GlobalSearchScope.allScope(project))
+    for (file in allfiles) {
+        if (file.parent.path == project.basePath) {
+            return true
+        }
+    }
+    return false
+}
+>>>>>>> 9eb87da... display trace of selected text in editor:src/main/kotlin/org/openpolicyagent/ideaplugin/ide/actions/ActionUtils.kt
