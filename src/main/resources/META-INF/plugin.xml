@@ -63,7 +63,6 @@
     </extensions>
 
     <actions>
-
         <!-- All OPA actions -->
         <group id="org.openpolicyagent.ideaplugin.actions.OpaActions" text="OPA Actions" popup="true" icon="AllIcons.Actions.RealIntentionBulb">
             <add-to-group group-id="CodeMenu" anchor="first"/>
@@ -105,7 +104,29 @@
                     description="Display trace of selection in active editor"
                     icon="AllIcons.Actions.RealIntentionBulb">
             </action>
+            <action id="org.openpolicyagent.ideaplugin.actions.ProfileSelectionAction"
+                    class="org.openpolicyagent.ideaplugin.ide.actions.ProfileSelectionAction"
+                    text="Display the profile information of the selection in the active text editor"
+                    description="Display the profile information of the selection in the active text editor"
+                    icon="AllIcons.Actions.RealIntentionBulb">
+            </action>
+            <action id="org.openpolicyagent.ideaplugin.actions.EvalSelectedAction"
+                    class="org.openpolicyagent.ideaplugin.ide.actions.EvalSelectedAction"
+                    text="Evasl Selection"
+                    description="Display the profile information of the selection in the active text editor"
+                    icon="AllIcons.Actions.RealIntentionBulb">
+            </action>
         </group>
+<<<<<<< HEAD
+       <action id="org.openpolicyagent.ideaplugin.actions.TraceSelectionAction"
+                class="org.openpolicyagent.ideaplugin.ide.actions.TraceSelectionAction"
+                text="Display trace of selection in active editor"
+                description="Display trace of selection in active editor"
+                icon="AllIcons.Actions.RealIntentionBulb">
+            <add-to-group group-id="CodeMenu" anchor="before" relative-to-action="org.openpolicyagent.ideaplugin.actions.TestCoverageAction"/>
+        </action>
+=======
+>>>>>>> f95ba46... created opa actions submenu in code menu
 
         <action id="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"
                 class="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"

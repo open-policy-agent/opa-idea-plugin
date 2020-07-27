@@ -19,15 +19,14 @@ import java.io.File
 class InstallOPA : DumbAwareAction(){
     override fun actionPerformed(e: AnActionEvent) {
         //make sure opa binary doesn't already exist
-        if(PathEnvironmentVariableUtil.findInPath(OpaBaseTool.opaBinary) != null){
-            if(e.project != null) {
+       if(PathEnvironmentVariableUtil.findInPath(OpaBaseTool.opaBinary) != null){
+           if(e.project != null) {
                 Notification("ActionNotPerformed", "Install OPA", "OPA binary already exists", NotificationType.WARNING).notify(e.project)
             }
             return
         }
-
         val project = e.project ?: return
-        val logconsole = OPAActionToolWindow().getLogConsole(project, "Install OPA")
+       val logconsole = OPAActionToolWindow().getLogConsole(project, "Install OPA")
         logconsole.print("Finding destination...\n", ConsoleViewContentType.LOG_INFO_OUTPUT)
 
         val directory = getWriteableDirectoryInPath()
@@ -48,9 +47,9 @@ class InstallOPA : DumbAwareAction(){
                 .fileDestination { _, _ -> execFile }
                 .progress { readBytes, totalBytes ->
                     //progress bar
-                    if(readBytes.toFloat()/totalBytes.toFloat() * 100 > progbarpct){
+                   if(readBytes.toFloat()/totalBytes.toFloat() * 100 > progbarpct){
                         logconsole.print(".", ConsoleViewContentType.LOG_INFO_OUTPUT)
-                        progbarpct += 5
+                       progbarpct += 5
                     }
                 }
                 .response { result  ->
@@ -84,9 +83,8 @@ class InstallOPA : DumbAwareAction(){
         }
         return null
     }
-
     companion object {
-        val ID = "org.openpolicyagent.ideaplugin.actions.InstallOPA"
+       val ID = "org.openpolicyagent.ideaplugin.actions.InstallOPA"
         val INSTANCE = ActionManager.getInstance().getAction(ID)!!
     }
 

@@ -62,26 +62,22 @@ class OPAActionToolWindow {
             val processHandler = try {
                 OSProcessHandler(commandLine)
             } catch (e: ProcessNotCreatedException) {
-                //Suggest to install opa binary in case of failure
-                val notification = Notification("ActionNotPerformed", title, e.localizedMessage, NotificationType.ERROR)
-                notification.addAction(InstallOPA.INSTANCE)
+              //Suggest to install opa binary in case of failure
+               val notification = Notification("ActionNotPerformed", title, e.localizedMessage, NotificationType.ERROR)
+               notification.addAction(InstallOPA.INSTANCE)
                 notification.notify(project)
                 return
             }
             ProcessTerminatedListener.attach(processHandler)
-
             //create console to attach to tool window
             ApplicationManager.getApplication().invokeLater {
                 val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
                 consoleView.clear()
                 consoleView.attachToProcess(processHandler)
-
                 //filter to hyperlink to all referenced file:row:col during logging
                 consoleView.addMessageFilter(FileLineFilter(project))
                 processHandler.startNotify()
-
                 val toolWindow = getOpaToolWindow(project)
-
                 val panel = JPanel(BorderLayout())
                 panel.add(consoleView.component, "Center")
                 val toolbarActions = DefaultActionGroup()
@@ -92,13 +88,12 @@ class OPAActionToolWindow {
 
                 val consoleContent = ContentImpl(panel, title, false)
 
-                //if the tool window currently has a console view with the same opa task
+              //if the tool window currently has a console view with the same opa task
                 //in it, remove the old console before creating a new one
-                val existing = toolWindow.contentManager.findContent(title) ?: null
-                if (existing != null) {
+               val existing = toolWindow.contentManager.findContent(title) ?: null
+               if (existing != null) {
                     toolWindow.contentManager.removeContent(existing, true)
                 }
-
                 attachAndShowConsole(consoleContent, toolWindow)
                 return@invokeLater
 
@@ -108,19 +103,19 @@ class OPAActionToolWindow {
         }
     }
 
-    /**
-     * Creates and returns a console that is attached to the tool window but
+ /**
+    * Creates and returns a console that is attached to the tool window but
      * not to any process and doesn't have any contents. Useful to manually
      * log progress of non-commandline process
      */
-    fun getLogConsole(project: Project, title: String): ConsoleView {
-        val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
+  fun getLogConsole(project: Project, title: String): ConsoleView {
+       val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
         val toolWindow = getOpaToolWindow(project)
         val consoleContent = ContentImpl(consoleView.component, title, false)
 
-        //the tool window shouldn't have two consoles with the sdame title (task)
-        val existing = toolWindow.contentManager.findContent(title) ?: null
-        if (existing != null) {
+      //the tool window shouldn't have two consoles with the sdame title (task)
+       val existing = toolWindow.contentManager.findContent(title) ?: null
+       if (existing != null) {
             toolWindow.contentManager.removeContent(existing, true)
         }
 
@@ -128,12 +123,23 @@ class OPAActionToolWindow {
         return consoleView
     }
 
-    /**
-     * helper to attach console window running process to opa tool window
-     */
-    private fun attachAndShowConsole(consoleContent: ContentImpl, toolWindow: ToolWindow){
+  private fun getOpaToolWindow(project: Project): ToolWindow {
+        val toolWindowManager = ToolWindowManager.getInstance(project)
+        var toolWindow = toolWindowManager.getToolWindow(OPA_CONSOLE_ID)
+        if (toolWindow == null){
+            toolWindow = toolWindowManager.registerToolWindow(OPA_CONSOLE_ID, true, ToolWindowAnchor.BOTTOM)
+            toolWindow.title = OPA_CONSOLE_NAME
+            toolWindow.stripeTitle = OPA_CONSOLE_NAME
+            toolWindow.isShowStripeButton = true
+            toolWindow.icon = AllIcons.Toolwindows.ToolWindowMessages
+        }
+        return toolWindow
+    }
+
+    //helper to attach console window running process to opa tool window
+   private fun attachAndShowConsole(consoleContent: ContentImpl, toolWindow: ToolWindow){
         consoleContent.manager = toolWindow.contentManager
-        toolWindow.contentManager.addContent(consoleContent)
+       toolWindow.contentManager.addContent(consoleContent)
         toolWindow.contentManager.setSelectedContent(consoleContent)
 
         toolWindow.show(null)

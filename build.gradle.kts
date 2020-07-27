@@ -39,12 +39,14 @@ version = "1.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     testImplementation("org.assertj:assertj-core:3.16.1")
     implementation("com.github.kittinunf.fuel", "fuel", "2.2.3")
+    implementation("com.beust:klaxon:5.4")
 }
 
 idea {
