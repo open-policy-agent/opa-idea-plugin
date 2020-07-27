@@ -9,6 +9,7 @@ import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.FileViewProvider
+import com.intellij.psi.PsiElement
 import org.openpolicyagent.ideaplugin.lang.RegoFileType
 import org.openpolicyagent.ideaplugin.lang.RegoLanguage
 
@@ -18,7 +19,6 @@ class RegoFile(fileViewProvider: FileViewProvider) : PsiFileBase(fileViewProvide
     override fun toString(): String = "Rego File"
 
 }
-
 
 val VirtualFile.isNotRegoFile: Boolean get() = !isRegoFile
 val VirtualFile.isRegoFile: Boolean get() = fileType == RegoFileType
