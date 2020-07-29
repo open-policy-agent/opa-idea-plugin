@@ -19,6 +19,7 @@ import java.awt.BorderLayout
 import java.util.concurrent.ExecutionException
 import javax.swing.JPanel
 
+
 class OPAActionToolWindow {
 
     private val OPA_CONSOLE_ID = "OPA Console"
@@ -35,12 +36,15 @@ class OPAActionToolWindow {
             val processHandler = OSProcessHandler(commandLine)
             ProcessTerminatedListener.attach(processHandler)
 
+
             ApplicationManager.getApplication().invokeLater {
                 val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
                 consoleView.clear()
                 consoleView.attachToProcess(processHandler)
-                processHandler.startNotify()
 
+                //filter to hyperlink to all referenced file:row:col during logging
+                consoleView.addMessageFilter(FileLineFilter(project))
+                processHandler.startNotify()
                 val toolWindowManager = ToolWindowManager.getInstance(project)
                 var toolWindow = toolWindowManager.getToolWindow(OPA_CONSOLE_ID)
 
@@ -79,8 +83,13 @@ class OPAActionToolWindow {
         }
     }
 
+<<<<<<< HEAD
     //helper to attach console window running porcess to opa tool window
     private fun attachAndShowConsole(consoleContent: ContentImpl, toolWindow: ToolWindow) {
+=======
+    //helper to attach console window running process to opa tool window
+    private fun attachAndShowConsole(consoleContent: ContentImpl, toolWindow: ToolWindow){
+>>>>>>> 46065af... Creating console filter to hyperlink error messages to line numbers
         consoleContent.manager = toolWindow.contentManager
         toolWindow.contentManager.addContent(consoleContent)
         toolWindow.contentManager.setSelectedContent(consoleContent)

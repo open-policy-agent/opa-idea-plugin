@@ -21,7 +21,6 @@ import com.intellij.psi.search.GlobalSearchScope
 import org.openpolicyagent.ideaplugin.lang.RegoLanguage
 import org.openpolicyagent.ideaplugin.lang.psi.RegoImport
 import org.openpolicyagent.ideaplugin.lang.psi.RegoPackage
-import org.openpolicyagent.ideaplugin.lang.psi.isNotRegoFile
 import org.openpolicyagent.ideaplugin.openapiext.virtualFile
 
 /**
@@ -33,9 +32,6 @@ fun getProjectAndDocument(e: AnActionEvent): Pair<Project, Document>? {
     val project = e.project ?: return null
     val editor = e.getData(CommonDataKeys.EDITOR_EVEN_IF_INACTIVE) ?: getSelectedEditor(project) ?: return null
     val document = editor.document
-    val file = document.virtualFile ?: return null
-    if (!file.isInLocalFileSystem || file.isNotRegoFile) return null
-
 
     return Pair(project, document)
 
@@ -91,4 +87,3 @@ fun fileDirectChildOfRoot(project: Project, name: String): Boolean {
     }
     return false
 }
->>>>>>> 9eb87da... display trace of selected text in editor:src/main/kotlin/org/openpolicyagent/ideaplugin/ide/actions/ActionUtils.kt

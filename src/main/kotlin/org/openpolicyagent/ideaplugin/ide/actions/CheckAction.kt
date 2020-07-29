@@ -5,7 +5,6 @@
 
 package org.openpolicyagent.ideaplugin.ide.actions
 
-
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAwareAction
 import org.openpolicyagent.ideaplugin.opa.tool.OpaActions
