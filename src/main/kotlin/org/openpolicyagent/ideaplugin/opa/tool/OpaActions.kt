@@ -53,6 +53,7 @@ class OpaActions : OpaBaseTool() {
         OPAActionToolWindow().runProcessInConsole(project, args, "Opa Check")
     }
 
+
     /**
      * Opens window running `opa test --verbose` on project directory
      */
