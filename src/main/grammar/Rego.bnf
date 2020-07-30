@@ -69,7 +69,7 @@ package         ::= "package" ref
 import          ::= "import" ref ( "as" var )?
 policy          ::=  rule*
 rule            ::=  "default"?  rule-head  rule-body*
-rule-head       ::= var ( "(" rule-args ")" )? ("[" term "]" )? ( ( ":=" | "=" ) term )?
+rule-head       ::= var ( "(" rule-args? ")" )? ("[" term "]" )? ( ( ":=" | "=" ) term )?
 rule-args       ::= term ( "," term )*
 rule-body       ::= ( else ( "=" term )? )? "{" query "}"
 query           ::=( literal |';' )+
@@ -86,7 +86,7 @@ set-compr       ::= "{" term "|" query "}"
 object-compr    ::= "{" object-item "|" query "}"
 infix-operator  ::= bool-operator | arith-operator | bin-operator
 bool-operator   ::= "==" | "!=" | "<" | ">" | ">=" | "<="
-arith-operator  ::= "+" | "-" | "*" | "/"
+arith-operator  ::= "+" | "-" | "*" | "/" | "%"
 bin-operator    ::= "&" | "|"
 ref             ::= ( expr-call  | array | object | set | array-compr | object-compr | set-compr |var  )  ref-arg*
 ref-arg         ::= ref-arg-dot | ref-arg-brack
