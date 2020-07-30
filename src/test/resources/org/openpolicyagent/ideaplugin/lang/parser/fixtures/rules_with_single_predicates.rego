@@ -12,6 +12,10 @@ withFunction {
     isTrue
 }
 
+withTrivialComparison {
+    1 == 1
+}
+
 withFunctionAllowingParam {
     isCorrect(input.something)
 }
