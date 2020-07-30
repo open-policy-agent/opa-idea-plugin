@@ -12,8 +12,7 @@ class TestAction : DumbAwareAction() {
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        val (project, document) = getProjectAndDocument(e) ?: return
-        val editor = getEditor(e) ?: return
-        OpaActions().testWorkspace(project, document, editor)
+        val project = e.project ?: return
+        OpaActions().testWorkspace(project)
     }
 }
