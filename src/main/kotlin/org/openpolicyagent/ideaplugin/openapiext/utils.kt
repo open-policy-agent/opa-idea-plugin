@@ -38,6 +38,7 @@ import com.intellij.psi.stubs.StubIndexKey
 import com.intellij.reference.SoftReference
 import org.jdom.Element
 import org.jdom.input.SAXBuilder
+import org.openpolicyagent.ideaplugin.lang.psi.isNotRegoFile
 import java.lang.reflect.Field
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -115,6 +116,19 @@ fun VirtualFile.toPsiDirectory(project: Project): PsiDirectory? =
 val Document.virtualFile: VirtualFile?
     get() = FileDocumentManager.getInstance().getFile(this)
 
+/**
+ * returns true if the file contained in the document is a rego file and is valid
+ * false otherwise
+ */
+val Document.isOPAPluginApplicable: Boolean
+    get() {
+        val file = this.virtualFile ?: return false
+        if (file.isNotRegoFile || !file.isValid) {
+            return false
+        }
+        return true
+    }
+
 val VirtualFile.document: Document?
     get() = FileDocumentManager.getInstance().getDocument(this)
 
@@ -153,6 +167,7 @@ private fun FileDocumentManager.stripDocumentLater(document: Document): Boolean 
     if (this !is FileDocumentManagerImpl) return false
     val trailingSpacesStripper = trailingSpacesStripperField
         ?.get(this) as? TrailingSpacesStripper ?: return false
+
     @Suppress("UNCHECKED_CAST")
     val documentsToStripLater = documentsToStripLaterField
         ?.get(trailingSpacesStripper) as? MutableSet<Document> ?: return false

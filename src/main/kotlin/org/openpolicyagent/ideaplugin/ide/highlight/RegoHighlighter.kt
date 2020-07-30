@@ -16,10 +16,10 @@ import org.openpolicyagent.ideaplugin.lang.psi.REGO_OPERATOR
 import org.openpolicyagent.ideaplugin.lang.psi.RegoTypes
 
 /**
- * Handle the Syntax Highlighting of the a file.
+ * Handle the Syntax Highlighting of a file.
  *
- * Color can be customize be the user thank the [org.openpolicyagent.ideaplugin.ide.colors.RegoColorSettingsPage]
- * If you want let the user customize a color, you must update the [org.openpolicyagent.ideaplugin.ide.colors.RegoColor]
+ * Color can be customized by the user with the [org.openpolicyagent.ideaplugin.ide.colors.RegoColorSettingsPage]
+ * If you wish to let the user customize a color, update [org.openpolicyagent.ideaplugin.ide.colors.RegoColor]
  */
 class RegoHighlighter : SyntaxHighlighterBase() {
     override fun getHighlightingLexer(): Lexer = RegoLexerAdapter()

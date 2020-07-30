@@ -17,7 +17,7 @@ class RegoHighlighterAnnotator : Annotator {
     }
 
     //todo: better way to record colors used in annotator?
-    val usedColors = listOf<TextAttributesKey>(RegoColor.HEAD.textAttributesKey, RegoColor.CALL.textAttributesKey)
+    val usedColors = listOf(RegoColor.HEAD.textAttributesKey, RegoColor.CALL.textAttributesKey)
 
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         if (element is RegoRule){
