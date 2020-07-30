@@ -69,7 +69,7 @@ package         ::= "package" ref
 import          ::= "import" ref ( "as" var )?
 policy          ::=  rule*
 rule            ::=  "default"?  rule-head  rule-body*
-rule-head       ::= var ( "(" rule-args ")" )? ("[" term "]" )? ( ( ":=" | "=" ) term )?
+rule-head       ::= var ( "(" rule-args? ")" )? ("[" term "]" )? ( ( ":=" | "=" ) term )?
 rule-args       ::= term ( "," term )*
 rule-body       ::= ( else ( "=" term )? )? "{" query "}"
 query           ::=( literal |';' )+
