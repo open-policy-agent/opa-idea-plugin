@@ -21,14 +21,15 @@ import javax.swing.JPanel
 
 class OPAActionToolWindow {
 
-    val OPA_CONSOLE_ID = "OPA Console"
-    val OPA_CONSOLE_NAME = OPA_CONSOLE_ID
+    private val OPA_CONSOLE_ID = "OPA Console"
+    private val OPA_CONSOLE_NAME = OPA_CONSOLE_ID
+
     fun runProcessInConsole(project: Project, parameters: MutableList<String>, title: String) {
         val commandLine = GeneralCommandLine()
-                .withExePath(OpaBaseTool.opaBinary)
-                .withWorkDirectory(project.basePath)
-                .withParameters(parameters)
-                .withCharset(Charsets.UTF_8)
+            .withExePath(OpaBaseTool.opaBinary)
+            .withWorkDirectory(project.basePath)
+            .withParameters(parameters)
+            .withCharset(Charsets.UTF_8)
 
         try {
             val processHandler = OSProcessHandler(commandLine)
@@ -79,7 +80,7 @@ class OPAActionToolWindow {
     }
 
     //helper to attach console window running porcess to opa tool window
-    private fun attachAndShowConsole(consoleContent: ContentImpl, toolWindow: ToolWindow){
+    private fun attachAndShowConsole(consoleContent: ContentImpl, toolWindow: ToolWindow) {
         consoleContent.manager = toolWindow.contentManager
         toolWindow.contentManager.addContent(consoleContent)
         toolWindow.contentManager.setSelectedContent(consoleContent)

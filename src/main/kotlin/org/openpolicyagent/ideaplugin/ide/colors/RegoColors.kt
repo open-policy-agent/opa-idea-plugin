@@ -12,8 +12,9 @@ import com.intellij.openapi.options.colors.AttributesDescriptor
 /**
  * Kind of "token" for which the user can change color in the Syntax highlighting.
  *
- * note: this enum lust be keep in sync with [org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighter]. If you define
- * a color that in not defined in the highlighter, then user will be able to customize it but ide will never render it.
+ * note: this enum list should be kept in sync with [org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighter].
+ * If you define a color that is not defined in the highlighter, then even though a user will be able to customize it,
+ * but the ide will never render it.
  *
  * @see org.openpolicyagent.ideaplugin.ide.colors.RegoColorSettingsPage
  * @see org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighter

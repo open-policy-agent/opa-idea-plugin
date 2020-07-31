@@ -73,7 +73,7 @@
                 text="Check with opa check"
                 description="Check current file with Opa Check"
                 icon="AllIcons.Actions.RealIntentionBulb">
-            <add-to-group group-id="CodeMenu" anchor="before" relative-to-action="org.openpolicyagent.ideaplugin.actions.FmtAction"/>
+            <add-to-group group-id="CodeMenu" anchor="last"/>
         </action>
 
         <action id="org.openpolicyagent.ideaplugin.actions.TestAction"
@@ -81,7 +81,7 @@
                 text="Test workspace with opa test"
                 description="Test workspace with opa test"
                 icon="AllIcons.Actions.RealIntentionBulb">
-            <add-to-group group-id="CodeMenu" anchor="before" relative-to-action="org.openpolicyagent.ideaplugin.actions.CheckAction"/>
+            <add-to-group group-id="CodeMenu" anchor="last"/>
         </action>
 
         <action id="org.openpolicyagent.ideaplugin.actions.TestCoverageAction"
@@ -89,7 +89,7 @@
                 text="View test coverage for workspace with opa test --coverage"
                 description="View test coverage for workspace with opa test --coverage"
                 icon="AllIcons.Actions.RealIntentionBulb">
-            <add-to-group group-id="CodeMenu" anchor="before" relative-to-action="org.openpolicyagent.ideaplugin.actions.TestAction"/>
+            <add-to-group group-id="CodeMenu" anchor="last"/>
         </action>
 
         <action id="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"
