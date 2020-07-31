@@ -3,11 +3,12 @@ package org.openpolicyagent.ideaplugin.ide.extensions
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.module.ModuleType
+import com.intellij.openapi.module.ModuleTypeManager
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider
 import org.openpolicyagent.ideaplugin.lang.RegoIcons
 import javax.swing.Icon
 
-class RegoModuleType : ModuleType<RegoModuleBuilder>("Rego Module") {
+class RegoModuleType : ModuleType<RegoModuleBuilder>("REGO_MODULE") {
     override fun createModuleBuilder(): RegoModuleBuilder {
         return RegoModuleBuilder()
     }
@@ -28,6 +29,10 @@ class RegoModuleType : ModuleType<RegoModuleBuilder>("Rego Module") {
         return super.createWizardSteps(wizardContext, moduleBuilder, modulesProvider)
     }
 
+    companion object {
+        private const val ID = "REGO_MODULE"
+        val INSTANCE: RegoModuleType by lazy { ModuleTypeManager.getInstance().findByID(ID) as RegoModuleType }
+    }
 
 
 }

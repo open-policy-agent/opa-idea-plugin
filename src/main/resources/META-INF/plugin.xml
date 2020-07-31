@@ -31,8 +31,8 @@
     <extensions defaultExtensionNs="com.intellij">
 
         <!-- Project Generation -->
-        <moduleType id="Rego" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleType"/>
-        <moduleBuilder id="Rego" builderClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleBuilder" order="first"/>
+        <moduleType id="REGO_MODULE" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleType"/>
+        <moduleBuilder id="REGO_MODULE" builderClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleBuilder" order="first"/>
 
         <!-- File-type Factory -->
         <fileType name="Rego file"
@@ -59,6 +59,14 @@
 
     <actions>
 
+        <action id="org.openpolicyagent.ideaplugin.actions.InstallOPA"
+                class="org.openpolicyagent.ideaplugin.ide.actions.InstallOPA"
+                text="Install the OPA binary"
+                description="Install the OPA binary"
+                icon="AllIcons.Actions.RealIntentionBulb">
+            <add-to-group group-id="CodeMenu" anchor="first"/>
+        </action>
+
         <action id="org.openpolicyagent.ideaplugin.actions.FmtAction"
                 class="org.openpolicyagent.ideaplugin.ide.actions.FmtAction"
                 text="Reformat with opa fmt"
@@ -68,13 +76,14 @@
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl I"/>
         </action>
 
-        <action id="org.openpolicyagent.ideaplugin.actions.CheckAction"
-                class="org.openpolicyagent.ideaplugin.ide.actions.CheckAction"
-                text="Check with opa check"
-                description="Check current file with Opa Check"
+        <action id="org.openpolicyagent.ideaplugin.actions.CheckDocumentAction"
+                class="org.openpolicyagent.ideaplugin.ide.actions.CheckDocumentAction"
+                text="Check current open file with Opa Check"
+                description="Check current open file with Opa Check"
                 icon="AllIcons.Actions.RealIntentionBulb">
             <add-to-group group-id="CodeMenu" anchor="last"/>
         </action>
+
 
         <action id="org.openpolicyagent.ideaplugin.actions.TestAction"
                 class="org.openpolicyagent.ideaplugin.ide.actions.TestAction"

@@ -7,7 +7,6 @@ import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleType
 import com.intellij.openapi.roots.ModifiableRootModel
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider
-import com.intellij.psi.impl.file.impl.FileManagerImpl
 
 
 class RegoModuleBuilder : ModuleBuilder() {
@@ -19,8 +18,8 @@ class RegoModuleBuilder : ModuleBuilder() {
         super.setupModule(module)
     }
 
-    override fun getModuleType(): ModuleType<*> {
-        return RegoModuleType()
+    override fun getModuleType(): ModuleType<*>? {
+        return RegoModuleType.INSTANCE
     }
 
     override fun createWizardSteps(wizardContext: WizardContext, modulesProvider: ModulesProvider): Array<ModuleWizardStep> {
