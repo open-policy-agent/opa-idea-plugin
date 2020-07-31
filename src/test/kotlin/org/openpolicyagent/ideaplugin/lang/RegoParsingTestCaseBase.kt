@@ -10,6 +10,10 @@ import org.openpolicyagent.ideaplugin.OpaTestBase
 import org.openpolicyagent.ideaplugin.OpaTestCase
 import org.openpolicyagent.ideaplugin.OpaTestCase.Companion.testResourcesPath
 import org.openpolicyagent.ideaplugin.lang.parser.RegoParserDefinition
+import org.openpolicyagent.ideaplugin.openapiext.execute
+import java.util.concurrent.ExecutionException
+import com.intellij.execution.configurations.GeneralCommandLine
+import org.openpolicyagent.ideaplugin.opa.tool.OpaBaseTool.Companion.opaBinary
 
 
 abstract class RegoParsingTestCaseBase() : ParsingTestCase(
@@ -30,10 +34,29 @@ abstract class RegoParsingTestCaseBase() : ParsingTestCase(
      * Test that parsing does not return error
      *
      * This test is very basic, it does not check whether the generated PSI matches the expected one.
-     * At this time the grammar / psi is not finish; this test ensure no regressions are introduce when modifying grammar
+     * At this time the grammar / psi is not finish; this test ensure no regressions are introduced when modifying grammar.
+     * Also checks rego files by using local opa client with "opa check $filename.rego",
      */
     fun doTestNoError() {
+        checkRegoFileForErrorsWithLocalOpaClient()
         super.doTest(false, false)
+        ensureNoErrorElements()
+    }
+
+    private fun checkRegoFileForErrorsWithLocalOpaClient() {
+        GeneralCommandLine(opaBinary)
+            .withWorkDirectory(super.myFullDataPath)
+            .withParameters("check", "$testName.$myFileExt")
+            .withCharset(Charsets.UTF_8)
+            .execute(project, false)
+    }
+
+    fun ignore() {
+        super.doTest(false)
+    }
+
+    fun doTestNoErrorAndCheckResult() {
+        super.doTest(true, false)
         ensureNoErrorElements()
     }
 }

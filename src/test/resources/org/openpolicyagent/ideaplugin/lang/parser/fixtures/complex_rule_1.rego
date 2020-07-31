@@ -1,5 +1,7 @@
 package play
 
+sites = []
+
 labelrego[msg] {
     input.request.kind.kind == "Deployment"
     input.request.operation == "CREATE"
