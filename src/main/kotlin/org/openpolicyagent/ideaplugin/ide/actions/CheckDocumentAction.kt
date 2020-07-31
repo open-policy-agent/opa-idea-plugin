@@ -11,7 +11,7 @@ import org.openpolicyagent.ideaplugin.opa.tool.OpaActions
 import org.openpolicyagent.ideaplugin.openapiext.isOPAPluginApplicable
 
 
-class CheckAction : DumbAwareAction() {
+class CheckDocumentAction : DumbAwareAction() {
     override fun update(e: AnActionEvent) {
         super.update(e)
         e.presentation.isEnabledAndVisible = getProjectAndDocument(e) != null
