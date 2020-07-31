@@ -8,5 +8,5 @@ inRule {
     s := {cube.width, cube.height, cube.depth}
     {1,2,3} == {3,1,2}
     {1,2,3} == {3,x,2}
-#    count(set()) < 1
+    count(set()) < 1
 }
