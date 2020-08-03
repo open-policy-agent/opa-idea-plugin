@@ -11,7 +11,7 @@ warn[msg] {
     apiversions = ["apps/v1beta1", "apps/v1beta2"]
     resources =  as_array(input)
     r := resources[_]
-    not r.apiVersion == apiversions[_]
+    not apiversions[r.apiVersion]
     msg := sprintf(api_version_mgs_tmpl, [r.kind, r.metadata.name, r.apiVersion, "apps/v1"])
 }
 
