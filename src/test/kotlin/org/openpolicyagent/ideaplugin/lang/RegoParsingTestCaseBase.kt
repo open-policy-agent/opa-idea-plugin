@@ -51,9 +51,6 @@ abstract class RegoParsingTestCaseBase() : ParsingTestCase(
             .execute(project, false)
     }
 
-    fun ignore() {
-        super.doTest(false)
-    }
 
     fun doTestNoErrorAndCheckResult() {
         super.doTest(true, false)
