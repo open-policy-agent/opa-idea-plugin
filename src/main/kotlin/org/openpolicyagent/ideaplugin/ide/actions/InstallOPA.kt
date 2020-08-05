@@ -42,7 +42,7 @@ class InstallOPA : DumbAwareAction(){
                 .fileDestination { _, _ -> execFile }
                 .progress { readBytes, totalBytes ->
                     //progress bar
-                    if(readBytes.toFloat()/totalBytes.toFloat() * 10 > progbarrow){
+                    if(readBytes.toFloat()/totalBytes.toFloat() * 10 > progbar){
                         progbar += 1
                         logconsole.print(".", ConsoleViewContentType.LOG_INFO_OUTPUT)
                     }
