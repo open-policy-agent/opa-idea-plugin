@@ -21,7 +21,7 @@ class FileLineFilter(project: Project): Filter {
     override fun applyFilter(line: String, entireLength: Int): Filter.Result? {
         val basepath = project.basePath ?: return null //we will need to know the project basepath to hyperlink
         val startpoint = entireLength - line.length
-        //regex stolen from cited source...any simplifications welcome
+        //regex from cited source...any simplifications welcome
         val matcher = Pattern.compile(
                 "(?<link>(?<path>([.~])?(?:[a-zA-Z]:\\\\|/)?\\w[\\w/\\-.\\\\]*\\.[\\w\\-.]+)\\$?" +
                         "(?:(?::|, line |\\()(?<row>\\d+)(?:[:,]( column )?(?<col>\\d+)\\)?)?)?)",
@@ -31,7 +31,7 @@ class FileLineFilter(project: Project): Filter {
 
             var path = matcher.group("path")
 
-            //if no row is supplied, do not hyperlink (largely due to matching collisions with
+            //if no row is supplied, do not hyperlink (largely due to regex matching collisions with
             //rego values like data.xyz or input.xyz)
             val row = matcher.group("row")?.toInt() ?: continue
 
