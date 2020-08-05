@@ -5,9 +5,6 @@
 
 package org.openpolicyagent.ideaplugin.ide.actions
 
-// TODO: currently, if a tool window/terminal is selected rather than text editor,
-// these functions don't return the project/document currently displayed
-// possible solution is to make the consoleViews unselectable?
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -45,6 +42,9 @@ fun getEditor(e: AnActionEvent): Editor? {
 fun getSelectedEditor(project: Project): Editor? =
     FileEditorManager.getInstance(project).selectedTextEditor
 
+/**
+ * Returns package name in document as string
+ */
 fun getPackageAsString(document: Document, project: Project): String {
     val file = document.virtualFile ?: return ""
     val fileView = PsiManager.getInstance(project).findViewProvider(file) ?: return ""
@@ -58,6 +58,9 @@ fun getPackageAsString(document: Document, project: Project): String {
     return ""
 }
 
+/**
+ * Returns a list of the names of the imports in document as strings
+ */
 fun getImportsAsString(document: Document, project: Project): MutableList<String> {
     val file = document.virtualFile ?: return mutableListOf<String>()
     val fileView = PsiManager.getInstance(project).findViewProvider(file) ?: return mutableListOf<String>()
@@ -78,6 +81,10 @@ fun getImportsAsString(document: Document, project: Project): MutableList<String
     return imports
 }
 
+/**
+ * Returns whether the project base directory has a file with name
+ * as direct child (rather than in subdirectory)
+ */
 fun fileDirectChildOfRoot(project: Project, name: String): Boolean {
     val allfiles = FilenameIndex.getVirtualFilesByName(project, name, GlobalSearchScope.allScope(project))
     for (file in allfiles) {
