@@ -1,0 +1,7 @@
+<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude" allow-bundled-update="true">
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Project Generation -->
+        <moduleBuilder id="REGO_MODULE" builderClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleBuilder" order="first"/>
+    </extensions>
+</idea-plugin>
+

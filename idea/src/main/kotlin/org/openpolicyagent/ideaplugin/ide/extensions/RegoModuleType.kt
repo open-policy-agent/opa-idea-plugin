@@ -1,3 +1,8 @@
+/*
+ * Use of this source code is governed by the MIT license that can be
+ * found in the LICENSE file.
+ */
+
 package org.openpolicyagent.ideaplugin.ide.extensions
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
@@ -31,7 +36,10 @@ class RegoModuleType : ModuleType<RegoModuleBuilder>("REGO_MODULE") {
 
     companion object {
         private const val ID = "REGO_MODULE"
-        val INSTANCE: RegoModuleType by lazy { ModuleTypeManager.getInstance().findByID(ID) as RegoModuleType }
+        val INSTANCE: RegoModuleType by lazy { ModuleTypeManager.getInstance().findByID(
+            ID
+        ) as RegoModuleType
+        }
     }
 
 
