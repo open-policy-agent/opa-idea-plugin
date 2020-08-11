@@ -3,5 +3,9 @@
  * found in the LICENSE file.
  */
 
-rootProject.name = 'opa-idea-plugin'
+rootProject.name = "opa-idea-plugin"
 
+include(
+    "plugin",
+    "idea"
+)

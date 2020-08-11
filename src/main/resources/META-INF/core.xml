@@ -3,37 +3,14 @@
   ~ found in the LICENSE file.
   -->
 
-<idea-plugin>
-    <id>org.openpolicyagent.opa-idea-plugin</id>
-    <name>Open Policy Agent</name>
-    <vendor email="1167539+vgramer@users.noreply.github.com" url="https://github.com/vgramer/opa-idea-plugin">
-        https://github.com/vgramer/opa-idea-plugin
-    </vendor>
-
-    <description><![CDATA[
-    Idea plugin for Open Policy Agent<br/>
-    Main features are:
-    <ul>
-        <el>Syntax Highlighting</el>
-        <el>Opa eval</el>
-        <el>Opa test</el>
-    </ul>
-    ]]></description>
+<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude" allow-bundled-update="true">
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
-    <!-- todo: make compatible with non-IntelliJ platforms -->
-    <depends>com.intellij.modules.java</depends>
-
     <extensions defaultExtensionNs="com.intellij">
-
-        <!-- Project Generation -->
-        <moduleType id="REGO_MODULE" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleType"/>
-        <moduleBuilder id="REGO_MODULE" builderClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleBuilder" order="first"/>
-
         <!-- File-type Factory -->
         <fileType name="Rego file"
                   implementationClass="org.openpolicyagent.ideaplugin.lang.RegoFileType"
@@ -47,7 +24,7 @@
         <lang.syntaxHighlighterFactory language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterFactory"/>
         <colorSettingsPage implementation="org.openpolicyagent.ideaplugin.ide.colors.RegoColorSettingsPage"/>
         <lang.commenter language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.commenter.RegoCommenter"/>
-        <annotator language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoHighlighterAnnotator"/>
+        <annotator language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterAnnotator"/>
 
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>

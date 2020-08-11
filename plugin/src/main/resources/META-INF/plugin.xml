@@ -1,0 +1,38 @@
+<!--
+  ~ Use of this source code is governed by the MIT license that can be
+  ~ found in the LICENSE file.
+  -->
+
+<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude" allow-bundled-update="true">
+    <id>org.openpolicyagent.opa-idea-plugin</id>
+    <name>Open Policy Agent</name>
+    <vendor email="open-policy-agent-intellij-private@googlegroups.com" url="https://github.com/vgramer/opa-idea-plugin">
+        https://github.com/vgramer/opa-idea-plugin
+    </vendor>
+
+    <description><![CDATA[
+    Idea plugin for Open Policy Agent<br/>
+    Main features are:
+    <ul>
+        <el>Syntax Highlighting</el>
+        <el>Opa eval</el>
+        <el>Opa test</el>
+    </ul>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <xi:include href="/META-INF/core.xml" xpointer="xpointer(/idea-plugin/*)"/>
+
+    <depends optional="true" config-file="idea-only.xml">com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- although Rego module type is only created by IDEA, we need it in other IDEs as well
+           to be able to open a project created in IDEA without errors -->
+        <moduleType id="Rego" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleType"/>
+    </extensions>
+
+</idea-plugin>

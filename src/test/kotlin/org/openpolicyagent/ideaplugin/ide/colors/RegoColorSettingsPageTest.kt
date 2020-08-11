@@ -8,7 +8,7 @@ package org.openpolicyagent.ideaplugin.ide.colors
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.openpolicyagent.ideaplugin.ide.extensions.RegoHighlighterAnnotator
+import org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterAnnotator
 import org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighter
 
 class RegoColorSettingsPageTest {

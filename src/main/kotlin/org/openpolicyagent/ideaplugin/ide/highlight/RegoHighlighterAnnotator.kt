@@ -1,4 +1,4 @@
-package org.openpolicyagent.ideaplugin.ide.extensions
+package org.openpolicyagent.ideaplugin.ide.highlight
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
