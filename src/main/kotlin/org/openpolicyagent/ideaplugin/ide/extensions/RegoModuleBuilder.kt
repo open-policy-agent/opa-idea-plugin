@@ -9,7 +9,6 @@ import com.intellij.openapi.roots.ModifiableRootModel
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider
 
 
-
 class RegoModuleBuilder : ModuleBuilder() {
     override fun setupRootModel(modifiableRootModel: ModifiableRootModel) {
         super.setupRootModel(modifiableRootModel)
@@ -19,8 +18,8 @@ class RegoModuleBuilder : ModuleBuilder() {
         super.setupModule(module)
     }
 
-    override fun getModuleType(): ModuleType<*> {
-        return RegoModuleType()
+    override fun getModuleType(): ModuleType<*>? {
+        return RegoModuleType.INSTANCE
     }
 
     override fun createWizardSteps(wizardContext: WizardContext, modulesProvider: ModulesProvider): Array<ModuleWizardStep> {

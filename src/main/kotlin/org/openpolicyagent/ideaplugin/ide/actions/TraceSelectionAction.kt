@@ -5,14 +5,15 @@ import com.intellij.openapi.project.DumbAwareAction
 import org.openpolicyagent.ideaplugin.opa.tool.OpaActions
 
 
-class TestAction : DumbAwareAction() {
+class TraceSelectionAction : DumbAwareAction() {
     override fun update(e: AnActionEvent) {
         super.update(e)
         e.presentation.isEnabledAndVisible = getProjectAndDocument(e) != null
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        val (project, _) = getProjectAndDocument(e) ?: return
-        OpaActions().testWorkspace(project)
+        val (project, document) = getProjectAndDocument(e) ?: return
+        val editor = getEditor(e) ?: return
+        OpaActions().traceSelection(project, document, editor)
     }
 }
