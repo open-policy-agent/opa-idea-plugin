@@ -48,8 +48,8 @@ class OpaActions : OpaBaseTool() {
 
     fun checkDocument(project: Project, document: Document) {
         val file = document.virtualFile ?: return
-        // todo: get path to file relative to project path
-        val args = mutableListOf("check", file.name)
+        val rel_path = project.basePath?.let { file.path.removePrefix(it) }?.removePrefix("/")?: file.name
+        val args = mutableListOf("check", rel_path)
         OPAActionToolWindow().runProcessInConsole(project, args, "Opa Check")
     }
 
