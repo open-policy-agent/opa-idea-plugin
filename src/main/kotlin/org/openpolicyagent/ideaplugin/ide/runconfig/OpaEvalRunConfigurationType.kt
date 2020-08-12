@@ -6,6 +6,7 @@ package org.openpolicyagent.ideaplugin.ide.runconfig
 
 import com.intellij.execution.configurations.ConfigurationFactory
 import com.intellij.execution.configurations.ConfigurationType
+import com.intellij.execution.configurations.ConfigurationTypeUtil
 import org.openpolicyagent.ideaplugin.lang.RegoIcons
 import javax.swing.Icon
 
@@ -20,5 +21,10 @@ class OpaEvalRunConfigurationType : ConfigurationType {
     override fun getConfigurationTypeDescription(): String = "Opa eval"
     override fun getIcon(): Icon = RegoIcons.OPA
     override fun getConfigurationFactories(): Array<ConfigurationFactory> = arrayOf(OpaConfigurationFactory(this))
+
+    companion object {
+        fun getInstance(): OpaEvalRunConfigurationType =
+            ConfigurationTypeUtil.findConfigurationType(OpaEvalRunConfigurationType::class.java)
+    }
 }
 

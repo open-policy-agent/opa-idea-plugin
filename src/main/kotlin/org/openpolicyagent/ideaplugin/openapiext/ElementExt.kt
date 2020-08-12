@@ -8,7 +8,9 @@
 package org.openpolicyagent.ideaplugin.openapiext
 
 import com.intellij.execution.ExternalizablePath
+import com.intellij.openapi.util.JDOMUtil
 import org.jdom.Element
+import org.jdom.input.SAXBuilder
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -38,3 +40,7 @@ fun Element.writePath(name: String, value: Path?) {
 fun Element.readPath(name: String): Path? {
     return readString(name)?.let { Paths.get(ExternalizablePath.localPathValue(it)) }
 }
+
+fun Element.toXmlString() = JDOMUtil.writeElement(this)
+
+fun elementFromXmlString(xml: String): Element =    SAXBuilder().build(xml.byteInputStream()).rootElement

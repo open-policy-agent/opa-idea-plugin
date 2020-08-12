@@ -31,7 +31,7 @@ class OpaTestRunConfiguration(
     project: Project,
     factory: ConfigurationFactory,
     name: String
-) : RunConfigurationBase<OpaTestRunProfileState>(project, factory, name) {
+) : LocatableConfigurationBase<OpaTestRunProfileState>(project, factory, name) {
 
     /**
      * the bundle directory to pass to opa eval (ie option -b )

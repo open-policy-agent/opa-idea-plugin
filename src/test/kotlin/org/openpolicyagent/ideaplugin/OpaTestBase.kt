@@ -16,7 +16,7 @@ abstract class OpaTestBase : BasePlatformTestCase(), OpaTestCase {
     protected val fileName: String
         get() = "$testName.rego"
 
-    private val testName: String
+    protected val testName: String
         get() = camelOrWordsToSnake(getTestName(true))
 
     companion object {
@@ -27,4 +27,7 @@ abstract class OpaTestBase : BasePlatformTestCase(), OpaTestCase {
             return name.split("(?=[A-Z])".toRegex()).joinToString("_", transform = String::toLowerCase)
         }
     }
+
+    protected fun FileTree.create(): TestProject =
+        create(myFixture.project, myFixture.findFileInTempDir("."))
 }

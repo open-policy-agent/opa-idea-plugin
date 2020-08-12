@@ -31,7 +31,7 @@ class OpaEvalRunConfiguration(
     project: Project,
     factory: ConfigurationFactory,
     name: String
-) : RunConfigurationBase<OpaEvalRunProfileState>(project, factory, name) {
+) : LocatableConfigurationBase<OpaEvalRunProfileState>(project, factory, name) {
 
     /**
      * the querry to evaluate
@@ -54,6 +54,10 @@ class OpaEvalRunConfiguration(
      */
     var additionalArgs: String? = null
 
+
+    override fun suggestedName(): String? {
+        return query
+    }
 
     override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration?> = OpaEvalRunCommandEditor(project)
 

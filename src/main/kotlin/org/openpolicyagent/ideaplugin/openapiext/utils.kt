@@ -140,10 +140,6 @@ inline fun <Key, reified Psi : PsiElement> getElements(
     StubIndex.getElements(indexKey, key, project, scope, Psi::class.java)
 
 
-fun Element.toXmlString() = JDOMUtil.writeElement(this)
-fun elementFromXmlString(xml: String): org.jdom.Element =
-    SAXBuilder().build(xml.byteInputStream()).rootElement
-
 class CachedVirtualFile(private val url: String?) {
     private val cache = AtomicReference<VirtualFile>()
 
