@@ -32,7 +32,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- although Rego module type is only created by IDEA, we need it in other IDEs as well
            to be able to open a project created in IDEA without errors -->
-        <moduleType id="Rego" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleType"/>
+        <moduleType id="REGO_MODULE" implementationClass="org.openpolicyagent.ideaplugin.ide.extensions.RegoModuleType"/>
     </extensions>
 
 </idea-plugin>
