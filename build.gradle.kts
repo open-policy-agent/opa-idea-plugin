@@ -13,7 +13,15 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
+val baseIDE = prop("baseIDE")
 val ideaVersion = prop("ideaVersion")
+val pycharmCommunityVersion = prop("pycharmCommunityVersion")
+val baseVersion = when (baseIDE) {
+    "idea" -> ideaVersion
+    "pycharmCommunity" -> pycharmCommunityVersion
+    else -> error("Unexpected IDE name: `$baseIDE`")
+}
+
 val psiViewerPluginVersion = prop("psiViewerPluginVersion")
 val channel = prop("publishChannel")
 
@@ -59,14 +67,8 @@ allprojects {
     }
 
     intellij {
-        version = ideaVersion
-
-        tasks {
-            withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
-                sinceBuild(prop("sinceBuild"))
-                untilBuild(prop("untilBuild"))
-            }
-        }
+        version = baseVersion
+        sandboxDirectory = "$buildDir/$baseIDE-sandbox"
     }
 
     sourceSets {
@@ -96,6 +98,11 @@ allprojects {
             }
         }
 
+        withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
+            sinceBuild(prop("sinceBuild"))
+            untilBuild(prop("untilBuild"))
+        }
+
         withType<RunIdeTask> {
             jvmArgs("--add-exports", "java.base/jdk.internal.vm=ALL-UNNAMED")
         }
@@ -117,9 +124,13 @@ project(":plugin"){
     intellij {
         pluginName = "opa-idea-plugin"
         val plugins = mutableListOf(
-            "PsiViewer:$psiViewerPluginVersion",
-            "java" // TODO check that
+            "PsiViewer:$psiViewerPluginVersion"
         )
+        if (baseIDE == "idea") {
+            plugins += listOf(
+                "java"
+            )
+        }
         setPlugins(*plugins.toTypedArray())
     }
 
@@ -185,10 +196,6 @@ project(":") {
 }
 
 project(":idea") {
-    intellij {
-        version = ideaVersion
-        setPlugins("java")
-    }
     dependencies {
         implementation(project(":"))
         testImplementation(project(":", "testOutput"))
