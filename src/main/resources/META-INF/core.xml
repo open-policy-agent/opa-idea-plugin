@@ -37,7 +37,13 @@
         <!-- TODOs -->
         <todoIndexer filetype="Rego file" implementationClass="org.openpolicyagent.ideaplugin.ide.todo.RegoLexerBasedTodoIndexer"/>
         <indexPatternBuilder implementation="org.openpolicyagent.ideaplugin.ide.todo.RegoTodoIndexPatternBuilder"/>
-    </extensions>
+
+        <toolWindow id="OPA Console"
+                        anchor="bottom"
+                        icon="/icons/opa_13_13.svg"
+                        factoryClass="org.openpolicyagent.ideaplugin.ide.extensions.OPAActionToolWindowFactory"
+                        canCloseContents="true" />
+</extensions>
 
     <actions>
 

@@ -20,15 +20,9 @@ class RegoCreateFileAction : CreateFileFromTemplateAction(NAME, "", RegoIcons.OP
 
     override fun getActionName(directory: PsiDirectory?, newName: String, templateName: String?) = NAME
 
-    override fun buildDialog(
-        project: Project?,
-        directory: PsiDirectory?,
-        builder: CreateFileFromTemplateDialog.Builder
-    ) {
+    override fun buildDialog(project: Project, directory: PsiDirectory, builder: CreateFileFromTemplateDialog.Builder) {
         builder.setTitle(NAME)
             // keep templateName sync with files in /src/main/resources/fileTemplates/internal
             .addKind("Empty File", RegoIcons.OPA, "Rego File")
-
     }
-
 }

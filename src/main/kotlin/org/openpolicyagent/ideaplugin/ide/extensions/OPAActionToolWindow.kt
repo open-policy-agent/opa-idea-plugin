@@ -7,43 +7,48 @@ import com.intellij.execution.process.OSProcessHandler
 import com.intellij.execution.process.ProcessNotCreatedException
 import com.intellij.execution.process.ProcessTerminatedListener
 import com.intellij.execution.ui.ConsoleView
-import com.intellij.icons.AllIcons
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.wm.ToolWindow
-import com.intellij.openapi.wm.ToolWindowAnchor
+import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.ui.content.impl.ContentImpl
 import org.openpolicyagent.ideaplugin.ide.actions.InstallOPA
+import org.openpolicyagent.ideaplugin.ide.extensions.OPAActionToolWindow.Companion.OPA_CONSOLE_NAME
 import org.openpolicyagent.ideaplugin.opa.tool.OpaBaseTool
 import java.awt.BorderLayout
 import java.util.concurrent.ExecutionException
 import javax.swing.JPanel
 
+
+class OPAActionToolWindowFactory :ToolWindowFactory {
+    override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
+        toolWindow.stripeTitle = OPA_CONSOLE_NAME
+        toolWindow.isShowStripeButton = true
+    }
+
+}
 //Tool window like Run or Terminal windows to display results/progress of opa actions
 //or other user-invoked processes
 class OPAActionToolWindow {
 
-    private val OPA_CONSOLE_ID = "OPA Console"
-    private val OPA_CONSOLE_NAME = OPA_CONSOLE_ID
+    companion object {
+        const val OPA_CONSOLE_ID = "OPA Console"
+        const val OPA_CONSOLE_NAME = OPA_CONSOLE_ID
+    }
+
 
     /**
      * Returns (and creates if uninstantiated) the opa tool window
      */
     private fun getOpaToolWindow(project: Project): ToolWindow {
         val toolWindowManager = ToolWindowManager.getInstance(project)
-        var toolWindow = toolWindowManager.getToolWindow(OPA_CONSOLE_ID)
-        if (toolWindow == null){
-            toolWindow = toolWindowManager.registerToolWindow(OPA_CONSOLE_ID, true, ToolWindowAnchor.BOTTOM)
-            toolWindow.title = OPA_CONSOLE_NAME
-            toolWindow.stripeTitle = OPA_CONSOLE_NAME
-            toolWindow.isShowStripeButton = true
-            toolWindow.icon = AllIcons.Toolwindows.ToolWindowMessages
-        }
+        val toolWindow = toolWindowManager.getToolWindow(OPA_CONSOLE_ID) ?: throw IllegalStateException("ToolWindow not found")
         return toolWindow
     }
 
@@ -73,6 +78,8 @@ class OPAActionToolWindow {
             //create console to attach to tool window
             ApplicationManager.getApplication().invokeLater {
                 val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
+                Disposer.register(project, consoleView)
+
                 consoleView.clear()
                 consoleView.attachToProcess(processHandler)
 

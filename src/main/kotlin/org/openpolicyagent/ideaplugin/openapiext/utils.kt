@@ -7,7 +7,7 @@ package org.openpolicyagent.ideaplugin.openapiext
 
 import com.intellij.concurrency.SensitiveProgressWrapper
 import com.intellij.ide.plugins.IdeaPluginDescriptor
-import com.intellij.ide.plugins.PluginManager
+import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.ex.ApplicationUtil
 import com.intellij.openapi.command.WriteCommandAction
@@ -36,8 +36,6 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.stubs.StubIndex
 import com.intellij.psi.stubs.StubIndexKey
 import com.intellij.reference.SoftReference
-import org.jdom.Element
-import org.jdom.input.SAXBuilder
 import org.openpolicyagent.ideaplugin.lang.psi.isNotRegoFile
 import java.lang.reflect.Field
 import java.nio.file.Path
@@ -215,9 +213,9 @@ inline fun <T> UserDataHolderEx.getOrPutSoft(key: Key<SoftReference<T>>, default
         putUserDataIfAbsent(key, SoftReference(value)).get() ?: value
     }
 
-const val PLUGIN_ID: String = "org.rust.lang"
+const val PLUGIN_ID: String = "org.openpolicyagent.opa-idea-plugin"
 
-fun plugin(): IdeaPluginDescriptor = PluginManager.getPlugin(PluginId.getId(PLUGIN_ID))!!
+fun plugin(): IdeaPluginDescriptor = PluginManagerCore.getPlugin(PluginId.getId(PLUGIN_ID))!!
 
 val String.escaped: String get() = StringUtil.escapeXmlEntities(this)
 
