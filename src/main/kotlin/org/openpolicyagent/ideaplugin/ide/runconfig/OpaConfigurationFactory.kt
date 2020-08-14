@@ -27,4 +27,14 @@ class OpaConfigurationFactory(type: ConfigurationType) : ConfigurationFactory(ty
         return "Opa configuration factory"
     }
 
+    /**
+     * Returns the id of the run configuration that is used for serialization. For compatibility reason the default
+     * implementation calls the method {@link #getName()} and this may cause problems if {@link #getName} returns
+     * localized value.
+     *
+     * So we have orverride it to avoid any localization problem and keep the same value to avoid compatibility issue
+     */
+    override fun getId(): String {
+        return "Opa configuration factory"
+    }
 }

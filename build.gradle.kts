@@ -35,8 +35,8 @@ idea {
 plugins {
     idea
     kotlin("jvm") version "1.3.50"
-    id("org.jetbrains.intellij") version "0.4.16"
-    id("org.jetbrains.grammarkit") version "2020.1"
+    id("org.jetbrains.intellij") version "0.4.21"
+    id("org.jetbrains.grammarkit") version "2020.2.1"
     id("de.undercouch.download") version "3.4.3"
     id("net.saliman.properties") version "1.4.6"
 }
