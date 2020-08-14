@@ -14,9 +14,9 @@
     Idea plugin for Open Policy Agent<br/>
     Main features are:
     <ul>
-        <el>Syntax Highlighting</el>
-        <el>Opa eval</el>
-        <el>Opa test</el>
+        <li>Syntax Highlighting</li>
+        <li>Opa eval</li>
+        <li>Opa test</li>
     </ul>
     ]]></description>
 

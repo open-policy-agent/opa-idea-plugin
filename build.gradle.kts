@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
+val platformVersion = prop("platformVersion").toInt()
 val baseIDE = prop("baseIDE")
 val ideaVersion = prop("ideaVersion")
 val pycharmCommunityVersion = prop("pycharmCommunityVersion")
@@ -70,18 +71,18 @@ allprojects {
         version = baseVersion
         // location of IDE distributions, we customize it to easily run plugin verifier
         ideaDependencyCachePath = dependencyCachePath
-        sandboxDirectory = "$buildDir/$baseIDE-sandbox"
+        sandboxDirectory = "$buildDir/$baseIDE-sandbox-$platformVersion"
     }
 
     sourceSets {
         main {
             java.srcDirs("src/main/gen")
-            kotlin.srcDirs("src/main/kotlin")
-            resources.srcDirs("src/main/resources")
+            kotlin.srcDirs("src/$platformVersion/main/kotlin")
+            resources.srcDirs("src/$platformVersion/main/resources")
         }
         test {
-            kotlin.srcDirs("src/test/kotlin")
-            resources.srcDirs("src/test/resources")
+            kotlin.srcDirs("src/$platformVersion/test/kotlin")
+            resources.srcDirs("src/$platformVersion/test/resources")
         }
     }
 
@@ -129,10 +130,15 @@ val Project.dependencyCachePath get(): String {
     return cachePath.absolutePath
 }
 
+val channelSuffix = if (channel.isBlank() || channel == "stable") "" else "-$channel"
+val versionSuffix = "-$platformVersion$channelSuffix"
+val majorVersion = prop("majorVersion")
+val patchVersion = prop("patchVersion").toInt()
+val buildNumber =  System.getenv("GITHUB_RUN_ID" ) ?: "SNAPSHOT"
 
 // TODO MORE EXPLICIT --- Special module with run, build and publish tasks
 project(":plugin"){
-    version = "1.0.0-SNAPSHOT" // TODO compute version, like rust plugin include the chanel suffix in version
+    version = "$majorVersion.$patchVersion.$buildNumber$versionSuffix"
     intellij {
         pluginName = "opa-idea-plugin"
         val plugins = mutableListOf(
@@ -171,7 +177,6 @@ project(":") {
     val testOutput = configurations.create("testOutput")
 
     dependencies {
-        //TODO NEEDED ?
         testOutput(sourceSets.getByName("test").output.classesDirs)
     }
 
