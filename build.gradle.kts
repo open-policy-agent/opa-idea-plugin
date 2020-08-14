@@ -68,6 +68,8 @@ allprojects {
 
     intellij {
         version = baseVersion
+        // location of IDE distributions, we customize it to easily run plugin verifier
+        ideaDependencyCachePath = dependencyCachePath
         sandboxDirectory = "$buildDir/$baseIDE-sandbox"
     }
 
@@ -115,6 +117,16 @@ allprojects {
             systemProperty("jna.nosys", "true")
         }
     }
+}
+
+val Project.dependencyCachePath get(): String {
+    val cachePath = file("${rootProject.projectDir}/deps")
+    // If cache path doesn't exist, we need to create it manually
+    // because otherwise gradle-intellij-plugin will ignore it
+    if (!cachePath.exists()) {
+        cachePath.mkdirs()
+    }
+    return cachePath.absolutePath
 }
 
 
