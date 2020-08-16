@@ -1,6 +1,8 @@
 # Table of Content
 <!-- toc -->
 - [Project structure](#project-structure)
+  - [IDE specific features](#ide-specific-features)
+  - [Platform version](#platform-version)
 - [Lexer](#lexer)
 - [Parser](#parser)
 - [Useful methods](#useful-methods)
@@ -9,7 +11,7 @@
     - [Example](#example)
   - [Parsing tests](#parsing-tests)
   - [RunConfiguration tests](#runconfiguration-tests)
-    - [TestRunConfutation tests](#testrunconfutation-tests)
+    - [TestRunConfiguration tests](#testrunconfiguration-tests)
 <!-- /toc -->
 
 *to update toc, please read [this page](../../hack/README.md).*
@@ -19,12 +21,41 @@
 ```
 .
 ├── build.gradle.kts
-├── gradle.properties
+├── settings.gradle.kts
+├── gradle.properties # main properties file
+├── gradle-201.properties # properties file for platform version 201 (see platform versioning chapter for more info)
+├── gradle-202.properties  # properties file for platform version 202 
+├── deps
 ├── docs
-│   └── devel #technical documentation of the project
+│   ├── devel # technical documentation of the project
+│   └── user
 ├── hack # set of useful script to manage the project
-└── src
-    ├── main
+├── idea # source code of features only available for IntelliJ
+│   └── src
+│       ├── main
+│       │   ├── kotlin
+│       │   │
+│       │   └── resources
+│       │       └── META-INF
+│       │           └── idea-only.xml # subset of the plugin.xml that contains of features only available in IntelliJ
+│       └── test
+│           ├── kotlin
+│           └── resources
+│               └── META-INF
+│                   └── plugin.xml
+├── plugin # module to build/run/publish opa-ida-plugin plugin
+│   └── src
+│       └── main
+│           └── resources
+│               └── META-INF
+│                   ├── plugin.xml
+│                   └── pluginIcon.svg
+└── src # source code common to all Ide 
+    ├── 201 # source code specific to platform version 201
+    |   ├── main
+    |   └── test
+    ├── 202 # source code specific to platform version 202
+    ├── main 
     │   ├── gen # lexer and parser generated code
     │   ├── grammar # grammar and lexer definition
     │   ├── kotlin
@@ -33,19 +64,24 @@
     │   │       │   ├── actions
     │   │       │   ├── colors
     │   │       │   ├── commenter
+    │   │       │   ├── extensions
     │   │       │   ├── highlight
-    │   │       │   └── runconfig
+    │   │       │   ├── linemarkers
+    │   │       │   ├── runconfig
+    │   │       │   └── todo
     │   │       ├── lang # code relative to rego language
-    │   │       │   ├── lexer
-    │   │       │   ├── parser
-    │   │       │   ├── psi
     │   │       │   ├── RegoFiletype.kt
     │   │       │   ├── RegoIcons.kt
-    │   │       │   └── RegoLanguage.kt
+    │   │       │   ├── RegoLanguage.kt
+    │   │       │   ├── lexer
+    │   │       │   ├── parser
+    │   │       │   └── psi
     │   │       ├── opa
     │   │       │   └── tool
     │   │       └── openapiext # extension methods that could be in IDEA sdk
-    │   └── resources # assets need by the plugin
+    │   └── resources
+    │       └── META-INF
+    │          └── core.xml # subset of the plugin.xml that contains of features available in all IDE
     └── test
         ├── kotlin # test source code
         └── resources # assets needed by tests
@@ -54,6 +90,47 @@
 The project is built using gradle. We use the [gradle kotlin dsl](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
 because it contains the tasks `generateRegoLexer` and `generateRegoParser` that automatically generate
 lexer and parser code before compiling Kotlin code.
+
+## IDE specific features
+The plugin may be integrated with some features only available in certain IDE or certain plugin. For example, the creation of the `rego` project is only available in IntelliJ. To be able to build different "flavors" of the plugin, we
+have split the project into several gradle modules. Each module except `root` and `plugin` support some features only
+available to a certain IDE or the integration with a plugin.  
+It allows us to separate code only available for one IDE and avoid wrong dependencies
+
+The modules are  
+* `:`: the root / core module that contains all code common to every IDE
+* `plugin`: module to build/run/publish the 
+* `idea`: code specific to IntelliJ IDE
+
+the module `plugin` contains the `plugin.xml` of the plugin. This file includes the plugin descriptor (ie plugin.xml) of
+the other modules as optional dependency. To avoid name conflict the others plugin descriptor are not named
+`plugin.xml`. This module will build the plugin artifact (ie a zip)  that contains the `jar` of all modules. This `zip` can
+be installed on any IDE, only the feature compatible with the IDE will be loaded.
+
+*note: If you want to implement integration with another plugin/IDE, you should create a new Gradle module for that.*
+
+## Platform version
+The code may be incompatible from one major version to another (eg deprecated method removed). To avoid parallel vsc branches. We have separate folders for each version to keep platform-dependent code.
+
+For example, current platform version is 193, next version is 200 and `org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterAnnotator`
+should have separate implementations for each version. Then project source code structure will be``
+
+```
+ +-- src
+ |   +-- 200/kotlin
+ |       +-- org/openpolicyagent/ideaplugin/ide/highlight
+ |           +-- RegoHighlighterAnnotator.kt
+ |   +-- 193/kotlin
+ |       +-- org/openpolicyagent/ideaplugin/ide/highlight
+ |           +-- RegoHighlighterAnnotator.kt
+ |   +-- main/kotlin
+ |       +-- other platform independent code`
+ ```
+
+Of course, only one batch of platform dependent code will be used in compilation.
+
+You can choose which platform version to use by setting the `platformVersion` property in `gradle.properties`.
+
 
 # Lexer
 The lexer is defined by the [RegoLexer.flex](../../src/main/grammar/RegoLexer.flex) file written in [JFlex](https://www.jflex.de/)
