@@ -29,7 +29,7 @@ $ git clone git@github.com:vgramer/opa-idea-plugin.git
 $ cd opa-idea-plugin
 
 # run tests
-$ ./gradlew  test        
+$ ./gradlew  :test        
 
 > Task :generateRegoLexer
 Reading "/tmp/a/opa-idea-plugin/src/main/grammar/RegoLexer.flex"
@@ -50,7 +50,7 @@ BUILD SUCCESSFUL in 13s
 ```
 
 # Run a Sandbox ide to test plugin
- You can use the gradle task `runIde` to run an IntelliJ sandbox with
+You can use the gradle task `runIde` to run an IntelliJ sandbox with
  * opa plugin installed
  * psi viewer installed
  

@@ -136,7 +136,7 @@ val majorVersion = prop("majorVersion")
 val patchVersion = prop("patchVersion").toInt()
 val buildNumber =  System.getenv("GITHUB_RUN_ID" ) ?: "SNAPSHOT"
 
-// TODO MORE EXPLICIT --- Special module with run, build and publish tasks
+// module to build/run/publish opa-ida-plugin plugin
 project(":plugin"){
     version = "$majorVersion.$patchVersion.$buildNumber$versionSuffix"
     intellij {

@@ -8,8 +8,16 @@ Main features are:
 
 # Compatibility
 
-- IDEA products from version `2019.2`
-- OPA `0.20.5`
+The plugin is compatible with all IntelliJ-based IDEs starting from the version 2020.1, with the following differences in the sets of the available features:
+
+
+|                        | [IntelliJ IDEA] Community and Ultimate (commercial) |Other IDE
+|------------------------|---|---|
+| Rego project creation  | + | - |
+| Other features         | + | + |
+
+
+Plugin has been tested OPA `0.20.5`, but should works with more recent versions.
 
 # Status
 Not ready yet to be used by  end-users
