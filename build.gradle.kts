@@ -47,6 +47,9 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.16.1")
     implementation("com.github.kittinunf.fuel", "fuel", "2.2.3")
     implementation("com.beust:klaxon:5.4")
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation("org.json", "json", "20180813")
+
 }
 
 idea {

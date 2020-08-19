@@ -123,18 +123,6 @@ class OPAActionToolWindow {
         return consoleView
     }
 
-  private fun getOpaToolWindow(project: Project): ToolWindow {
-        val toolWindowManager = ToolWindowManager.getInstance(project)
-        var toolWindow = toolWindowManager.getToolWindow(OPA_CONSOLE_ID)
-        if (toolWindow == null){
-            toolWindow = toolWindowManager.registerToolWindow(OPA_CONSOLE_ID, true, ToolWindowAnchor.BOTTOM)
-            toolWindow.title = OPA_CONSOLE_NAME
-            toolWindow.stripeTitle = OPA_CONSOLE_NAME
-            toolWindow.isShowStripeButton = true
-            toolWindow.icon = AllIcons.Toolwindows.ToolWindowMessages
-        }
-        return toolWindow
-    }
 
     //helper to attach console window running process to opa tool window
    private fun attachAndShowConsole(consoleContent: ContentImpl, toolWindow: ToolWindow){

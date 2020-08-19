@@ -100,35 +100,7 @@ class OpaActions : OpaBaseTool() {
         opaWindow.runProcessInConsole(project, args, "Trace Selection")
     }
 
-    /**
-     * Outputs the trace for the selected text in current editor. Looks for input.json in project root
-     * directory
-     */
-    fun traceSelection(project: Project, document: Document, editor: Editor) {
-        val opaWindow = OPAActionToolWindow()
-        val text = editor.selectionModel.selectedText ?: return
-        val pkg = getPackageAsString(document, project)
-        val imports = getImportsAsString(document, project)
-        val args = mutableListOf("eval", text, "--package", pkg, "--format", "pretty")
 
-        //supply input.json from project root if exists
-        val input_file = "input.json"
-        if (fileDirectChildOfRoot(project, input_file)) {
-            args.add("--input")
-            args.add(input_file)
-        }
-
-        args.add("--data=file:${project.basePath}")
-        for (import in imports) {
-            args.add("--import")
-            args.add(import)
-        }
-        args.add("--explain")
-        args.add("full")
-
-        opaWindow.runProcessInConsole(project, args, "Trace Selection")
-
-    }
 
     fun profileSelection(project: Project, document: Document, editor: Editor){
         val opaWindow = OPAActionToolWindow()

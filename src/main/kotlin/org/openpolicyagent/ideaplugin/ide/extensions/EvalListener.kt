@@ -1,13 +1,11 @@
 package org.openpolicyagent.ideaplugin.ide.extensions
-import com.beust.klaxon.JsonArray
 import com.intellij.execution.process.ProcessEvent
 import com.intellij.execution.process.ProcessListener
 import com.intellij.openapi.util.Key
-import com.beust.klaxon.JsonObject
-import com.beust.klaxon.Parser
 import com.intellij.execution.ui.ConsoleView
 import com.intellij.execution.ui.ConsoleViewContentType
-import org.mozilla.javascript.NativeJSON.stringify
+import org.json.JSONArray
+import org.json.JSONObject
 
 class EvalListener(consoleView: ConsoleView): ProcessListener {
     private var output = ""
@@ -22,41 +20,36 @@ class EvalListener(consoleView: ConsoleView): ProcessListener {
         if (exitcode != 0) {
             consoleView.print(output, ConsoleViewContentType.ERROR_OUTPUT)
         } else {
-            val parser = Parser.default()
-            val stringBuilder: StringBuilder = StringBuilder(output)
-            val json: JsonObject = parser.parse(stringBuilder) as JsonObject
-            //get json.result[0]
-            val results: JsonArray<JsonObject>? = json.array("result")
-            if (results != null){
-                val first = results[0]
-                consoleView.print("${first.toJsonString(true)}", ConsoleViewContentType.LOG_DEBUG_OUTPUT)
-                val bindings : JsonArray<JsonObject>? = first.array("bindings")
-                if (bindings == null) {
-                    consoleView.print("Bindings null", ConsoleViewContentType.LOG_DEBUG_OUTPUT)
-                    val screen_output = results.map {
-                       val expressions : JsonArray<JsonObject>? = it.array("expressions")
-                        var test = ""
-                        expressions?.map {
-                           it.boolean("value")
-                       }
-                   }
-                    consoleView.print("${stringify(screen_output)}", ConsoleViewContentType.LOG_INFO_OUTPUT)
-                } else {
-                    consoleView.print("$bindings", ConsoleViewContentType.LOG_DEBUG_OUTPUT)
-                    //output = result.result.map((x: any) => x.bindings);
-                    results.map{
-                        val indiv_bindings: JsonArray<Boolean>? = it.array("bindings")
-                        indiv_bindings?.map{
-                            consoleView.print(it.toString(), ConsoleViewContentType.LOG_INFO_OUTPUT)
+            val json = JSONObject(output)
+            if (json.has("result")){
+                val results = json.getJSONArray("result")
+                val first = results.getJSONObject(0)
+                val screen_output = JSONArray()
+                if (first.has("bindings")) {
+                    val bindings = first.getJSONArray("bindings")
+                    for (i in 0 until results.length()) {
+                        if(results.getJSONObject(i).has("bindings")){
+                            screen_output.put(results.getJSONObject(i).get("bindings"))
                         }
                     }
 
+                } else {
+                    for (i in 0 until results.length()) {
+                        if(results.getJSONObject(i).has("expressions")){
+                            val expressions = results.getJSONObject(i).getJSONArray("expressions")
+                            val sublist = JSONArray()
+                            for (j in 0 until expressions.length()){
+                                sublist.put(expressions.getJSONObject(j).get("value"))
+                            }
+                            screen_output.put(sublist)
+                        }
+                    }
                 }
+                consoleView.print("${screen_output.toString(4)}", ConsoleViewContentType.LOG_INFO_OUTPUT)
             } else {
                 consoleView.print("No results found", ConsoleViewContentType.LOG_INFO_OUTPUT)
             }
         }
-            //consoleView.print("${json.string("result")}", ConsoleViewContentType.NORMAL_OUTPUT)
     }
 
 
@@ -67,7 +60,6 @@ class EvalListener(consoleView: ConsoleView): ProcessListener {
 
     override fun startNotified(event: ProcessEvent) {
         output = ""
-
     }
 
 

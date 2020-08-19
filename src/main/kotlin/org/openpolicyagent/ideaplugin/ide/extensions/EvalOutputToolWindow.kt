@@ -77,33 +77,5 @@ class EvalOutputToolWindow {
             toolWindow.show(null)
             return@invokeLater
         }
-
-
-//
-//            val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
-//            val toolWindow = getOutputWindow(project)
-//            val consoleContent = ContentImpl(consoleView.component, title, false)
-//            consoleContent.manager = toolWindow.contentManager
-//            toolWindow.contentManager.addContent(consoleContent)
-//            toolWindow.contentManager.setSelectedContent(consoleContent)
-//            val exitcode = processOutput.exitCode
-//            if (exitcode != 0) {
-//                if (processOutput.stdout != "") {
-//                    consoleView.print(processOutput.stdout, ConsoleViewContentType.ERROR_OUTPUT)
-//                } else {
-//                    consoleView.print(processOutput.stderr, ConsoleViewContentType.ERROR_OUTPUT)
-//                }
-//            } else {
-//                val parser = Parser.default()
-//                val stringBuilder: StringBuilder = StringBuilder(processOutput.stdout)
-//                val json: JsonObject = parser.parse(stringBuilder) as JsonObject
-//                //get json.result[0]
-//                //consoleView.print("${json.string("result")}", ConsoleViewContentType.NORMAL_OUTPUT)
-//            }
-
-
-        //toolWindow.show(null)
-
-
     }
 }
