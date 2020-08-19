@@ -68,51 +68,51 @@
             <add-to-group group-id="CodeMenu" anchor="first"/>
             <action id="org.openpolicyagent.ideaplugin.actions.InstallOPA"
                     class="org.openpolicyagent.ideaplugin.ide.actions.InstallOPA"
-                    text="Install the OPA binary"
+                    text="OPA: Install the OPA binary"
                     description="Install the OPA binary"
                     icon="AllIcons.Actions.RealIntentionBulb">
             </action>
             <action id="org.openpolicyagent.ideaplugin.actions.FmtAction"
                     class="org.openpolicyagent.ideaplugin.ide.actions.FmtAction"
-                    text="Reformat with opa fmt"
+                    text="OPA: Reformat"
                     description="Reformat current file with Opa Fmt"
                     icon="AllIcons.Actions.RealIntentionBulb">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl I"/>
             </action>
             <action id="org.openpolicyagent.ideaplugin.actions.CheckDocumentAction"
                     class="org.openpolicyagent.ideaplugin.ide.actions.CheckDocumentAction"
-                    text="Check current open file with Opa Check"
+                    text="OPA: Check file"
                     description="Check current open file with Opa Check"
                     icon="AllIcons.Actions.RealIntentionBulb">
             </action>
             <action id="org.openpolicyagent.ideaplugin.actions.TestAction"
                     class="org.openpolicyagent.ideaplugin.ide.actions.TestAction"
-                    text="Test workspace with opa test"
+                    text="OPA: Test Workspace"
                     description="Test workspace with opa test"
                     icon="AllIcons.Actions.RealIntentionBulb">
             </action>
             <action id="org.openpolicyagent.ideaplugin.actions.TestCoverageAction"
                     class="org.openpolicyagent.ideaplugin.ide.actions.TestCoverageAction"
-                    text="View test coverage for workspace with opa test --coverage"
+                    text="OPA: View test coverage"
                     description="View test coverage for workspace with opa test --coverage"
                     icon="AllIcons.Actions.RealIntentionBulb">
             </action>
 
             <action id="org.openpolicyagent.ideaplugin.actions.TraceSelectionAction"
                     class="org.openpolicyagent.ideaplugin.ide.actions.TraceSelectionAction"
-                    text="Display trace of selection in active editor"
+                    text="OPA: Trace Selection"
                     description="Display trace of selection in active editor"
                     icon="AllIcons.Actions.RealIntentionBulb">
             </action>
             <action id="org.openpolicyagent.ideaplugin.actions.ProfileSelectionAction"
                     class="org.openpolicyagent.ideaplugin.ide.actions.ProfileSelectionAction"
-                    text="Display the profile information of the selection in the active text editor"
+                    text="OPA: Profile Selection"
                     description="Display the profile information of the selection in the active text editor"
                     icon="AllIcons.Actions.RealIntentionBulb">
             </action>
             <action id="org.openpolicyagent.ideaplugin.actions.EvalSelectedAction"
                     class="org.openpolicyagent.ideaplugin.ide.actions.EvalSelectedAction"
-                    text="Evasl Selection"
+                    text="OPA: Eval Selection"
                     description="Display the profile information of the selection in the active text editor"
                     icon="AllIcons.Actions.RealIntentionBulb">
             </action>
@@ -124,8 +124,6 @@
                 icon="AllIcons.Actions.RealIntentionBulb">
             <add-to-group group-id="CodeMenu" anchor="before" relative-to-action="org.openpolicyagent.ideaplugin.actions.TestCoverageAction"/>
         </action>
-
-
         <action id="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"
                 class="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"
                 text="Rego File"
