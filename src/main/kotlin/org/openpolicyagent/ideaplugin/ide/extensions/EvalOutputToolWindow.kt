@@ -6,6 +6,7 @@ import com.intellij.execution.filters.TextConsoleBuilderFactory
 import com.intellij.execution.process.OSProcessHandler
 import com.intellij.execution.process.ProcessNotCreatedException
 import com.intellij.execution.process.ProcessTerminatedListener
+import com.intellij.execution.ui.ConsoleView
 import com.intellij.execution.ui.ConsoleViewContentType
 import com.intellij.icons.AllIcons
 import com.intellij.notification.Notification
@@ -23,7 +24,7 @@ import java.util.concurrent.ExecutionException
 
 
 class EvalOutputToolWindow {
-    private val OUTPUT_WINDOW_ID = "Output"
+    private val OUTPUT_WINDOW_ID = "output.json"
     /**
      * Returns (and creates if uninstantiated) the opa output tool window
      */
@@ -61,7 +62,7 @@ class EvalOutputToolWindow {
             val toolWindow = getOutputWindow(project)
             val consoleContent = ContentImpl(consoleView.component, title, false)
 
-            //the tool window shouldn't have two consoles with the sdame title (task)
+            //the tool window shouldn't have two consoles with the same title (task)
             val existing = toolWindow.contentManager.findContent(title) ?: null
             if (existing != null) {
                 toolWindow.contentManager.removeContent(existing, true)

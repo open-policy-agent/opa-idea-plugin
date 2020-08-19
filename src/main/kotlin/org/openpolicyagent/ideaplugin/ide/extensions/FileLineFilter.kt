@@ -21,19 +21,19 @@ class FileLineFilter(project: Project): Filter {
     override fun applyFilter(line: String, entireLength: Int): Filter.Result? {
         val basepath = project.basePath ?: return null //we will need to know the project basepath to hyperlink
         val startpoint = entireLength - line.length
-      //regex from cited source...any simplifications welcome
-       val matcher = Pattern.compile(
-               "(?<link>(?<path>([.~])?(?:[a-zA-Z]:\\\\|/)?\\w[\\w/\\-.\\\\]*\\.[\\w\\-.]+)\\$?" +
-                        "(?:(?::|, line |\\()(?<row>\\d+)(?:[:,]( column )?(?<col>\\d+)\\)?)?)?)",
-                Pattern.UNICODE_CHARACTER_CLASS).matcher(line)
+        //regex from cited source...any simplifications welcome
+        val matcher = Pattern.compile(
+            "(?<link>(?<path>([.~])?(?:[a-zA-Z]:\\\\|/)?\\w[\\w/\\-.\\\\]*\\.[\\w\\-.]+)\\$?" +
+                    "(?:(?::|, line |\\()(?<row>\\d+)(?:[:,]( column )?(?<col>\\d+)\\)?)?)?)",
+            Pattern.UNICODE_CHARACTER_CLASS).matcher(line)
         val results = mutableListOf<Filter.ResultItem>()
         while (matcher.find()) {
 
             var path = matcher.group("path")
 
-           //if no row is supplied, do not hyperlink (largely due to regex matching collisions with
+            //if no row is supplied, do not hyperlink (largely due to regex matching collisions with
             //rego values like data.xyz or input.xyz)
-           val row = matcher.group("row")?.toInt() ?: continue
+            val row = matcher.group("row")?.toInt() ?: continue
 
             val files = mutableListOf<VirtualFile>()
             //path could be relative to project basedir path or absolute path

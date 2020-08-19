@@ -54,8 +54,6 @@ class EvalListener(consoleView: ConsoleView): ProcessListener {
 
 
     override fun processWillTerminate(event: ProcessEvent, willBeDestroyed: Boolean) {
-        print("processWillTerminate")
-        print(event.text)
     }
 
     override fun startNotified(event: ProcessEvent) {

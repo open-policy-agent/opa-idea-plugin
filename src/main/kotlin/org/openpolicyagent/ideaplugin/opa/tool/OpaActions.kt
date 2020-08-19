@@ -7,6 +7,7 @@ package org.openpolicyagent.ideaplugin.opa.tool
 
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.GeneralCommandLine
+import com.intellij.execution.process.ProcessNotCreatedException
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
