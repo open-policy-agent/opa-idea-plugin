@@ -18,7 +18,7 @@ class RegoModuleBuilder : ModuleBuilder() {
     }
 
     override fun getModuleType(): ModuleType<*>? {
-        return RegoModuleType.INSTANCE
+        return RegoModuleType()
     }
 
     override fun createWizardSteps(wizardContext: WizardContext, modulesProvider: ModulesProvider): Array<ModuleWizardStep> {

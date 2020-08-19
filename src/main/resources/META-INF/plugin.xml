@@ -117,13 +117,6 @@
                     icon="AllIcons.Actions.RealIntentionBulb">
             </action>
         </group>
-       <action id="org.openpolicyagent.ideaplugin.actions.TraceSelectionAction"
-                class="org.openpolicyagent.ideaplugin.ide.actions.TraceSelectionAction"
-                text="Display trace of selection in active editor"
-                description="Display trace of selection in active editor"
-                icon="AllIcons.Actions.RealIntentionBulb">
-            <add-to-group group-id="CodeMenu" anchor="before" relative-to-action="org.openpolicyagent.ideaplugin.actions.TestCoverageAction"/>
-        </action>
         <action id="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"
                 class="org.openpolicyagent.ideaplugin.ide.actions.RegoCreateFileAction"
                 text="Rego File"

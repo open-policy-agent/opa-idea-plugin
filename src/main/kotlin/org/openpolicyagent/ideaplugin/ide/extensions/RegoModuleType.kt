@@ -31,7 +31,6 @@ class RegoModuleType : ModuleType<RegoModuleBuilder>("REGO_MODULE") {
 
     companion object {
         private const val ID = "REGO_MODULE"
-        val INSTANCE: RegoModuleType by lazy { ModuleTypeManager.getInstance().findByID(ID) as RegoModuleType }
     }
 
 
