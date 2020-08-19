@@ -19,8 +19,15 @@ OPA binary must be in the path.
 Installation instructions for OPA can be found [here](https://www.openpolicyagent.org/docs/latest/#running-opa).
 
 ## from Jetbrains repository
-not available yet
+First, in IntelliJ IDEA, from Preferences>Plugins, add `https://plugins.jetbrains.com/plugins/dev/list` to your Custom Repositories
 
+![Step 1](docs/user/img/1_install_plugin.png)
+
+![Step 2](docs/user/img/2_add_custom_repository.png)
+
+Then, search "opa" in the Marketplace tab and install the plugin
+
+![Step 3](docs/user/img/3_install_opa_plugin.png)
 ## from source
 You can build the project from source and then install it. Build instructions are available [here](docs/devel/setup_development_env.md)
 
