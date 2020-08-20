@@ -25,9 +25,9 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
-    <xi:include href="/META-INF/core.xml" xpointer="xpointer(/idea-plugin/*)"/>
+    <xi:include href="/META-INF/opa-core.xml" xpointer="xpointer(/idea-plugin/*)"/>
 
-    <depends optional="true" config-file="idea-only.xml">com.intellij.modules.java</depends>
+    <depends optional="true" config-file="opa-idea-only.xml">com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- although Rego module type is only created by IDEA, we need it in other IDEs as well
