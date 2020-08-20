@@ -35,10 +35,9 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.3.72"
     id("org.jetbrains.intellij") version "0.4.21"
     id("org.jetbrains.grammarkit") version "2020.2.1"
-    id("de.undercouch.download") version "3.4.3"
     id("net.saliman.properties") version "1.4.6"
 }
 
@@ -56,8 +55,9 @@ allprojects {
     }
 
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-        implementation("com.github.kittinunf.fuel", "fuel", "2.2.3")
+        implementation("com.github.kittinunf.fuel", "fuel", "2.2.3"){
+            exclude("org.jetbrains.kotlin")
+        }
         testImplementation("org.assertj:assertj-core:3.16.1")
     }
 
