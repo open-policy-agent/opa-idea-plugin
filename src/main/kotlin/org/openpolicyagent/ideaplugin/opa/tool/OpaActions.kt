@@ -31,7 +31,6 @@ class OpaActions : OpaBaseTool() {
     fun reformatDocument(project: Project, document: Document): String {
         val processOutput = try {
             GeneralCommandLine(opaBinary)
-                .withWorkDirectory(project.basePath)
                 .withParameters("fmt")
                 .withCharset(Charsets.UTF_8)
                 .execute(project, false, stdIn = document.text.toByteArray())

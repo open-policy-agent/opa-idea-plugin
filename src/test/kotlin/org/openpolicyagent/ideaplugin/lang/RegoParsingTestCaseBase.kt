@@ -6,12 +6,12 @@
 package org.openpolicyagent.ideaplugin.lang
 
 import com.intellij.testFramework.ParsingTestCase
+import com.intellij.util.EnvironmentUtil
+import org.apache.commons.io.IOUtils
 import org.openpolicyagent.ideaplugin.OpaTestBase
 import org.openpolicyagent.ideaplugin.OpaTestCase
 import org.openpolicyagent.ideaplugin.OpaTestCase.Companion.testResourcesPath
 import org.openpolicyagent.ideaplugin.lang.parser.RegoParserDefinition
-import org.openpolicyagent.ideaplugin.openapiext.execute
-import com.intellij.execution.configurations.GeneralCommandLine
 import org.openpolicyagent.ideaplugin.opa.tool.OpaBaseTool.Companion.opaBinary
 
 
@@ -42,17 +42,45 @@ abstract class RegoParsingTestCaseBase() : ParsingTestCase(
         ensureNoErrorElements()
     }
 
+    /**
+     * use opa check command to ensure the file is correct
+     *
+     * Implementation note:
+     * To execute the opa check command, we dont use a GeneralCommandLine like this one
+     *
+     *  GeneralCommandLine(opaBinary)
+     *     .withWorkDirectory(super.myFullDataPath)
+     *     .withParameters("check", "$testName.$myFileExt")
+     *     .withCharset(Charsets.UTF_8)
+     *     .execute(project, false)
+     *
+     *  because since version 202, the way to load Charset has changed and it's lead to an IllegalStateException:
+     *
+     *  java.lang.IllegalStateException: @NotNull method com/intellij/openapi/vfs/encoding/EncodingManager.getInstance must not return null
+     *  at com.intellij.openapi.vfs.encoding.EncodingManager.$$$reportNull$$$0(EncodingManager.java)
+     *  at com.intellij.openapi.vfs.encoding.EncodingManager.getInstance(EncodingManager.java:20)
+     *  at com.intellij.execution.configurations.GeneralCommandLine.defaultCharset(GeneralCommandLine.java:124)
+     *
+     *  I think it's because the ParsingTestCase use a mockApplication instead of CodeInsightTestFixture.
+     */
     private fun checkRegoFileForErrorsWithLocalOpaClient() {
-        GeneralCommandLine(opaBinary)
-            .withWorkDirectory(super.myFullDataPath)
-            .withParameters("check", "$testName.$myFileExt")
-            .withCharset(Charsets.UTF_8)
-            .execute(project, false)
-    }
+        val fileToCheck = "${super.myFullDataPath}/$testName.$myFileExt"
 
+        val pb = ProcessBuilder(opaBinary, "check", fileToCheck)
+        val env = pb.environment()
+        env.clear()
+        env.putAll(EnvironmentUtil.getEnvironmentMap())
+        pb.redirectErrorStream(true)
 
-    fun doTestNoErrorAndCheckResult() {
-        super.doTest(true, false)
-        ensureNoErrorElements()
+        val p = pb.start()
+        p.waitFor()
+        if (p.exitValue() != 0) {
+            throw Exception(
+                """
+                opa check fail on file '$fileToCheck'
+                output:'${IOUtils.toString(p.inputStream, Charsets.UTF_8)}'
+            """.trimIndent()
+            )
+        }
     }
 }
