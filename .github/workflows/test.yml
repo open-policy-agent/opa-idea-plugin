@@ -11,7 +11,13 @@ on:
 
 jobs:
   build:
-
+    strategy:
+      fail-fast: false
+      matrix:
+        platform-version: [ 201, 202 ]
+    timeout-minutes: 60
+    env:
+      ORG_GRADLE_PROJECT_platformVersion: ${{ matrix.platform-version }}
     runs-on: ubuntu-latest
 
     steps:
@@ -32,4 +38,22 @@ jobs:
     - name: Build and test
       run: |
         export PATH=/tmp/opa_bin:$PATH
-        ./gradlew assemble test
+        ./gradlew :test
+
+  # This job is successful if all depend jobs are successful. To be able to merge the PR, this job must be successful
+  all-checks:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    env:
+      NEEDS_CONTEXT: ${{ toJson(needs) }}
+    steps:
+      - name: Finish check
+        run: |
+          if jq -r '.[] | .result ' <<<"${NEEDS_CONTEXT}" | grep -iq failure ; then
+              echo "Error some check are failed"
+              exit 1
+          else
+              echo "All checks ok"
+              exit 0
+          fi
