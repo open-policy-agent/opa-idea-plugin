@@ -109,6 +109,12 @@ allprojects {
         withType<RunIdeTask> {
             jvmArgs("--add-exports", "java.base/jdk.internal.vm=ALL-UNNAMED")
         }
+
+        buildSearchableOptions {
+            // buildSearchableOptions task doesn't make sense for non-root subprojects
+            val isRootProject = project.name == "plugin"
+            enabled = isRootProject
+        }
     }
     afterEvaluate {
         tasks.withType<Test>().configureEach {
