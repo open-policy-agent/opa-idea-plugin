@@ -37,7 +37,7 @@
 │       │   │
 │       │   └── resources
 │       │       └── META-INF
-│       │           └── idea-only.xml # subset of the plugin.xml that contains of features only available in IntelliJ
+│       │           └── idea-only.xml # subset of the plugin.xml that contains features only available in IntelliJ
 │       └── test
 │           ├── kotlin
 │           └── resources
@@ -78,42 +78,42 @@
     │   │       │   └── psi
     │   │       ├── opa
     │   │       │   └── tool
-    │   │       └── openapiext # extension methods that could be in IDEA sdk
+    │   │       └── openapiext # extension methods that could be in IDEA SDK
     │   └── resources
     │       └── META-INF
-    │          └── core.xml # subset of the plugin.xml that contains of features available in all IDE
+    │          └── core.xml # subset of the plugin.xml that contains features available in all IDE
     └── test
         ├── kotlin # test source code
         └── resources # assets needed by tests
 ```
 
-The project is built using gradle. We use the [gradle kotlin dsl](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
+The project is built using Gradle. We use the [gradle kotlin dsl](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
 because it contains the tasks `generateRegoLexer` and `generateRegoParser` that automatically generate
 lexer and parser code before compiling Kotlin code.
 
 ## IDE specific features
 The plugin may be integrated with some features only available in certain IDE or certain plugin. For example, the creation of the `rego` project is only available in IntelliJ. To be able to build different "flavors" of the plugin, we
-have split the project into several gradle modules. Each module except `root` and `plugin` support some features only
+have split the project into several Gradle modules. Each module except `root` and `plugin` support some features only
 available to a certain IDE or the integration with a plugin.  
 It allows us to separate code only available for one IDE and avoid wrong dependencies
 
 The modules are  
-* `:`: the root / core module that contains all code common to every IDE
-* `plugin`: module to build/run/publish the 
+* `:`: the root/core module that contains all code common to every IDE
+* `plugin`: module to build/run/publish the plugin
 * `idea`: code specific to IntelliJ IDE
 
 the module `plugin` contains the `plugin.xml` of the plugin. This file includes the plugin descriptor (ie plugin.xml) of
-the other modules as optional dependency. To avoid name conflict the others plugin descriptor are not named
+the other modules as optional dependencies. To avoid name conflict the other plugin descriptors are not named
 `plugin.xml`. This module will build the plugin artifact (ie a zip)  that contains the `jar` of all modules. This `zip` can
 be installed on any IDE, only the feature compatible with the IDE will be loaded.
 
 *note: If you want to implement integration with another plugin/IDE, you should create a new Gradle module for that.*
 
 ## Platform version
-The code may be incompatible from one major version to another (eg deprecated method removed). To avoid parallel vsc branches. We have separate folders for each version to keep platform-dependent code.
+The code may be incompatible from one major version to another (eg deprecated or removed methods). To avoid parallel vsc branches. We have separate folders for each version to keep platform-dependent code.
 
 For example, current platform version is 193, next version is 200 and `org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterAnnotator`
-should have separate implementations for each version. Then project source code structure will be``
+should have separate implementations for each version. Then project source code structure will be:
 
 ```
  +-- src
@@ -127,7 +127,7 @@ should have separate implementations for each version. Then project source code 
  |       +-- other platform independent code`
  ```
 
-Of course, only one batch of platform dependent code will be used in compilation.
+Of course, only one batch of platform-dependent code will be used in compilation.
 
 You can choose which platform version to use by setting the `platformVersion` property in `gradle.properties`.
 
@@ -139,7 +139,7 @@ format. Code can be generated thanks to `generateRegoLexer` gradle tasks.
 # Parser
 The parser is defined by the [Rego.bnf](../../src/main/grammar/Rego.bnf) file written in [Grammar kit ](https://github.com/JetBrains/Grammar-Kit)
 format. It looks like a `bnf` grammar. `Grammar kit` also generates the [PSI](https://www.jetbrains.org/intellij/sdk/docs/basics/architectural_overview/psi.html)
-(Program Structure Interface) which is a kind of AST but with more information. Lots of ide features are plugged to the PSI.
+(Program Structure Interface) which is a kind of AST but with more information. Lots of IDE features are plugged into the PSI.
 Once the PSI is generated, some features like commenting code are really straightforward to implement.
 
 Code can be generated thanks to `generateRegoParser` gradle tasks.
@@ -170,7 +170,7 @@ in IntelliJ is to name these resources after the name of the test.
 
 The logic to find and compare both files is implemented in base classes `OpaTestBase`, `OpaWithRealProjectTestBase`. 
 
-In your test class you must override the `dataPath` field to indicate the folder containing the resources files. By 
+In your test class, you must override the `dataPath` field to indicate the folder containing the resources files. By 
 convention the name of this folder follows the pattern `<package_of_the_tested_class>.fixtures`
 
 ### Example
