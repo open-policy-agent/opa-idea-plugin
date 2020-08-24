@@ -7,12 +7,14 @@ package org.openpolicyagent.ideaplugin.opa.tool
 
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.GeneralCommandLine
+import com.intellij.execution.process.ProcessNotCreatedException
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import org.openpolicyagent.ideaplugin.ide.actions.fileDirectChildOfRoot
 import org.openpolicyagent.ideaplugin.ide.actions.getImportsAsString
 import org.openpolicyagent.ideaplugin.ide.actions.getPackageAsString
+import org.openpolicyagent.ideaplugin.ide.extensions.EvalOutputToolWindow
 import org.openpolicyagent.ideaplugin.ide.extensions.OPAActionToolWindow
 import org.openpolicyagent.ideaplugin.openapiext.execute
 import org.openpolicyagent.ideaplugin.openapiext.isUnitTestMode
@@ -48,8 +50,8 @@ class OpaActions : OpaBaseTool() {
 
     fun checkDocument(project: Project, document: Document) {
         val file = document.virtualFile ?: return
-        // todo: get path to file relative to project path
-        val args = mutableListOf("check", file.name)
+        val rel_path = project.basePath?.let { file.path.removePrefix(it) }?.removePrefix("/")?: file.name
+        val args = mutableListOf("check", rel_path)
         OPAActionToolWindow().runProcessInConsole(project, args, "Opa Check")
     }
 
@@ -97,7 +99,55 @@ class OpaActions : OpaBaseTool() {
         args.add("full")
 
         opaWindow.runProcessInConsole(project, args, "Trace Selection")
-
     }
+
+
+
+    fun profileSelection(project: Project, document: Document, editor: Editor){
+        val opaWindow = OPAActionToolWindow()
+        val text = editor.selectionModel.selectedText ?: return
+        val pkg = getPackageAsString(document, project)
+        val imports = getImportsAsString(document, project)
+        val args = mutableListOf("eval", text, "--package", pkg, "--profile", "--format", "pretty")
+
+        //supply input.json from project root if exists
+        val input_file = "input.json"
+        if (fileDirectChildOfRoot(project, input_file)) {
+            args.add("--input")
+            args.add(input_file)
+        }
+
+        args.add("--data=file:${project.basePath}")
+        for (import in imports) {
+            args.add("--import")
+            args.add(import)
+        }
+        opaWindow.runProcessInConsole(project, args, "Profile Selection")
+    }
+
+    fun evalSelection(project: Project, document: Document, editor: Editor){
+        val opaWindow = EvalOutputToolWindow()
+        val text = editor.selectionModel.selectedText ?: return
+        val pkg = getPackageAsString(document, project)
+        val imports = getImportsAsString(document, project)
+        val args = mutableListOf("eval", text, "--package", pkg)
+
+        //supply input.json from project root if exists
+        val input_file = "input.json"
+        if (fileDirectChildOfRoot(project, input_file)) {
+            args.add("--input")
+            args.add(input_file)
+        }
+
+        args.add("--data=file:${project.basePath}")
+        for (import in imports) {
+            args.add("--import")
+            args.add(import)
+        }
+
+
+        opaWindow.showOutput(project, args, "Eval Selection")
+    }
+
 
 }

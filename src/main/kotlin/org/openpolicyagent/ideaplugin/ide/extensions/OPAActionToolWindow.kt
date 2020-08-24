@@ -69,19 +69,15 @@ class OPAActionToolWindow {
                 return
             }
             ProcessTerminatedListener.attach(processHandler)
-
             //create console to attach to tool window
             ApplicationManager.getApplication().invokeLater {
                 val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
                 consoleView.clear()
                 consoleView.attachToProcess(processHandler)
-
                 //filter to hyperlink to all referenced file:row:col during logging
                 consoleView.addMessageFilter(FileLineFilter(project))
                 processHandler.startNotify()
-
                 val toolWindow = getOpaToolWindow(project)
-
                 val panel = JPanel(BorderLayout())
                 panel.add(consoleView.component, "Center")
                 val toolbarActions = DefaultActionGroup()
@@ -98,7 +94,6 @@ class OPAActionToolWindow {
                 if (existing != null) {
                     toolWindow.contentManager.removeContent(existing, true)
                 }
-
                 attachAndShowConsole(consoleContent, toolWindow)
                 return@invokeLater
 
@@ -128,9 +123,8 @@ class OPAActionToolWindow {
         return consoleView
     }
 
-    /**
-     * helper to attach console window running process to opa tool window
-     */
+
+    //helper to attach console window running process to opa tool window
     private fun attachAndShowConsole(consoleContent: ContentImpl, toolWindow: ToolWindow){
         consoleContent.manager = toolWindow.contentManager
         toolWindow.contentManager.addContent(consoleContent)

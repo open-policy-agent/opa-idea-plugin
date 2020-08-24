@@ -15,9 +15,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.util.PsiTreeUtil
 import org.openpolicyagent.ideaplugin.lang.RegoLanguage
 import org.openpolicyagent.ideaplugin.lang.psi.RegoImport
 import org.openpolicyagent.ideaplugin.lang.psi.RegoPackage
+import org.openpolicyagent.ideaplugin.openapiext.toPsiFile
 import org.openpolicyagent.ideaplugin.openapiext.virtualFile
 
 /**
@@ -46,16 +48,9 @@ fun getSelectedEditor(project: Project): Editor? =
  * Returns package name in document as string
  */
 fun getPackageAsString(document: Document, project: Project): String {
-    val file = document.virtualFile ?: return ""
-    val fileView = PsiManager.getInstance(project).findViewProvider(file) ?: return ""
-    val psiTree = fileView.getPsi(RegoLanguage)
-    val children = psiTree.children
-    for (child in children) {
-        if (child is RegoPackage) {
-            return child.ref.text
-        }
-    }
-    return ""
+    val file = document.virtualFile
+    val element = PsiTreeUtil.findChildOfType(file?.toPsiFile(project), RegoPackage::class.java)
+    return element?.ref?.text?: ""
 }
 
 /**
@@ -94,3 +89,4 @@ fun fileDirectChildOfRoot(project: Project, name: String): Boolean {
     }
     return false
 }
+

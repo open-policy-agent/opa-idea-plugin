@@ -6,7 +6,7 @@ import org.openpolicyagent.ideaplugin.opa.tool.OpaActions
 import org.openpolicyagent.ideaplugin.openapiext.isOPAPluginApplicable
 
 
-class TraceSelectionAction : DumbAwareAction() {
+class EvalSelectedAction : DumbAwareAction() {
     override fun update(e: AnActionEvent) {
         super.update(e)
         e.presentation.isEnabledAndVisible = getProjectAndDocument(e) != null
@@ -18,6 +18,6 @@ class TraceSelectionAction : DumbAwareAction() {
             return
         }
         val editor = getEditor(e) ?: return
-        OpaActions().traceSelection(project, document, editor)
+        OpaActions().evalSelection(project, document, editor)
     }
 }

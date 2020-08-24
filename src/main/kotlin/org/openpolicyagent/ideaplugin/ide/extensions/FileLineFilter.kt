@@ -23,9 +23,9 @@ class FileLineFilter(project: Project): Filter {
         val startpoint = entireLength - line.length
         //regex from cited source...any simplifications welcome
         val matcher = Pattern.compile(
-                "(?<link>(?<path>([.~])?(?:[a-zA-Z]:\\\\|/)?\\w[\\w/\\-.\\\\]*\\.[\\w\\-.]+)\\$?" +
-                        "(?:(?::|, line |\\()(?<row>\\d+)(?:[:,]( column )?(?<col>\\d+)\\)?)?)?)",
-                Pattern.UNICODE_CHARACTER_CLASS).matcher(line)
+            "(?<link>(?<path>([.~])?(?:[a-zA-Z]:\\\\|/)?\\w[\\w/\\-.\\\\]*\\.[\\w\\-.]+)\\$?" +
+                    "(?:(?::|, line |\\()(?<row>\\d+)(?:[:,]( column )?(?<col>\\d+)\\)?)?)?)",
+            Pattern.UNICODE_CHARACTER_CLASS).matcher(line)
         val results = mutableListOf<Filter.ResultItem>()
         while (matcher.find()) {
 
