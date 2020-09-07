@@ -92,4 +92,22 @@ the parser will be automatically generated.
 The code is generated in the [gen folder](../../src/main/gen). If you want to reset the generated, just delete the
 content of the gen folder and launch tasks `:generateRegoLexer` and `:generateRegoParser`.
 
+ # Configure IDE to automatically add license header
+ If it's not already done, please install the [copyright plugin](https://plugins.jetbrains.com/plugin/13114-copyright/).
+ This plugin will automatically add the license header when you create a file.
  
+ To configure it , open the `Settings / Preferences dialog` and select `Editor | Copyright`. Create a new profile with 
+ this license header:
+ 
+ ```
+ Use of this source code is governed by the MIT license that can be
+ found in the LICENSE file.
+ ```
+ 
+ To check if project file contains the license header, run the script `hack/check-license.sh`
+ 
+ ```
+ $ hack/check-license.sh
+   Checking files contains licence header...
+   Check OK
+ ```
