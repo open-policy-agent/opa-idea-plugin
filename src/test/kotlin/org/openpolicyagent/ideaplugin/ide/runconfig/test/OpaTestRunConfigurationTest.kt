@@ -58,6 +58,12 @@ class OpaTestRunConfigurationTest : OpaTestRunConfigurationBase() {
         "Bundle directory must be a directory"
     )
 
+    fun `test invalid config, bundle is null`() = doCheckConfigError(
+        null,
+        validAdditionalArgs(),
+        "Bundle directory must be a directory"
+    )
+
     fun `test read external`() {
         val runConfig = createTestConfig()
 
