@@ -61,11 +61,8 @@ class OpaTestRunConfiguration(
             throw RuntimeConfigurationError("Only format option (-f or --format) = pretty is handle by plugin")
         }
 
-        // TODO check that if bundle dir is null, a path is provided to command
-        bundleDir?.let {
-            if (it.isFile()) {
-                throw RuntimeConfigurationError("Bundle directory must be a directory")
-            }
+        if (bundleDir == null || bundleDir!!.isFile()){
+            throw RuntimeConfigurationError("Bundle directory must be a directory")
         }
     }
 
