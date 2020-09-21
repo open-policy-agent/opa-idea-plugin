@@ -1,0 +1,21 @@
+Testing started at .+
+opa test \-f pretty \-v \-b .+
+FAILURES
+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+data.test.main.test_rule_2_should_be_ko: FAIL \(.+\)
+  query:1                                                              Enter data.test.main.test_rule_2_should_be_ko = _
+  [^:]+:9      \| Enter data.test.main.test_rule_2_should_be_ko
+  [^:]+:11     \| \| Fail msg = \{"another message in order to put the test in FAIL state"}
+  query:1                                                              \| Fail data.test.main.test_rule_2_should_be_ko = _
+
+
+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+data.test.main.test_should_raise_error: ERROR \([^)]+\)  [^:]+:18: eval_builtin_error: to_number: strconv.ParseFloat: parsing "x": invalid syntax
+
+PASS: 1\/3
+FAIL: 1\/3
+ERROR: 1\/3
+
+Process finished with exit code 2

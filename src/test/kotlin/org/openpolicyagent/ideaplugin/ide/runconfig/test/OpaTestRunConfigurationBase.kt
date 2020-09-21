@@ -6,8 +6,12 @@
 package org.openpolicyagent.ideaplugin.ide.runconfig.test
 
 import com.intellij.execution.configurations.RunConfiguration
+import com.intellij.execution.filters.HyperlinkInfo
+import com.intellij.execution.testframework.Printable
+import com.intellij.execution.testframework.Printer
 import com.intellij.execution.testframework.sm.runner.SMTestProxy
 import com.intellij.execution.testframework.sm.runner.ui.SMTRunnerConsoleView
+import com.intellij.execution.ui.ConsoleViewContentType
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.util.ui.UIUtil
@@ -43,7 +47,7 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
             waitFor()
         }
         UIUtil.dispatchAllInvocationEvents()
-        Disposer.dispose(executionConsole)
+        Disposer.register(project,executionConsole)
         return testsRootNode
     }
 
@@ -94,13 +98,19 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
      *
      */
     protected fun checkTreeErrorMsg(root: SMTestProxy) {
+        val allNodes = mutableListOf(root)
+        allNodes.addAll(root.children)
 
-        for (node in root.children) {
+        for (node in allNodes) {
             val pattern =
                 FileUtil.loadFile(
-                    Paths.get("${OpaTestCase.testResourcesPath}/${dataPath}/${testName}/${node.name}.regex").toFile())
+                    Paths.get("${OpaTestCase.testResourcesPath}/${dataPath}/${testName}/${node.name}.regex").toFile()
+                )
 
-            assertThat(node.errorMessage ?: "")
+           val value =  if (node == root) node.output else node.errorMessage ?: ""
+
+
+            assertThat(value)
                 .describedAs("test node '${node.name}' does not contain the expected error message")
                 .matches(Regex(pattern, RegexOption.MULTILINE).toPattern())
         }
@@ -120,5 +130,34 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
 
             return name.split("(?=[A-Z])".toRegex()).joinToString("_", transform = String::toLowerCase)
         }
+
+        private val SMTestProxy.output: String
+            get() {
+                val printer = ToStringPrinter()
+                printOn(printer)
+                return printer.output
+            }
     }
+}
+
+/**
+ * Fake printer that append text to a StringBuilder. It used to collect the output of the test root node.
+ */
+class ToStringPrinter : Printer {
+    private val buffer = StringBuilder()
+
+    val output get()= buffer.toString()
+
+    override fun print(text: String, contentType: ConsoleViewContentType) {
+        buffer.append(text)
+    }
+
+    override fun onNewAvailable(printable: Printable) {
+        printable.printOn(this);
+    }
+
+    override fun printHyperlink(text: String?, info: HyperlinkInfo?) {}
+
+    override fun mark() {}
+
 }
