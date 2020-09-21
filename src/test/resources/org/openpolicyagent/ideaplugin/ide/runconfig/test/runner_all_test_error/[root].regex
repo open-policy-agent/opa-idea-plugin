@@ -1,0 +1,14 @@
+Testing started at .+
+opa test \-f pretty \-v \-b .+
+
+data.test.main.test_rule1_should_raise_error: ERROR \([^)]+\)  [^:]+:8: eval_builtin_error: to_number: strconv.ParseFloat: parsing "rule1": invalid syntax
+
+
+data.test.main.test_rule2_should_raise_error: ERROR \([^)]+\)  [^:]+:12: eval_builtin_error: to_number: strconv.ParseFloat: parsing "rule2": invalid syntax
+
+
+data.test.main.test_3_should_raise_error: ERROR \([^)]+\)  [^:]+:16: eval_builtin_error: to_number: strconv.ParseFloat: parsing "test3": invalid syntax
+
+ERROR: 3\/3
+
+Process finished with exit code 2

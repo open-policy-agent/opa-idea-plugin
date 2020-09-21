@@ -91,39 +91,45 @@ class OpaTestEventsConverter(
      * events to generate the test tree.
      *
      * In order to be able to show the query explanation in the node output. we use the `-v -f pretty` output format of
-     * `opa test` command. It's may look this( without the line numbers):
+     * `opa test` command. The output of the command executed by IntelliJ may look this( without the line numbers):
      *
-     * 1)  FAILURES
-     * 2)  --------------------------------------------------------------------------------
-     * 3)  data.test_rules.one.ok.one.ko.test_rule1_should_be_ko: FAIL (1.015625ms)
-     * 4)
-     * 5)    query:1                       Enter data.test_rules.one.ok.one.ko.test_rule1_should_be_ko = _
-     * 6)    test_rules_1_ok_ko.rego:6     | Enter data.test_rules.one.ok.one.ko.test_rule1_should_be_ko
-     * 7)    main.rego:3                   | | Enter data.main.rule1
-     * 8)    main.rego:6                   | | | Note "rule 1 trace"
-     * 9)    test_rules_1_ok_ko.rego:8     | | Fail msg = {"msg from rule 1"}
-     * 10)   query:1                       | Fail data.test_rules.one.ok.one.ko.test_rule1_should_be_ko = _
-     * 11)
-     * 12) data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko: FAIL (493.993µs)
+     * 1)  Testing started at .+
+     * 2)  opa test \-f pretty \-v \-b .+
+     * 3)  FAILURES
+     * 4)  --------------------------------------------------------------------------------
+     * 5)  data.test_rules.one.ok.one.ko.test_rule1_should_be_ko: FAIL (1.015625ms)
+     * 6)
+     * 7)    query:1                       Enter data.test_rules.one.ok.one.ko.test_rule1_should_be_ko = _
+     * 8)    test_rules_1_ok_ko.rego:6     | Enter data.test_rules.one.ok.one.ko.test_rule1_should_be_ko
+     * 9)    main.rego:3                   | | Enter data.main.rule1
+     * 10)   main.rego:6                   | | | Note "rule 1 trace"
+     * 11)   test_rules_1_ok_ko.rego:8     | | Fail msg = {"msg from rule 1"}
+     * 12)   query:1                       | Fail data.test_rules.one.ok.one.ko.test_rule1_should_be_ko = _
      * 13)
-     * 14)   query:1                        Enter data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko = _
-     * 15)   test_rules_1_ok_ko.rego:12     | Enter data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko
-     * 16)   test_rules_1_ok_ko.rego:14     | | Fail msg = {"another message in order to put the test in FAIL state"}
-     * 17)   query:1                        | Fail data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko = _
-     * 18)
-     * 19) SUMMARY
-     * 20) --------------------------------------------------------------------------------
-     * 21) data.test_rules.one.ok.one.ko.test_rule1_should_be_ko: FAIL (1.015625ms)
-     * 22) data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko: FAIL (493.993µs)
-     * 23) data.test_rules.one.ok.one.ko.test_should_be_ok: PASS (419.351µs)
-     * 24) data.test_rules.one.ok.one.ko.test_should_raise_error: ERROR (570.322µs)
-     * 25)   test_rules_1_ok_ko.rego:25: eval_builtin_error: to_number: strconv.ParseFloat: parsing "x": invalid syntax
-     * 26) --------------------------------------------------------------------------------
-     * 27) PASS: 1/4
-     * 28) FAIL: 2/4
-     * 29) ERROR: 1/4
+     * 14) data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko: FAIL (493.993µs)
+     * 15)
+     * 16)   query:1                        Enter data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko = _
+     * 17)   test_rules_1_ok_ko.rego:12     | Enter data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko
+     * 18)   test_rules_1_ok_ko.rego:14     | | Fail msg = {"another message in order to put the test in FAIL state"}
+     * 19)   query:1                        | Fail data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko = _
+     * 20)
+     * 21) SUMMARY
+     * 22) --------------------------------------------------------------------------------
+     * 23) data.test_rules.one.ok.one.ko.test_rule1_should_be_ko: FAIL (1.015625ms)
+     * 24) data.test_rules.one.ok.one.ko.test_rule_2_should_be_ko: FAIL (493.993µs)
+     * 25) data.test_rules.one.ok.one.ko.test_should_be_ok: PASS (419.351µs)
+     * 26) data.test_rules.one.ok.one.ko.test_should_raise_error: ERROR (570.322µs)
+     * 27)   test_rules_1_ok_ko.rego:25: eval_builtin_error: to_number: strconv.ParseFloat: parsing "x": invalid syntax
+     * 28) --------------------------------------------------------------------------------
+     * 29) PASS: 1/4
+     * 30) FAIL: 2/4
+     * 31) ERROR: 1/4
+     * 32)
+     * 33) Process finished with exit code 2
      *
-     * The Fail or Error information are spread across lines, because this function is call for each lines, we need to
+     * Lines 3 to 32 correspond to the output of the opa command, the other lines are IntelliJ debugging information.
+     *
+     * The Fail or Error information are spread across lines because this function is called for each line, we need to
      * track to keep track of state and memorize information (ie query explanation) about Fail/ Error test. To achieve
      * this goal we use 2 variables
      *  [state]: indicate if we a ready to precess a new test, or add the line to output of the [currentFailTest]
@@ -135,14 +141,19 @@ class OpaTestEventsConverter(
      *  is initialized with this test.
      *  The next lines are appended to the output of [currentFailTest] until we encounter a line which is not the part of
      *  the query explanation. It can be another test or the begging of a new section (eg L12, L19, L20, L23, L26).
-     *  Finally a failedTest event is triggered withe the information of [currentFailTest] in order to add the fail test
+     *  Finally a failedTest event is triggered with the information of [currentFailTest] to add the fail test
      *  in the test tree and [state] is switched to [State.START]
      *
      *  If we encounter a Pass test, we directly trigger an event to add the pass test in the tree. Pass test information
-     *  are contains on one line (eg L23)
+     *  is contained on one line (eg L23)
      *
-     *  Note: because fail tests hearer are present twice in the output (eg L3 and L21, L12 and L22), we keep track of
+     *  Note:
+     *      1) because fail tests hearer are present twice in the output (eg L3 and L21, L12 and L22), we keep track of
      *  the fail / error test that has been already processed in [failTestIds] set.
+     *
+     *      2) To make debugging easier, the root node output contains the full output of the command (L1 to L33). IntelliJ
+     *  automatically add the output of the other nodes to the root. So we have to add the lines which are part of a test
+     *  result (eg L1-4, L21-22, and L29-33).
      */
     override fun processServiceMessages(text: String, outputType: Key<*>, visitor: ServiceMessageVisitor): Boolean {
         when (state) {
@@ -150,16 +161,20 @@ class OpaTestEventsConverter(
                 if (isPassTest(text)) {
                     firePassedTest(text, outputType, visitor)
                 }
-                if (isFailTest(text)) {
+                else if (isFailTest(text)) {
                     // to avoid duplicate fail if we are in the summary section. Error test are only in Summary section
                     if (createCurrentFailedTest(text)) {
                         state = State.FAIL_OUTPUT
                     }
                 }
+                else {
+                    // Add the `text` that is not part of the test result to the root node. (eg L1-4,L21-22 L29-33).
+                    processor.onUncapturedOutput(text, outputType)
+                }
             }
             State.FAIL_OUTPUT -> {
                 when {
-                    isEndMsg(text) -> { // handle the case the the last test fail (eg L19) or an error test(eg L26)
+                    isEndMsg(text) -> { // handle the case the the last test fail (eg L21) or an error test(eg L28)
                         fireFailedTest(currentFailTest!!, outputType, visitor)
                         state = State.START
                     }
@@ -170,7 +185,7 @@ class OpaTestEventsConverter(
                         state = State.START
                     }
 
-                    isFailTest(text) -> { // eg L12
+                    isFailTest(text) -> { // eg L14
                         fireFailedTest(currentFailTest!!, outputType, visitor)
                         createCurrentFailedTest(text)
                         state = State.FAIL_OUTPUT
