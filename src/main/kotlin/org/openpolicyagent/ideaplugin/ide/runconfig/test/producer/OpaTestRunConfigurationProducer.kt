@@ -44,7 +44,7 @@ class OpaTestRunConfigurationProducer : LazyRunConfigurationProducer<OpaTestRunC
 
 
         configuration.additionalArgs = "-f pretty  ${getRunOption(element, regoPackage)}"
-        configuration.name = element.text
+        configuration.name = "test ${element.text}"
         return true
     }
 

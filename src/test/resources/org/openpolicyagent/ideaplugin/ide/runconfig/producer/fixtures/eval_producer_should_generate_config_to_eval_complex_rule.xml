@@ -1,5 +1,5 @@
 <configurations>
-  <configuration name="data.main.abc.efg.rule_1" class="OpaEvalRunConfiguration">
+  <configuration name="eval data.main.abc.efg.rule_1" class="OpaEvalRunConfiguration">
     <option name="query" value="data.main.abc.efg.rule_1" />
     <option name="addtionalargs" value="-f pretty " />
   </configuration>

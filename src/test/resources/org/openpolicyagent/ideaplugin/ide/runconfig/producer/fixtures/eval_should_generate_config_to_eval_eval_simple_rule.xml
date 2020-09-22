@@ -1,5 +1,5 @@
 <configurations>
-  <configuration name="data.main.abc.efg.api_version_mgs_tmpl" class="OpaEvalRunConfiguration">
+  <configuration name="eval data.main.abc.efg.api_version_mgs_tmpl" class="OpaEvalRunConfiguration">
     <option name="query" value="data.main.abc.efg.api_version_mgs_tmpl" />
     <option name="addtionalargs" value="-f pretty " />
   </configuration>
