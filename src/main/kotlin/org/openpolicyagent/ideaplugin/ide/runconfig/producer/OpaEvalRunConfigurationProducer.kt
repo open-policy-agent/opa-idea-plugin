@@ -48,7 +48,7 @@ class OpaEvalRunConfigurationProducer : LazyRunConfigurationProducer<OpaEvalRunC
 
         configuration.query = query
         configuration.additionalArgs = "-f pretty $options"
-        configuration.name = configuration.query!!
+        configuration.name = "eval ${configuration.query!!}"
         return true
     }
 
