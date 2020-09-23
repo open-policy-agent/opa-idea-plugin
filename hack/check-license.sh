@@ -12,7 +12,7 @@ LICENSE_HEADER="/*
  
 file_with_no_lic=""
  
-echo "Checking files contains licence header..." 
+echo "Checking files contains license header..."
  
 # we use git ls-files instead of find command because we don't care about non versionned filed (eg generated code)
 for file in $(git ls-files | grep -E '\.kt$|\.java$'); do

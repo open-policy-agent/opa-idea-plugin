@@ -108,6 +108,6 @@ content of the gen folder and launch tasks `:generateRegoLexer` and `:generateRe
  
  ```
  $ hack/check-license.sh
-   Checking files contains licence header...
+   Checking files contains license header...
    Check OK
  ```
