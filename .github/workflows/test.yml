@@ -10,6 +10,12 @@ on:
     branches: [ master ]
 
 jobs:
+  check-license:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: ./hack/check-license.sh
+
   build:
     strategy:
       fail-fast: false
@@ -42,7 +48,7 @@ jobs:
 
   # This job is successful if all depend jobs are successful. To be able to merge the PR, this job must be successful
   all-checks:
-    needs: [build]
+    needs: [build, check-license]
     runs-on: ubuntu-latest
     if: ${{ always() }}
     env:
