@@ -11,12 +11,11 @@ import com.intellij.execution.actions.LazyRunConfigurationProducer
 import com.intellij.execution.configurations.ConfigurationFactory
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
-import com.intellij.psi.util.PsiTreeUtil
 import org.openpolicyagent.ideaplugin.ide.runconfig.OpaConfigurationFactory
 import org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfiguration
 import org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationType
+import org.openpolicyagent.ideaplugin.lang.REGO_TEST_RULE_PREFIX
 import org.openpolicyagent.ideaplugin.lang.psi.*
-import java.nio.file.Paths
 
 class OpaTestRunConfigurationProducer : LazyRunConfigurationProducer<OpaTestRunConfiguration>() {
     override fun getConfigurationFactory(): ConfigurationFactory {
@@ -39,7 +38,7 @@ class OpaTestRunConfigurationProducer : LazyRunConfigurationProducer<OpaTestRunC
         sourceElement: Ref<PsiElement>
     ): Boolean {
         val element = sourceElement.get()
-        if (! element.containingFile.isRegoTestFile()) return false
+        if (element.parent.parent is RegoRuleHead && ! element.text.startsWith(REGO_TEST_RULE_PREFIX)) return false
         val regoPackage = element.getRegoPackage() ?: return false
 
 

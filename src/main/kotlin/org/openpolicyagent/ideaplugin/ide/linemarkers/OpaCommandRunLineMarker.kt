@@ -10,6 +10,7 @@ import com.intellij.execution.lineMarker.RunLineMarkerContributor
 import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.elementType
+import org.openpolicyagent.ideaplugin.lang.REGO_TEST_RULE_PREFIX
 import org.openpolicyagent.ideaplugin.lang.psi.*
 
 
@@ -59,15 +60,12 @@ class OpaCommandRunLineMarker : RunLineMarkerContributor() {
         if (element.containingFile !is RegoFile) return null
         if (element.elementType != RegoTypes.ASCII_LETTER) return null
 
-        val cmd = if (element.containingFile.isRegoTestFile()) "test" else "eval"
-
         if (element.parent.parent.parent is RegoPackage) {
-            return Info(AllIcons.RunConfigurations.TestState.Run, { "$cmd package" }, ExecutorAction.getActions(1))
+            return Info(AllIcons.RunConfigurations.TestState.Run, { "eval or test package" }, ExecutorAction.getActions(1))
         }
 
-        // todo element.parent is a VAR, in the grammar VAR is a simple rule is equals to token ASCII_LETTER, may be we should
-        // as VAR directly as a token to avoid this unnecessary node in the psi tree
         if (element.parent.parent is RegoRuleHead) {
+            val cmd =  if(element.text.startsWith(REGO_TEST_RULE_PREFIX)) "test"  else "eval"
             return Info(AllIcons.RunConfigurations.TestState.Run, { "$cmd rule" }, ExecutorAction.getActions(1))
         }
 
