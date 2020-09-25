@@ -19,21 +19,13 @@ The plugin is compatible with all IntelliJ-based IDEs starting from the version 
 
 Plugin has been tested against OPA `0.20.5`, but should work with more recent versions.
 
-# Status
-Not ready for use by end-users.
 
 # Installation 
 OPA binary must be in the path.
 Installation instructions for OPA can be found [here](https://www.openpolicyagent.org/docs/latest/#running-opa).
 
 ## from Jetbrains repository
-First, in IntelliJ IDEA, in Preferences>Plugins, add `https://plugins.jetbrains.com/plugins/dev/list` to your Custom Repositories
-
-![Step 1](docs/user/img/1_install_plugin.png)
-
-![Step 2](docs/user/img/2_add_custom_repository.png)
-
-Then, search "opa" in the Marketplace tab and install the plugin
+Go to `Settings / Preferences / Plugins` menu. Then, search `opa` in the `Marketplace` tab and install the plugin.
 
 ![Step 3](docs/user/img/3_install_opa_plugin.png)
 ## from source
