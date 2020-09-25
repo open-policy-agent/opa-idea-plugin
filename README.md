@@ -1,5 +1,5 @@
 # Opa IntelliJ plugin
-A plugin for [IntelliJ](https://www.jetbrains.com/idea/) that provides support for [Open Policy Agent]()
+A plugin for [IntelliJ](https://www.jetbrains.com/idea/) that provides support for [Open Policy Agent](https://www.openpolicyagent.org/)
 
 Main features are:
 * highlighting
@@ -17,17 +17,17 @@ The plugin is compatible with all IntelliJ-based IDEs starting from the version 
 | Other features         | + | + |
 
 
-Plugin has been tested OPA `0.20.5`, but should works with more recent versions.
+Plugin has been tested against OPA `0.20.5`, but should work with more recent versions.
 
 # Status
-Not ready yet to be used by  end-users
+Not ready for use by end-users.
 
 # Installation 
 OPA binary must be in the path.
 Installation instructions for OPA can be found [here](https://www.openpolicyagent.org/docs/latest/#running-opa).
 
 ## from Jetbrains repository
-First, in IntelliJ IDEA, from Preferences>Plugins, add `https://plugins.jetbrains.com/plugins/dev/list` to your Custom Repositories
+First, in IntelliJ IDEA, in Preferences>Plugins, add `https://plugins.jetbrains.com/plugins/dev/list` to your Custom Repositories
 
 ![Step 1](docs/user/img/1_install_plugin.png)
 
@@ -37,14 +37,14 @@ Then, search "opa" in the Marketplace tab and install the plugin
 
 ![Step 3](docs/user/img/3_install_opa_plugin.png)
 ## from source
-You can build the project from source and then install it. Build instructions are available [here](docs/devel/setup_development_env.md)
+You can build the project from source and then install it. Build instructions are available [here](docs/devel/setup_development_env.md).
 
 # Documentation 
 User documentation is available [here](docs/user/README.md).
 
 # Contributing
-Interesting to contribute ? please start by read this [document](CONTRIBUTING.md)
+Interested in contributing? Please, start by reading this [document](CONTRIBUTING.md).
 
 # Acknowledgment
-This project is widely inspired by [rust IntelliJ plugin](https://github.com/intellij-rust/intellij-rust). So thank you
-to [JetBrains](https://www.jetbrains.org/) team.
+This project is widely inspired by [rust IntelliJ plugin](https://github.com/intellij-rust/intellij-rust). So, thank you
+[JetBrains](https://www.jetbrains.org/) team.
