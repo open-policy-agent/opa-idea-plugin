@@ -33,3 +33,21 @@ q(1, x) = y {
 q(2, x) = y {
     y := x*4
 }
+
+fun_obj(x) = h {
+    h := {"a": {"b":  [x,2]}}
+}
+
+fun_array(x) = j {
+    j:= [{"a": [x,2]}]
+}
+aRule {
+    # testing we can acces to the function's return value without assigning it to a variable. Issue #57
+    a = fun_obj(1).a
+    b = fun_obj(1).a.b
+    c = fun_obj(1).a.b[0]
+
+    k = fun_array(1)[0]
+    l = fun_array(1)[0].a
+    m = fun_array(1)[0].a[0]
+}

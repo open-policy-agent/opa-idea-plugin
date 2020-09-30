@@ -77,7 +77,7 @@ literal         ::= ( some-decl | expr | "not" expr )  with-modifier*
 with-modifier   ::= "with" term "as" term
 some-decl       ::= "some" var ( "," var )*
 expr            ::=  expr2  ((':=' | '=') expr2)?
-expr2           ::=  expr-infix | expr-call   | term
+expr2           ::=  expr-infix | (expr-call ref-arg*)  | term
 expr-call       ::= var ref-arg-dot* "(" ( term ( "," term )* )? ")"
 expr-infix      ::= ( term "=" )? term infix-operator term
 term            ::= ref | var | scalar | array | object | set | array-compr | object-compr | set-compr
