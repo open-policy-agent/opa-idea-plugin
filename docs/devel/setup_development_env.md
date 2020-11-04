@@ -50,6 +50,7 @@ BUILD SUCCESSFUL in 20s
 * `./gradlew :plugin:buildPlugin` -- fully build the plugin and create an archive at `plugin/build/distributions` which can be installed into your IDE via `Install plugin from disk...` action found in `Settings > Plugins` menu.
 * `./gradlew :plugin:runIde` -- run a development IDE with the plugin installed. 
 * `./gradlew :test`
+* `./gradlew clean :plugin:verifyPlugin` -- verify the plugin binary compatibility. More information [here](https://github.com/JetBrains/intellij-plugin-verifier). 
 
 **note: The `:` in front of the task name is important because now there are several Gradle modules.**
 
