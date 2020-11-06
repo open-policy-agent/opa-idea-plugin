@@ -51,3 +51,16 @@ aRule {
     l = fun_array(1)[0].a
     m = fun_array(1)[0].a[0]
 }
+
+filterFunc(x) {
+   true
+}
+
+testing_complex_function_args{
+    # testing accectiing infix operation as arg. Issue #63
+    x := count({"x"} & {"y"})
+
+    # testing "complex" args
+    myset := {1, 2, 3}
+    array.slice([1, 2, 3, 4 ], count({x | myset[x]; filterFunc(x)} & {2}), 3)
+}
