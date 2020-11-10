@@ -64,41 +64,42 @@
         COMMENT             = 'regexp:[ \t]*#[^\r\n]*'
     ]
 }
-module          ::= package import*  policy
-package         ::= "package" ref
-import          ::= "import" ref ( "as" var )?
-policy          ::=  rule*
-rule            ::=  "default"?  rule-head  rule-body*
-rule-head       ::= var ( "(" rule-args? ")" )? ("[" term "]" )? ( ( ":=" | "=" ) term )?
-rule-args       ::= term ( "," term )*
-rule-body       ::= ( else ( "=" term )? )? "{" query "}"
-query           ::=( literal |';' )+
-literal         ::= ( some-decl | expr | "not" expr )  with-modifier*
-with-modifier   ::= "with" term "as" term
-some-decl       ::= "some" var ( "," var )*
-expr            ::=  expr2  ((':=' | '=') expr2)?
-expr2           ::=  expr-infix | (expr-call ref-arg*)  | term
-expr-call       ::= var ref-arg-dot* "(" ( term ( "," term )* )? ")"
-expr-infix      ::= ( term "=" )? term infix-operator term
-term            ::= ref | var | scalar | array | object | set | array-compr | object-compr | set-compr
-array-compr     ::= "[" term "|" query "]"
-set-compr       ::= "{" term "|" query "}"
-object-compr    ::= "{" object-item "|" query "}"
-infix-operator  ::= bool-operator | arith-operator | bin-operator
-bool-operator   ::= "==" | "!=" | "<" | ">" | ">=" | "<="
-arith-operator  ::= "+" | "-" | "*" | "/" | "%"
-bin-operator    ::= "&" | "|"
-ref             ::= ( expr-call  | array | object | set | array-compr | object-compr | set-compr |var  )  ref-arg*
-ref-arg         ::= ref-arg-dot | ref-arg-brack
-ref-arg-brack   ::= "[" ( scalar | var | array | object | set | "_" ) "]"
-ref-arg-dot     ::= "." var
-var             ::= ASCII_LETTER
-scalar          ::= string | NUMBER | TRUE | FALSE | NULL
-string          ::= STRING_TOKEN| RAW_STRING
-array           ::= '[' term? ( ',' term )* ','? ']'
-object          ::= '{' object-item? ( ',' object-item )* ','? '}'
-object-item     ::= ( scalar | ref | var ) ":" term
-set             ::= empty-set | non-empty-set
-non-empty-set   ::= "{" term ( "," term )* ','?  "}"
-empty-set       ::= "set(" ")"
+module              ::= package import*  policy
+package             ::= "package" ref
+import              ::= "import" ref ( "as" var )?
+policy              ::=  rule*
+rule                ::=  "default"?  rule-head  rule-body*
+rule-head           ::= var ( "(" rule-args? ")" )? ("[" term "]" )? ( ( ":=" | "=" ) term )?
+rule-args           ::= term ( "," term )*
+rule-body           ::= ( else ( "=" term )? )? "{" query "}"
+query               ::=( literal |';' )+
+literal             ::= ( some-decl | expr | "not" expr )  with-modifier*
+with-modifier       ::= "with" term "as" term
+some-decl           ::= "some" var ( "," var )*
+expr                ::=  expr2  ((':=' | '=') expr2)?
+expr2               ::=  expr-infix | (expr-call ref-arg*)  | term
+term-or-infix-op    ::= term (infix-operator term)?
+expr-call           ::= var ref-arg-dot* "(" ( term-or-infix-op ( "," term-or-infix-op )* )? ")"
+expr-infix          ::= ( term "=" )? term infix-operator term
+term                ::= ref | var | scalar | array | object | set | array-compr | object-compr | set-compr
+array-compr         ::= "[" term "|" query "]"
+set-compr           ::= "{" term "|" query "}"
+object-compr        ::= "{" object-item "|" query "}"
+infix-operator      ::= bool-operator | arith-operator | bin-operator
+bool-operator       ::= "==" | "!=" | "<" | ">" | ">=" | "<="
+arith-operator      ::= "+" | "-" | "*" | "/" | "%"
+bin-operator        ::= "&" | "|"
+ref                 ::= ( expr-call  | array | object | set | array-compr | object-compr | set-compr |var  )  ref-arg*
+ref-arg             ::= ref-arg-dot | ref-arg-brack
+ref-arg-brack       ::= "[" ( scalar | var | array | object | set | "_" ) "]"
+ref-arg-dot         ::= "." var
+var                 ::= ASCII_LETTER
+scalar              ::= string | NUMBER | TRUE | FALSE | NULL
+string              ::= STRING_TOKEN| RAW_STRING
+array               ::= '[' term? ( ',' term )* ','? ']'
+object              ::= '{' object-item? ( ',' object-item )* ','? '}'
+object-item         ::= ( scalar | ref | var ) ":" term
+set                 ::= empty-set | non-empty-set
+non-empty-set       ::= "{" term ( "," term )* ','?  "}"
+empty-set           ::= "set(" ")"
 
