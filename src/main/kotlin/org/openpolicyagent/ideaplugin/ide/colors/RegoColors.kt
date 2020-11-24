@@ -5,6 +5,7 @@
 
 package org.openpolicyagent.ideaplugin.ide.colors
 
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.options.colors.AttributesDescriptor
@@ -42,4 +43,8 @@ enum class RegoColor(humanName: String, val default: TextAttributesKey? = null) 
 
     val textAttributesKey = TextAttributesKey.createTextAttributesKey("org.openpolicyagent.ideaplugin.$name", default)
     val attributesDescriptor = AttributesDescriptor(humanName, textAttributesKey)
+
+    // create a new severity with the name of the rego color. It useful to test highlighting.
+    // see [org.openpolicyagent.ideaplugin.ide.highlight.AnnotatorTestBase.setUp] for more information
+    val testSeverity: HighlightSeverity = HighlightSeverity(name, HighlightSeverity.INFORMATION.myVal)
 }
