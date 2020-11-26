@@ -15,11 +15,11 @@ import org.openpolicyagent.ideaplugin.lang.psi.RegoExprCall
 import org.openpolicyagent.ideaplugin.lang.psi.RegoRule
 import org.openpolicyagent.ideaplugin.openapiext.isUnitTestMode
 
-class RegoHighlighterAnnotator : Annotator {
+class RegoHighlighterAnnotator : AnnotatorBase() {
     // visibility for Testing
     val usedColors = listOf(RegoColor.HEAD.textAttributesKey, RegoColor.CALL.textAttributesKey)
 
-    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+    override fun annotateInternal(element: PsiElement, holder: AnnotationHolder) {
         val (style, range) = when (element) {
             is RegoRule -> Pair(RegoColor.HEAD, element.ruleHead.`var`.textRange)
 
