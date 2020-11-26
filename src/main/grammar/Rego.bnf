@@ -54,13 +54,12 @@
         QUOTIENT            = '/'
         REMAINDER           = '%'
         SET_OPEN            = 'set('
-        BACKSTRICK          = '`'
         NULL                = 'null'
         ASCII_LETTER        = 'regexp:[A-Za-z_][A-Za-z_0-9]*'
         NUMBER              = 'regexp:-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d*)?'
         WHITE_SPACE         = 'regexp:\s+'
-        STRING_TOKEN        = 'regexp:"([^"\]|\\.)*"'
-        RAW_STRING          = 'regexp:`[^`]*`'
+        STRING_TOKEN        = 'regexp:"([^\r\n"])*"?'
+        RAW_STRING          = 'regexp:`[^`]*(`)?'
         COMMENT             = 'regexp:[ \t]*#[^\r\n]*'
     ]
 }
