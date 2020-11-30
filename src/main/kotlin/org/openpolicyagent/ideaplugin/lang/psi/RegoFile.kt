@@ -9,7 +9,6 @@ import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.FileViewProvider
-import com.intellij.psi.PsiElement
 import org.openpolicyagent.ideaplugin.lang.RegoFileType
 import org.openpolicyagent.ideaplugin.lang.RegoLanguage
 
