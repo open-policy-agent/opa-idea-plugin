@@ -36,7 +36,7 @@ idea {
 plugins {
     idea
     kotlin("jvm") version "1.3.72"
-    id("org.jetbrains.intellij") version "0.4.21"
+    id("org.jetbrains.intellij") version "0.6.1"
     id("org.jetbrains.grammarkit") version "2020.2.1"
     id("net.saliman.properties") version "1.4.6"
 }
@@ -69,8 +69,6 @@ allprojects {
 
     intellij {
         version = baseVersion
-        // location of IDE distributions, we customize it to easily run plugin verifier
-        ideaDependencyCachePath = dependencyCachePath
         sandboxDirectory = "$buildDir/$baseIDE-sandbox-$platformVersion"
     }
 
@@ -126,16 +124,6 @@ allprojects {
     }
 }
 
-val Project.dependencyCachePath get(): String {
-    val cachePath = file("${rootProject.projectDir}/deps")
-    // If cache path doesn't exist, we need to create it manually
-    // because otherwise gradle-intellij-plugin will ignore it
-    if (!cachePath.exists()) {
-        cachePath.mkdirs()
-    }
-    return cachePath.absolutePath
-}
-
 val channelSuffix = if (channel.isBlank() || channel == "stable") "" else "-$channel"
 val versionSuffix = "-$platformVersion$channelSuffix"
 val majorVersion = prop("majorVersion")
@@ -175,6 +163,9 @@ project(":plugin"){
         withType<PublishTask> {
             token(prop("publishToken"))
             channels(channel)
+        }
+        runPluginVerifier {
+            ideVersions(prop("pluginVerifierIdeVersions"))
         }
     }
 }
