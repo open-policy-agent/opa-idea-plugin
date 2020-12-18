@@ -5,12 +5,14 @@
 
 package org.openpolicyagent.ideaplugin.lang
 
+import com.intellij.lang.LanguageBraceMatching
 import com.intellij.testFramework.ParsingTestCase
 import com.intellij.util.EnvironmentUtil
 import org.apache.commons.io.IOUtils
 import org.openpolicyagent.ideaplugin.OpaTestBase
 import org.openpolicyagent.ideaplugin.OpaTestCase
 import org.openpolicyagent.ideaplugin.OpaTestCase.Companion.testResourcesPath
+import org.openpolicyagent.ideaplugin.ide.typing.RegoBraceMatcher
 import org.openpolicyagent.ideaplugin.lang.parser.RegoParserDefinition
 import org.openpolicyagent.ideaplugin.opa.tool.OpaBaseTool.Companion.opaBinary
 
@@ -21,6 +23,12 @@ abstract class RegoParsingTestCaseBase() : ParsingTestCase(
     true,
     RegoParserDefinition()
 ), OpaTestCase {
+
+    override fun setUp() {
+        super.setUp()
+        // fix issue #71
+        addExplicitExtension(LanguageBraceMatching.INSTANCE, RegoLanguage, RegoBraceMatcher())
+    }
 
     override fun getTestDataPath(): String = testResourcesPath
 
