@@ -25,6 +25,7 @@ numbers {
     z2 := x * y
     z3 := x / y
     z4 := x % y
+    z5 := z + z1 - z2 * z3 / z4 % 3
     output := round(x)
     output1 := abs(x)
     output2 := count(collection_or_string)
@@ -55,6 +56,8 @@ sets {
     s3 := s1 & s2
     s4 := s1 | s2
     s5 := s1 - s2
+    s6 := s1 | s2 | s3 & s4 - s5
+
     output := intersection(set[set])
     output1 := union(set[set])
 }
