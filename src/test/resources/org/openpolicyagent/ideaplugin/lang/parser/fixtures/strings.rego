@@ -6,3 +6,7 @@ someRule {
 }
 
 someString := `hello\there`
+
+multiLineRawString := `hello
+world
+`

@@ -9,15 +9,19 @@ import com.intellij.codeInsight.daemon.impl.SeveritiesProvider
 import org.intellij.lang.annotations.Language
 import org.openpolicyagent.ideaplugin.OpaTestBase
 import org.openpolicyagent.ideaplugin.ide.colors.RegoColor
+import kotlin.reflect.KClass
 
-abstract class AnnotatorTestBase: OpaTestBase() {
+abstract class AnnotatorTestBase(private val annotatorClass: KClass<out AnnotatorBase>): OpaTestBase() {
     /**
      * override setup to add register  RegoColor names has new severities. It allow us to test text is correctly
      * highlighted. for more information see [check_info]
      *
+     * Also enable only the annotator [annotatorClass]. For more informationn see [org.openpolicyagent.ideaplugin.ide.highlight.AnnotatorBase]
      */
     override fun setUp() {
         super.setUp()
+        AnnotatorBase.enableAnnotator(annotatorClass.java, testRootDisposable)
+
         val testSeverityProvider = TestSeverityProvider(RegoColor.values().map(RegoColor::testSeverity))
         // BACKCOMPAT: 2020.1
         SeveritiesProvider.EP_NAME.getPoint(null).registerExtension(testSeverityProvider, testRootDisposable)

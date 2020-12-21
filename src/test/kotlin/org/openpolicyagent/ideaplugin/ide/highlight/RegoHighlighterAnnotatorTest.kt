@@ -6,7 +6,7 @@
 package org.openpolicyagent.ideaplugin.ide.highlight
 
 
-class RegoHighlighterAnnotatorTest : AnnotatorTestBase() {
+class RegoHighlighterAnnotatorTest : AnnotatorTestBase(RegoHighlighterAnnotator::class) {
     fun `test rule name is highlighted`() {
         check_info( """
             package  main

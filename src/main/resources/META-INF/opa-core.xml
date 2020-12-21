@@ -19,7 +19,10 @@
         <lang.syntaxHighlighterFactory language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterFactory"/>
         <colorSettingsPage implementation="org.openpolicyagent.ideaplugin.ide.colors.RegoColorSettingsPage"/>
         <lang.commenter language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.commenter.RegoCommenter"/>
+
+        <!-- Annotator -->
         <annotator language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterAnnotator"/>
+        <annotator language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.highlight.RegoSyntaxErrorAnnotator"/>
 
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.OpaEvalRunConfigurationType"/>
         <configurationType implementation="org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfigurationType"/>

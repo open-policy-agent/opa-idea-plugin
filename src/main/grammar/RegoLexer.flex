@@ -28,10 +28,13 @@ WHITE_SPACE=\s+
 ASCII_LETTER=[A-Za-z_][A-Za-z_0-9]*
 NUMBER=-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]*)?
 WHITE_SPACE=[ \t\n\x0B\f\r]+
-STRING_TOKEN=\"([^\"\\]|\\.)*\"
-RAW_STRING=`[^`]*`
-COMMENT=[ \t]*#[^\r\n]*
 
+//The closing quote is optional in order to have a valid token, so the quoteHandler can autoclose it
+//if the user don't close the quote, an error will be reported by the RegoSyntaxErrorAnnotator
+STRING_TOKEN=\"([^\r\n\"])*\"?
+RAW_STRING=`[^`]*(`)?
+
+COMMENT=[ \t]*#[^\r\n]*
 
 %%
 <YYINITIAL> {
@@ -73,7 +76,6 @@ COMMENT=[ \t]*#[^\r\n]*
   "/"                 { return QUOTIENT; }
   "%"                 { return REMAINDER; }
   "set("              { return SET_OPEN; }
-  "`"                 { return BACKSTRICK; }
   "null"              { return NULL; }
 
   {ASCII_LETTER}      { return ASCII_LETTER; }
