@@ -38,6 +38,7 @@
 
         <!-- Typing -->
         <lang.braceMatcher language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.typing.RegoBraceMatcher"/>
+        <lang.quoteHandler language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.typing.RegoQuoteHandler"/>
 
         <toolWindow id="OPA Console"
                         anchor="bottom"

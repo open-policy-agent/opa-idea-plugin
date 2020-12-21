@@ -9,7 +9,7 @@ import com.intellij.codeInsight.highlighting.BraceMatchingUtil
 import org.openpolicyagent.ideaplugin.OpaTestBase
 import org.openpolicyagent.ideaplugin.lang.RegoFileType
 
-class RegoBraceMatcherTest: OpaTestBase() {
+class RegoBraceMatcherTest: RegoTypingTestBase() {
 
     fun `test parenthesis are paired`()= doTest(
         """
@@ -109,11 +109,7 @@ class RegoBraceMatcherTest: OpaTestBase() {
         """.trimIndent(),
         "}"
     )
-    private fun doTest(before: String, type: Char, after: String) {
-        myFixture.configureByText(RegoFileType, before)
-        myFixture.type(type)
-        myFixture.checkResult(after)
-    }
+
 
     private fun doMatch(source: String, coBrace: String) {
         myFixture.configureByText(RegoFileType, source)
