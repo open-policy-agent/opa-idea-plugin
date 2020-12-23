@@ -33,6 +33,7 @@ class RegoParsingTestCase: RegoParsingTestCaseBase() {
     fun `test functions`() = doTestNoError()
     fun `test multiple expressions`() = doTestNoError()
     fun `test rules`() = doTestNoError()
+    fun `test rule head`() = doTestNoError()
     fun `test self joins`() = doTestNoError()
     fun `test with keyword 2`() = doTestNoError()
 
