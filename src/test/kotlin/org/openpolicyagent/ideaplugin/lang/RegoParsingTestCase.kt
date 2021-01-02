@@ -40,7 +40,6 @@ class RegoParsingTestCase: RegoParsingTestCaseBase() {
 
     fun `test composite keys`() = doTestNoError()
     fun `test composite values`() = doTestNoError()
-    fun `test else keyword 2`() = doTestNoError()
 
     fun `test imports`() = doTestNoError()
     fun `test imports between rules`() = doTestNoError()

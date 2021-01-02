@@ -69,7 +69,7 @@ import              ::= "import" ref ( "as" var )?
 rule                ::=  "default"?  rule-head  rule-body*
 rule-head           ::= var ( "(" rule-args? ")" )? ("[" term "]" )? ( ( ":=" | "=" ) expr2 )?
 rule-args           ::= term ( "," term )*
-rule-body           ::= ( else ( "=" term )? )? "{" query "}"
+rule-body           ::= ( else ( "=" expr2 )? )? "{" query "}"
 query               ::=( literal |';' )+
 literal             ::= ( some-decl | expr | "not" expr )  with-modifier*
 with-modifier       ::= "with" term "as" term
