@@ -2,11 +2,12 @@
 <!-- toc -->
 - [Requirements](#requirements)
 - [Setup](#setup)
-- [Run a Sandbox ide to test plugin](#run-a-sandbox-ide-to-test-plugin)
+- [Main Gradle tasks](#main-gradle-tasks)
 - [Configuring the sandbox IDE](#configuring-the-sandbox-ide)
 - [Configuring the platform](#configuring-the-platform)
 - [Build the plugin archive](#build-the-plugin-archive)
 - [Other important tasks](#other-important-tasks)
+- [Configure IDE to automatically add license header](#configure-ide-to-automatically-add-license-header)
 <!-- /toc -->
 
 *to update toc, please read [this page](../../hack/README.md).*
@@ -93,22 +94,22 @@ the parser will be automatically generated.
 The code is generated in the [gen folder](../../src/main/gen). If you want to reset the generated, just delete the
 content of the gen folder and launch tasks `:generateRegoLexer` and `:generateRegoParser`.
 
- # Configure IDE to automatically add license header
- If it's not already done, please install the [copyright plugin](https://plugins.jetbrains.com/plugin/13114-copyright/).
- This plugin will automatically add the license header when you create a file.
- 
- To configure it , open the `Settings / Preferences dialog` and select `Editor | Copyright`. Create a new profile with 
- this license header:
- 
- ```
- Use of this source code is governed by the MIT license that can be
- found in the LICENSE file.
- ```
- 
- To check if project file contains the license header, run the script `hack/check-license.sh`
- 
- ```
- $ hack/check-license.sh
-   Checking files contains license header...
-   Check OK
- ```
+# Configure IDE to automatically add license header
+If it's not already done, please install the [copyright plugin](https://plugins.jetbrains.com/plugin/13114-copyright/).
+This plugin will automatically add the license header when you create a file.
+
+To configure it , open the `Settings / Preferences dialog` and select `Editor | Copyright`. Create a new profile with 
+this license header:
+
+```
+Use of this source code is governed by the MIT license that can be
+found in the LICENSE file.
+```
+
+To check if project file contains the license header, run the script `hack/check-license.sh`
+
+```
+$ hack/check-license.sh
+  Checking files contains license header...
+  Check OK
+```

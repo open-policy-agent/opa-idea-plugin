@@ -2,6 +2,7 @@
 <!-- toc -->
 - [Introduction](#introduction)
 - [Contribution](#contribution)
+  - [Developer Certificate Of Origin](#developer-certificate-of-origin)
 - [Helpful resources](#helpful-resources)
 <!-- /toc -->
 *to update toc, please read [this page](../../hack/README.md).*
@@ -20,6 +21,23 @@ If you are contributing code, please consider the following:
 * all tests must passed
 * add link to IntelliJ SDK documentation in JavaDoc, if the SDK documentation does not exist, please write a section in project architecture.
 
+## Developer Certificate Of Origin
+
+The OPA project requires that contributors sign off on changes submitted to OPA repositories. As opa-idea-plugin is now part of the OPA repositories, opa-idea-plugin requires contributors sign off on changes as well. The [Developer Certificate of Origin (DCO)](https://developercertificate.org/) is a simple way to certify that you wrote or have the right to submit the code you are contributing to the project.
+
+The DCO is a standard requirement for Linux Foundation and CNCF projects.
+
+You sign-off by adding the following to your commit messages:
+
+    This is my commit message
+
+    Signed-off-by: Random J Developer <random@developer.example.org>
+
+Git has a `-s` command line option to do this automatically.
+
+    git commit -s -m 'This is my commit message'
+
+You can find the full text of the DCO here: https://developercertificate.org/
 
 # Helpful resources
 * [IntelliJ sdk documentation](https://www.jetbrains.org/intellij/sdk/docs/intro/welcome.html)
