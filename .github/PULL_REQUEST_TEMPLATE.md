@@ -1,12 +1,12 @@
 <!--  Thanks for sending a pull request!  Before submitting your PR, some kind reminder
 
-* If this is your first PR, please read our contributor guidelines: https://github.com/vgramer/opa-idea-plugin/blob/master/CONTRIBUTING.md
+* If this is your first PR, please read our contributor guidelines: https://github.com/open-policy-agent/opa-idea-plugin/blob/master/CONTRIBUTING.md
 
 * Code should be accompanied by tests whenever it's possible.
 
 * New feature must be documented
 
-For more information about the project architecture please take a look at https://github.com/vgramer/opa-idea-plugin/tree/master/docs/devel
+For more information about the project architecture please take a look at https://github.com/open-policy-agent/opa-idea-plugin/tree/master/docs/devel
 
 -->
 

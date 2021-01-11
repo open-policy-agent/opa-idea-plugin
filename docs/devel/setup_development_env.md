@@ -28,7 +28,7 @@ Just clone the project and execute the tests to ensure everything is ok.
 
 ```bash
 # clone the project 
-$ git clone git@github.com:vgramer/opa-idea-plugin.git
+$ git clone git@github.com:open-policy-agent/opa-idea-plugin.git
 $ cd opa-idea-plugin
 
 # run tests

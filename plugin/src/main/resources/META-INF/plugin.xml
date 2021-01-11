@@ -6,8 +6,8 @@
 <idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude" allow-bundled-update="true">
     <id>org.openpolicyagent.opa-idea-plugin</id>
     <name>Open Policy Agent</name>
-    <vendor email="open-policy-agent-intellij-private@googlegroups.com" url="https://github.com/vgramer/opa-idea-plugin">
-        https://github.com/vgramer/opa-idea-plugin
+    <vendor email="open-policy-agent-intellij-private@googlegroups.com" url="https://github.com/open-policy-agent/opa-idea-plugin">
+        https://github.com/open-policy-agent/opa-idea-plugin
     </vendor>
 
     <description><![CDATA[
