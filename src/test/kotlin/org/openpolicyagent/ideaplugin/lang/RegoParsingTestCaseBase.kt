@@ -17,7 +17,7 @@ import org.openpolicyagent.ideaplugin.lang.parser.RegoParserDefinition
 import org.openpolicyagent.ideaplugin.opa.tool.OpaBaseTool.Companion.opaBinary
 
 
-abstract class RegoParsingTestCaseBase() : ParsingTestCase(
+abstract class RegoParsingTestCaseBase : ParsingTestCase(
     "org/openpolicyagent/ideaplugin/lang/parser/fixtures",
     "rego",
     true,
