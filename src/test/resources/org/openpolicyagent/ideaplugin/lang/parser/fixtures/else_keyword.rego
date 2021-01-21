@@ -43,3 +43,42 @@ check_object_comprehension_for_else(x) = x {
 } else = {y : "true" | some y;  a[y] } {
     true
 }
+
+check_only_querry_for_else = true {
+ false
+} else {
+    true
+}
+
+check_only_equal_querry_for_else = true {
+ false
+} else = {
+    true
+}
+
+# issue 84
+check_empty_query_else = true {
+    input.x < input.y
+} else = false
+
+
+check_empty_query_else_with_number = 3 {
+    input.x < input.y
+} else = 2
+
+check_empty_query_else_with_string = "ok" {
+    input.x < input.y
+} else = "ko"
+
+check_empty_query_else_with_array= ["ok", "yes"] {
+    input.x < input.y
+} else = ["ko", "no"]
+
+check_empty_query_else_with_set= { 0 ,2 ,3 } {
+    input.x < input.y
+} else = { 4, 5, 6 }
+
+
+check_empty_query_else_with_infix_op= 0 {
+    input.x < input.y
+} else = abs(input.x) + 10 - input.y

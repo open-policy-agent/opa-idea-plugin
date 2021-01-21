@@ -66,16 +66,18 @@
 module              ::= package (import|  rule)*
 package             ::= "package" ref
 import              ::= "import" ref ( "as" var )?
-rule                ::=  "default"?  rule-head  rule-body*
+rule                ::= "default"?  rule-head  rule-body*
 rule-head           ::= var ( "(" rule-args? ")" )? ("[" term "]" )? ( ( ":=" | "=" ) expr2 )?
 rule-args           ::= term ( "," term )*
-rule-body           ::= ( else ( "=" expr2 )? )? "{" query "}"
-query               ::=( literal |';' )+
+rule-body           ::= else-expr  | query-block
+else-expr           ::= else "=" expr2  query-block? | else "="? query-block
+query-block         ::= "{" query "}"
+query               ::= ( literal |';' )+
 literal             ::= ( some-decl | expr | "not" expr )  with-modifier*
 with-modifier       ::= "with" term "as" term
 some-decl           ::= "some" var ( "," var )*
-expr                ::=  expr2  ((':=' | '=') expr2)?
-expr2               ::=  expr-infix | (expr-call ref-arg*)  | term
+expr                ::= expr2  ((':=' | '=') expr2)?
+expr2               ::= expr-infix | (expr-call ref-arg*)  | term
 term-or-infix-op    ::= term (infix-operator term)?
 expr-call           ::= var ref-arg-dot* "(" ( term-or-infix-op ( "," term-or-infix-op )* )? ")"
 expr-infix          ::= term infix-operator term (infix-operator term)*
