@@ -10,3 +10,5 @@ arr5 := [1,2,]
 
 arr6 := ["hello", "world"]
 
+# test object value can be complex expression
+arr7 := [1 + 2 * 4, count(arr6) / abs(arr5[0])  ]
