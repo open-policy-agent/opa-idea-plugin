@@ -52,4 +52,6 @@ class RegoParsingTestCase: RegoParsingTestCaseBase() {
     fun `test sets`() = doTestNoError()
     fun `test strings`() = doTestNoError()
     fun `test variables`() = doTestNoError()
+
+    fun `test ref arg back`() = doTestNoError()
 }
