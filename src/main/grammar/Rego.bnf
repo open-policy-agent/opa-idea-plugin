@@ -67,18 +67,18 @@ module              ::= package (import|  rule)*
 package             ::= "package" ref
 import              ::= "import" ref ( "as" var )?
 rule                ::= "default"?  rule-head  rule-body*
-rule-head           ::= var ( "(" rule-args? ")" )? ("[" term "]" )? ( ( ":=" | "=" ) expr2 )?
+rule-head           ::= var ( "(" rule-args? ")" )? ("[" term "]" )? ( ( ":=" | "=" ) expr )?
 rule-args           ::= term ( "," term )*
 rule-body           ::= else-expr  | query-block
-else-expr           ::= else "=" expr2  query-block? | else "="? query-block
+else-expr           ::= else "=" expr  query-block? | else "="? query-block
 query-block         ::= "{" query "}"
 query               ::= ( literal |';' )+
-literal             ::= ( some-decl | expr | "not" expr )  with-modifier*
+literal             ::= ( some-decl | literal-expr | "not" literal-expr )  with-modifier*
 with-modifier       ::= "with" term "as" term
 some-decl           ::= "some" var ( "," var )*
-expr                ::= expr2  ((':=' | '=') expr2)?
-expr2               ::= expr-infix | (expr-call ref-arg*)  | term
-expr-call           ::= var ref-arg-dot* "(" ( expr2 ( "," expr2 )* )? ")"
+literal-expr        ::= expr  ((':=' | '=') expr)?
+expr                ::= expr-infix | (expr-call ref-arg*)  | term
+expr-call           ::= var ref-arg-dot* "(" ( expr ( "," expr )* )? ")"
 expr-infix          ::= factor-expr  (infix-operator factor-expr)*
 factor-expr         ::= ("(" expr-infix ")") | term
 term                ::= ref | var | scalar | array | object | set | array-compr | object-compr | set-compr
@@ -92,14 +92,14 @@ arith-operator      ::= "+" | "-" | "*" | "/" | "%"
 bin-operator        ::= "&" | "|"
 ref                 ::= ( expr-call  | array | object | set | array-compr | object-compr | set-compr |var  )  ref-arg*
 ref-arg             ::= ref-arg-dot | ref-arg-brack
-ref-arg-brack       ::= "[" ( expr2 | "_" ) "]"
+ref-arg-brack       ::= "[" ( expr | "_" ) "]"
 ref-arg-dot         ::= "." var
 var                 ::= ASCII_LETTER
 scalar              ::= string | NUMBER | TRUE | FALSE | NULL
 string              ::= STRING_TOKEN| RAW_STRING
-array               ::= '[' expr2? ( ',' expr2 )* ','? ']'
+array               ::= '[' expr? ( ',' expr )* ','? ']'
 object              ::= '{' object-item? ( ',' object-item )* ','? '}'
-object-item         ::= ( scalar | ref | var ) ":" expr2
+object-item         ::= ( scalar | ref | var ) ":" expr
 set                 ::= empty-set | non-empty-set
 non-empty-set       ::= "{" term ( "," term )* ','?  "}"
 empty-set           ::= "set(" ")"
