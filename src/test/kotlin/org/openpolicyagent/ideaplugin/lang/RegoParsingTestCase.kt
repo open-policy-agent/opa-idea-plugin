@@ -54,4 +54,5 @@ class RegoParsingTestCase: RegoParsingTestCaseBase() {
     fun `test variables`() = doTestNoError()
 
     fun `test ref arg back`() = doTestNoError()
+    fun `test factor expr`() = doTestNoError()
 }
