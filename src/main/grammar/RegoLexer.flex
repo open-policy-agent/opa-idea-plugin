@@ -31,7 +31,7 @@ WHITE_SPACE=[ \t\n\x0B\f\r]+
 
 //The closing quote is optional in order to have a valid token, so the quoteHandler can autoclose it
 //if the user don't close the quote, an error will be reported by the RegoSyntaxErrorAnnotator
-STRING_TOKEN=\"([^\r\n\"])*\"?
+STRING_TOKEN=\"([^\\\"\r\n]|\\[^\r\n])*\"?
 RAW_STRING=`[^`]*(`)?
 
 COMMENT=[ \t]*#[^\r\n]*

@@ -38,7 +38,14 @@ class RegoSyntaxErrorAnnotatorTest : AnnotatorTestBase(RegoSyntaxErrorAnnotator:
     fun `test no error are reported for valid string containing escape`(){
         check_error("""
             package main
-            a:= "hello \”world"
+            a:= "hello \"world"
+        """.trimIndent())
+    }
+
+    fun `test no error are reported for valid string containing only escape`(){
+        check_error("""
+            package main
+            a:= "\”"
         """.trimIndent())
     }
 

@@ -5,8 +5,13 @@ someRule {
     someOtherString := "some \\ string"
 }
 
-someString := `hello\there`
-
+emptyRawString := ``
+rawString := `hello\there`
 multiLineRawString := `hello
 world
 `
+rawStringWithQuote := `"`
+
+emptyString := ""
+stringWithEscapeQuote := "hello \"world"
+stringWithOnlyEscapedQuote := "\""
