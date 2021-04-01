@@ -58,7 +58,7 @@
         ASCII_LETTER        = 'regexp:[A-Za-z_][A-Za-z_0-9]*'
         NUMBER              = 'regexp:-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d*)?'
         WHITE_SPACE         = 'regexp:\s+'
-        STRING_TOKEN        = 'regexp:"([^\r\n"])*"?'
+        STRING_TOKEN        = 'regexp:"([^\\"\r\n]|\\[^\r\n])*"?'
         RAW_STRING          = 'regexp:`[^`]*(`)?'
         COMMENT             = 'regexp:[ \t]*#[^\r\n]*'
     ]
