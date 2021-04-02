@@ -5,6 +5,7 @@
 
 import org.gradle.api.JavaVersion.VERSION_1_8
 import org.gradle.api.internal.HasConvention
+import org.intellij.markdown.ast.getTextInNode
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.intellij.tasks.RunIdeTask
@@ -25,6 +26,16 @@ val baseVersion = when (baseIDE) {
 
 val psiViewerPluginVersion = prop("psiViewerPluginVersion")
 val channel = prop("publishChannel")
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        // needed to extract the last release notes
+        classpath("org.jetbrains:markdown:0.2.0")
+    }
+}
 
 idea {
     module {
@@ -110,6 +121,7 @@ allprojects {
         withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
             sinceBuild(prop("sinceBuild"))
             untilBuild(prop("untilBuild"))
+            changeNotes(getLastReleaseNotes())
         }
 
         withType<RunIdeTask> {
@@ -134,13 +146,12 @@ allprojects {
 
 val channelSuffix = if (channel.isBlank() || channel == "stable") "" else "-$channel"
 val versionSuffix = "-$platformVersion$channelSuffix"
-val majorVersion = prop("majorVersion")
-val patchVersion = prop("patchVersion").toInt()
-val buildNumber =  System.getenv("GITHUB_RUN_ID" ) ?: "SNAPSHOT"
+val pluginVersion = prop("pluginVersion")
+
 
 // module to build/run/publish opa-ida-plugin plugin
 project(":plugin"){
-    version = "$majorVersion.$patchVersion.$buildNumber$versionSuffix"
+    version = "$pluginVersion$versionSuffix"
     intellij {
         pluginName = "opa-idea-plugin"
         val plugins = mutableListOf(
@@ -238,3 +249,38 @@ val SourceSet.kotlin: SourceDirectorySet
 
 fun SourceSet.kotlin(action: SourceDirectorySet.() -> Unit) =
     kotlin.action()
+
+fun getLastReleaseNotes(changLogPath: String = "CHANGELOG.md"): String {
+    val src = File(changLogPath).readText()
+    val flavour = org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor()
+    val parsedTree = org.intellij.markdown.parser.MarkdownParser(flavour).buildMarkdownTreeFromString(src)
+
+    var found = false
+    val releaseNotesChildren: MutableList<org.intellij.markdown.ast.ASTNode> = mutableListOf()
+
+    for (child in parsedTree.children) {
+        if (child.type == org.intellij.markdown.MarkdownElementTypes.ATX_1) {
+            if (found) {
+                // collect finished. exit
+                break
+            }
+            if (child.getTextInNode(src).startsWith("# Release notes for v")) {
+                releaseNotesChildren.add(child)
+                found = true
+            }
+        } else {
+            if (found) {  // collect child related to this release note
+                releaseNotesChildren.add(child)
+            }
+        }
+    }
+
+    if (!found) {
+        throw Exception("Can not find releases notes in '${changLogPath}'")
+    }
+    val root = org.intellij.markdown.ast.CompositeASTNode(
+        org.intellij.markdown.MarkdownElementTypes.MARKDOWN_FILE,
+        releaseNotesChildren
+    )
+    return org.intellij.markdown.html.HtmlGenerator(src, root, flavour).generateHtml()
+}
