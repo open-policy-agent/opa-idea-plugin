@@ -18,8 +18,7 @@ jobs:
         platform-version: [ 201, 202 ]
     env:
       ORG_GRADLE_PROJECT_platformVersion: ${{ matrix.platform-version }}
-      #todo change that after test
-      ORG_GRADLE_PROJECT_publishChannel: dev
+      ORG_GRADLE_PROJECT_publishChannel: stable
       ORG_GRADLE_PROJECT_publishToken: ${{ secrets.PUBLISH_TOKEN }}
     steps:
       # Cache gradle dependencies
@@ -38,14 +37,14 @@ jobs:
 
       - name: publish plugin
         run: |
-          ORG_GRADLE_PROJECT_pluginVersion="${GITHUB_REF/refs\/tags\//}"
+          export ORG_GRADLE_PROJECT_pluginVersion="${GITHUB_REF/refs\/tags\//}"
           ./gradlew :plugin:publishPlugin
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2.2.2
         with:
           name: plugin-artifact
-          path: ./build/distributions/*.zip
+          path: ./plugin/build/distributions/*.zip
           retention-days: 1
           if-no-files-found: error
 
