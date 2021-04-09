@@ -4,7 +4,7 @@
 # This script generate the release-notes for next version in ${NEXT_RELEASE_NOTES_FILE} ie
 # repository_root/next-release-notes.md". It collect release notes from PR description merged into 'master' between the
 # last github release and HEAD.
-# For more information about the collection please read the documentation: docs/release-notes-generation.md
+# For more information about the collection please read the documentation: docs/devel/releasing/release-notes-generation.md
 #
 # This script is intended to be run in github action but can run in local.
 #
