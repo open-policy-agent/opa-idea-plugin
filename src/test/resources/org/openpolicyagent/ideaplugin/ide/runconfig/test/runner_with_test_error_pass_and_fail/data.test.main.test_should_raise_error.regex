@@ -1,1 +1,0 @@
-data.test.main.test_should_raise_error: ERROR \([^)]+\)  [^:]+:8: eval_builtin_error: to_number: strconv.ParseFloat: parsing "x": invalid syntax
