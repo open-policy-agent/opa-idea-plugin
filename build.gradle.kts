@@ -35,10 +35,10 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "1.3.72"
-    id("org.jetbrains.intellij") version "0.6.1"
-    id("org.jetbrains.grammarkit") version "2020.2.1"
-    id("net.saliman.properties") version "1.4.6"
+    kotlin("jvm") version "1.4.32"
+    id("org.jetbrains.intellij") version "0.7.2"
+    id("org.jetbrains.grammarkit") version "2021.1.2"
+    id("net.saliman.properties") version "1.5.1"
 }
 
 allprojects {
@@ -52,6 +52,14 @@ allprojects {
 
     repositories {
         mavenCentral()
+        jcenter()
+        maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
+    }
+
+    configurations {
+        all {
+            resolutionStrategy.sortArtifacts(ResolutionStrategy.SortOrder.DEPENDENCY_FIRST)
+        }
     }
 
     dependencies {
