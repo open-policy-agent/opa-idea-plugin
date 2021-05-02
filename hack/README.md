@@ -22,14 +22,14 @@ $ ./hack/verify-toc.sh
 - [Verify and update table of content scripts](#verify-and-update-table-of-content-scripts)
   - [verify-toc.sh](#verify-tocsh)
   - [update-toc.sh](#update-tocsh)
-Cleanning...
+Cleaning...
 
 ```
 Example with a document that does not need an update:
 
 ```bash
 $ ./hack/verify-toc.sh
-Cleanning...
+Cleaning...
 
 ```
 
