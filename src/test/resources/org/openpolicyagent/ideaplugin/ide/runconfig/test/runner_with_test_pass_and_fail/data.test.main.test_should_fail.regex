@@ -1,0 +1,6 @@
+data.test.main.test_should_fail: FAIL \(.+\)
+  query:1                                                              Enter data.test.main.test_should_fail = _
+  [^:]+:14     \| Enter data.test.main.test_should_fail
+  [^:]+:16     \| \| Fail to_number\("x"\)
+  query:1                                                              \| Fail data.test.main.test_should_fail = _
+

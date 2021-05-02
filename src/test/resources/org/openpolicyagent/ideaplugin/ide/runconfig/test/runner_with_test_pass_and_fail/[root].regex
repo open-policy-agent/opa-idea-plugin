@@ -3,31 +3,24 @@ Testing started at .+
 FAILURES
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-data.test.main.test_rule1_should_be_ko: FAIL \([^)]+\)
-  query:1                                                              Enter data.test.main.test_rule1_should_be_ko = _
-  [^:]+:5     \| Enter data.test.main.test_rule1_should_be_ko
-  [^:]+:7     \| \| Fail msg = \{"should fail test 1"}
-  query:1                                                              \| Fail data.test.main.test_rule1_should_be_ko = _
-
-
-
-data.test.main.test_rule_2_should_be_ko: FAIL \([^)]+\)
+data.test.main.test_rule_2_should_be_ko: FAIL \(.+\)
   query:1                                                              Enter data.test.main.test_rule_2_should_be_ko = _
-  [^:]+:10     \| Enter data.test.main.test_rule_2_should_be_ko
-  [^:]+:12     \| \| Fail msg = \{"another message in order to put the test in FAIL state"}
+  [^:]+:9      \| Enter data.test.main.test_rule_2_should_be_ko
+  [^:]+:11     \| \| Fail msg = \{"another message in order to put the test in FAIL state"}
   query:1                                                              \| Fail data.test.main.test_rule_2_should_be_ko = _
 
 
 
-data.test.main.test_should_fail: FAIL \([^)]+\)
+data.test.main.test_should_fail: FAIL \(.+\)
   query:1                                                              Enter data.test.main.test_should_fail = _
-  [^:]+:15     \| Enter data.test.main.test_should_fail
-  [^:]+:16     \| \| Fail 2 = 1
+  [^:]+:14     \| Enter data.test.main.test_should_fail
+  [^:]+:16     \| \| Fail to_number\("x"\)
   query:1                                                              \| Fail data.test.main.test_should_fail = _
 
 
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-FAIL: 3\/3
+PASS: 1\/3
+FAIL: 2\/3
 
 Process finished with exit code 2
