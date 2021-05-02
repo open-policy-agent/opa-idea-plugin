@@ -23,9 +23,10 @@ abstract class RunConfigurationProducerTestBase : OpaTestBase() {
     protected fun checkOnLeaf() = checkOnElement<PsiElement>()
 
     private inline fun <reified T : PsiElement> checkOnElement() {
-        val configurationContext = ConfigurationContext(
-            myFixture.file.findElementAt(myFixture.caretOffset)?.ancestorOrSelf<T>()
-        )
+        var element = myFixture.file.findElementAt(myFixture.caretOffset)
+            ?.ancestorOrSelf<T>()
+            ?: error("Failed to find element of `${T::class.simpleName}` class at caret")
+        val configurationContext = ConfigurationContext(element)
         check(configurationContext)
     }
 
@@ -103,7 +104,7 @@ abstract class RunConfigurationProducerTestBase : OpaTestBase() {
         private fun addFile(path: String, code: String): File {
             val matchResult = Regex("# caret:([0-9]+)").find(code)
 
-            var offset :Int?= null
+            var offset: Int? = null
             if (matchResult != null) {
                 val caretOffset = matchResult.groupValues[1].toInt()
 

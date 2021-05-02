@@ -13,7 +13,7 @@ import org.assertj.core.api.Assertions.assertThat
 class PsiElementExtKtTest: OpaTestBase() {
 
     fun `test getRegoPackage returns null if file is not a rego file`(){
-        val file = myFixture.configureByText(JsonFileType(),"""
+        val file = myFixture.configureByText(JsonFileType.INSTANCE,"""
             {"a": "b"}
         """.trimIndent())
 
