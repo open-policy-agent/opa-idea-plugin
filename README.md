@@ -8,7 +8,7 @@ Main features are:
 
 # Compatibility
 
-The plugin is compatible with all IntelliJ-based IDEs starting from the version 2020.1, with the following differences in the sets of the available features:
+The plugin is compatible with all IntelliJ-based IDEs starting from the version 2020.3, with the following differences in the sets of the available features:
 
 
 |                        | [IntelliJ IDEA] Community and Ultimate (commercial) |Other IDE
