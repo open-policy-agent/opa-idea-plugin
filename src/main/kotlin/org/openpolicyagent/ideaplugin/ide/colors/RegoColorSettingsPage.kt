@@ -13,6 +13,8 @@ import com.intellij.openapi.options.colors.ColorSettingsPage
 import com.intellij.openapi.util.io.StreamUtil
 import org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighter
 import org.openpolicyagent.ideaplugin.lang.RegoIcons
+import java.io.InputStreamReader
+import java.nio.charset.StandardCharsets
 import javax.swing.Icon
 
 /**
@@ -28,7 +30,7 @@ class RegoColorSettingsPage : ColorSettingsPage {
      */
     private val regoDemoText by lazy {
         val stream = javaClass.classLoader.getResourceAsStream("org/openpolicyagent/ideaplugin/ide/colors/RegoDemo.rego")
-        StreamUtil.convertSeparators(StreamUtil.readText(stream!!, "UTF-8"))
+        StreamUtil.convertSeparators(StreamUtil.readText(InputStreamReader(stream, StandardCharsets.UTF_8)))
     }
 
     override fun getDisplayName(): String = "Rego"

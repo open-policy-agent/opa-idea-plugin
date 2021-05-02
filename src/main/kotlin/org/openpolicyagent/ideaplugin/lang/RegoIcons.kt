@@ -11,5 +11,5 @@ object RegoIcons{
     /**
      * icon use the file type 'rego'
      */
-    val OPA = IconLoader.getIcon("/icons/opa.svg")
+    val OPA = IconLoader.getIcon("/icons/opa.svg", RegoIcons.javaClass)
 }

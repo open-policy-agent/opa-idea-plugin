@@ -18,7 +18,6 @@ class CheckAction : DumbAwareAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         val (project, document) = getProjectAndDocument(e) ?: return
-        val editor = getEditor(e) ?: return
         OpaActions().checkDocument(project, document)
     }
 }
