@@ -1,32 +1,32 @@
 #!/usr/bin/env bash
 
-# widely inspired from https://github.com/kubernetes/enhancements/blob/master/hack/update-toc.sh but use the curl instead
-# of go to get binary. Thansk to the kubernetes authors
+# widely inspired from https://github.com/kubernetes/enhancements/blob/master/hack/update-toc.sh but uses curl instead
+# of go to get binary. Thanks to the kubernetes authors
 
-# This scirpt update toc of all md file in the repo
+# This script updates TOC of all md file in the repo
 
 set -o errexit
 set -o nounset
 set -o pipefail
 
-# version of mtdodc
+# version of mdtoc
 VERSION="v1.0.0"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 cd "${ROOT}"
 
-# create a temporary directory where mtdoc is dowload
+# create a temporary directory where mdtoc is dowloaded
 TMP_DIR=$(mktemp -d)
 cd "${TMP_DIR}"
 
 exit_hook(){
- echo "Cleanning..."
+ echo "Cleaning..."
  rm -rf "${TMP_DIR}"
 }
 
 trap exit_hook EXIT
 
-#Download mtdoc and add it to path
+#Download mdtoc and add it to path
 curl -s "https://github.com/tallclair/mdtoc/releases/download/${VERSION}/mdtoc" -o mdtoc
 export PATH="${TMP_DIR}:${PATH}"
 
