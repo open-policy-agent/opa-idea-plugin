@@ -15,7 +15,7 @@ VERSION="v1.0.0"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 cd "${ROOT}"
 
-# create a temporary directory where mdtoc is dowloaded
+# create a temporary directory where mdtoc is downloaded
 TMP_DIR=$(mktemp -d)
 cd "${TMP_DIR}"
 
