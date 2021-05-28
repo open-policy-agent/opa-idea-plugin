@@ -1,5 +1,6 @@
 <configurations>
   <configuration name="test test_1" class="OpaTestRunConfiguration">
-    <option name="addtionalargs" value="-f pretty  -r data.test.main.abc.efg.test_1" />
+    <option name="additionalargs" value="-f pretty  -r data.test.main.abc.efg.test_1" />
+    <envs />
   </configuration>
 </configurations>

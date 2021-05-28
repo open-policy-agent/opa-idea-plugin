@@ -5,6 +5,8 @@
 
 package org.openpolicyagent.ideaplugin.ide.runconfig.test
 
+import com.google.common.collect.ImmutableMap
+import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.execution.configurations.RuntimeConfigurationError
 import org.assertj.core.api.Assertions
 import org.jdom.Element
@@ -66,21 +68,25 @@ class OpaTestRunConfigurationTest : OpaTestRunConfigurationBase() {
 
     fun `test read external`() {
         val runConfig = createTestConfig()
+        runConfig.env = validEnvs()
 
         val data = Element("root")
         data.writePath("bundledir", validBundleDir())
-        data.writeString("addtionalargs", validAdditionalArgs())
+        data.writeString("additionalargs", validAdditionalArgs())
+        runConfig.env.writeExternal(data)
 
         runConfig.readExternal(data)
 
         Assertions.assertThat(runConfig.bundleDir).isEqualTo(validBundleDir())
         Assertions.assertThat(runConfig.additionalArgs).isEqualTo(validAdditionalArgs())
+        Assertions.assertThat(runConfig.env).isEqualTo(validEnvs())
     }
 
     fun `test write external`() {
         val runConfig = createTestConfig()
         runConfig.bundleDir = validBundleDir()
         runConfig.additionalArgs = validAdditionalArgs()
+        runConfig.env = validEnvs()
 
         val elem = Element("root")
         runConfig.writeExternal(elem)
@@ -88,7 +94,8 @@ class OpaTestRunConfigurationTest : OpaTestRunConfigurationBase() {
 
         val expected = Element("root")
         expected.writePath("bundledir", runConfig.bundleDir)
-        expected.writeString("addtionalargs", runConfig.additionalArgs)
+        expected.writeString("additionalargs", runConfig.additionalArgs)
+        runConfig.env.writeExternal(expected)
 
         Assertions.assertThat(elem.toXmlString()).isEqualTo(expected.toXmlString())
 
@@ -136,6 +143,7 @@ class OpaTestRunConfigurationTest : OpaTestRunConfigurationBase() {
 
     private fun validBundleDir(): Path = Paths.get("${myFixture.tempDirPath}/${bundleDirName}")
     private fun validAdditionalArgs() = "-f pretty -v -t 12s"
+    private fun validEnvs() = EnvironmentVariablesData.DEFAULT.with(ImmutableMap.of("CUSTOM_ENV", "custom-value"))
 
     private companion object {
         const val bundleDirName = "src"

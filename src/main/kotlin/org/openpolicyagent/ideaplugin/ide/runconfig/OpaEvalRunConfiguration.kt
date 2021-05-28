@@ -5,6 +5,7 @@
 package org.openpolicyagent.ideaplugin.ide.runconfig
 
 import com.intellij.execution.Executor
+import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.execution.configurations.*
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.options.SettingsEditor
@@ -34,7 +35,7 @@ class OpaEvalRunConfiguration(
 ) : LocatableConfigurationBase<OpaEvalRunProfileState>(project, factory, name) {
 
     /**
-     * the querry to evaluate
+     * the query to evaluate
      */
     var query: String? = null
 
@@ -53,6 +54,7 @@ class OpaEvalRunConfiguration(
      * others arguments to pass to opa eval command (eg -f pretty)
      */
     var additionalArgs: String? = null
+    var env: EnvironmentVariablesData = EnvironmentVariablesData.DEFAULT
 
 
     override fun suggestedName(): String? {
@@ -110,7 +112,8 @@ class OpaEvalRunConfiguration(
         query = element.readString("query")
         input = element.readPath("input")
         bundleDir = element.readPath("bundledir")
-        additionalArgs = element.readString("addtionalargs")
+        additionalArgs = element.readString("additionalargs")
+        env = EnvironmentVariablesData.readExternal(element)
     }
 
     /**
@@ -123,7 +126,8 @@ class OpaEvalRunConfiguration(
         element.writeString("query", query)
         element.writePath("input", input)
         element.writePath("bundledir", bundleDir)
-        element.writeString("addtionalargs", additionalArgs)
+        element.writeString("additionalargs", additionalArgs)
+        env.writeExternal(element)
 
     }
 }

@@ -5,6 +5,7 @@
 
 package org.openpolicyagent.ideaplugin.ide.runconfig.test
 
+import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.execution.filters.HyperlinkInfo
 import com.intellij.execution.testframework.Printable
@@ -24,12 +25,17 @@ import java.nio.file.Paths
 
 abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
 
-    fun createTestConfig(bundleDir: Path? = null, additionalArgs: String? = null): OpaTestRunConfiguration {
+    fun createTestConfig(
+        bundleDir: Path? = null,
+        additionalArgs: String? = null,
+        env: EnvironmentVariablesData = EnvironmentVariablesData.DEFAULT
+    ): OpaTestRunConfiguration {
         val runConfig = OpaConfigurationFactory(OpaTestRunConfigurationType())
             .createTemplateConfiguration(myFixture.project) as OpaTestRunConfiguration
 
         runConfig.bundleDir = bundleDir
         runConfig.additionalArgs = additionalArgs
+        runConfig.env = env
         return runConfig
     }
 
@@ -47,7 +53,7 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
             waitFor()
         }
         UIUtil.dispatchAllInvocationEvents()
-        Disposer.register(project,executionConsole)
+        Disposer.register(project, executionConsole)
         return testsRootNode
     }
 
@@ -107,7 +113,7 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
                     Paths.get("${OpaTestCase.testResourcesPath}/${dataPath}/${testName}/${node.name}.regex").toFile()
                 )
 
-           val value =  if (node == root) node.output else node.errorMessage ?: ""
+            val value = if (node == root) node.output else node.errorMessage ?: ""
 
 
             assertThat(value)
@@ -146,7 +152,7 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
 class ToStringPrinter : Printer {
     private val buffer = StringBuilder()
 
-    val output get()= buffer.toString()
+    val output get() = buffer.toString()
 
     override fun print(text: String, contentType: ConsoleViewContentType) {
         buffer.append(text)

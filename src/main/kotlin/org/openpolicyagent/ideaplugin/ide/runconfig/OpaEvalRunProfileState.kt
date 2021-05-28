@@ -35,6 +35,7 @@ class OpaEvalRunProfileState(
         args.add(runConfiguration.query)
 
         val cmd = GeneralCommandLine(OpaBaseTool.opaBinary)
+            .withEnvironment(runConfiguration.env.envs)
             .withParameters("eval")
             .withParameters(args)
             .withCharset(StandardCharsets.UTF_8)
