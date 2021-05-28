@@ -5,6 +5,7 @@
 package org.openpolicyagent.ideaplugin.ide.runconfig.test
 
 import com.intellij.execution.Executor
+import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.execution.configurations.*
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.options.SettingsEditor
@@ -42,6 +43,7 @@ class OpaTestRunConfiguration(
      * others arguments to pass to opa eval command (eg -f pretty)
      */
     var additionalArgs: String? = null
+    var env: EnvironmentVariablesData = EnvironmentVariablesData.DEFAULT
 
 
     override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration?> = OpaTestRunCommandEditor(project)
@@ -61,7 +63,7 @@ class OpaTestRunConfiguration(
             throw RuntimeConfigurationError("Only format option (-f or --format) = pretty is handle by plugin")
         }
 
-        if (bundleDir == null || bundleDir!!.isFile()){
+        if (bundleDir == null || bundleDir!!.isFile()) {
             throw RuntimeConfigurationError("Bundle directory must be a directory")
         }
     }
@@ -92,7 +94,9 @@ class OpaTestRunConfiguration(
         super.readExternal(element)
 
         bundleDir = element.readPath("bundledir")
-        additionalArgs = element.readString("addtionalargs")
+        additionalArgs = element.readString("additionalargs")
+        env = EnvironmentVariablesData.readExternal(element)
+
     }
 
     /**
@@ -103,7 +107,8 @@ class OpaTestRunConfiguration(
         super.writeExternal(element)
 
         element.writePath("bundledir", bundleDir)
-        element.writeString("addtionalargs", additionalArgs)
+        element.writeString("additionalargs", additionalArgs)
+        env.writeExternal(element)
     }
 }
 

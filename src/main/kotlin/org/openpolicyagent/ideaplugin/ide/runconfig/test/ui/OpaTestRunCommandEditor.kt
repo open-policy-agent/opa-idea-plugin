@@ -10,6 +10,8 @@
 
 package org.openpolicyagent.ideaplugin.ide.runconfig.test.ui
 
+import com.intellij.execution.configuration.EnvironmentVariablesComponent
+import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
@@ -37,6 +39,7 @@ class OpaTestRunCommandEditor(private val project: Project) : SettingsEditor<Opa
         )
     }
     private var additionalArgs = RawCommandLineEditor()
+    private val environmentVariables = EnvironmentVariablesComponent()
 
     override fun createEditor() = panel {
         row("Bundle:") {
@@ -46,6 +49,10 @@ class OpaTestRunCommandEditor(private val project: Project) : SettingsEditor<Opa
         row("Additional Args:") {
             additionalArgs.apply { preferredSize = Dimension(1000, height) }()
         }
+
+        row(environmentVariables.label) {
+            environmentVariables()
+        }
     }
 
     /**
@@ -54,6 +61,7 @@ class OpaTestRunCommandEditor(private val project: Project) : SettingsEditor<Opa
     override fun applyEditorTo(s: OpaTestRunConfiguration) {
         s.bundleDir = bundle.text.toPath()
         s.additionalArgs = additionalArgs.text
+        s.env = environmentVariables.envData
     }
 
     /**
@@ -62,6 +70,7 @@ class OpaTestRunCommandEditor(private val project: Project) : SettingsEditor<Opa
     override fun resetEditorFrom(s: OpaTestRunConfiguration) {
         bundle.text = s.bundleDir?.toString() ?: ""
         additionalArgs.text = s.additionalArgs ?: ""
+        environmentVariables.envData = s.env
     }
 
     private fun String.toPath(): Path? {

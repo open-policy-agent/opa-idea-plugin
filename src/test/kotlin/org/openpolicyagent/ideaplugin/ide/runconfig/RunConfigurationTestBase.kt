@@ -6,6 +6,7 @@
 package org.openpolicyagent.ideaplugin.ide.runconfig
 
 import com.intellij.execution.ExecutionResult
+import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.process.ProcessAdapter
@@ -25,7 +26,8 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
         query: String? = null,
         input: Path? = null,
         bundleDir: Path? = null,
-        additionalArgs: String? = null
+        additionalArgs: String? = null,
+        env: EnvironmentVariablesData = EnvironmentVariablesData.DEFAULT
     ): OpaEvalRunConfiguration {
         val runConfig = OpaConfigurationFactory(OpaEvalRunConfigurationType())
             .createTemplateConfiguration(myFixture.project) as OpaEvalRunConfiguration
@@ -34,6 +36,7 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
         runConfig.bundleDir = bundleDir
         runConfig.input = input
         runConfig.additionalArgs = additionalArgs
+        runConfig.env = env
 
 
         return runConfig

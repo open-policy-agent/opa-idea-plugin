@@ -1,9 +1,11 @@
 <configurations>
   <configuration name="eval data.main.abc.efg" class="OpaEvalRunConfiguration">
     <option name="query" value="data.main.abc.efg" />
-    <option name="addtionalargs" value="-f pretty --metrics" />
+    <option name="additionalargs" value="-f pretty --metrics" />
+    <envs />
   </configuration>
   <configuration name="test package" class="OpaTestRunConfiguration">
-    <option name="addtionalargs" value="-f pretty  -r data.main.abc.efg" />
+    <option name="additionalargs" value="-f pretty  -r data.main.abc.efg" />
+    <envs />
   </configuration>
 </configurations>

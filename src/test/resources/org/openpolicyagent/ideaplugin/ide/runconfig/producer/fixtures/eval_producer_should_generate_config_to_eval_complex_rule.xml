@@ -1,6 +1,7 @@
 <configurations>
   <configuration name="eval data.main.abc.efg.rule_1" class="OpaEvalRunConfiguration">
     <option name="query" value="data.main.abc.efg.rule_1" />
-    <option name="addtionalargs" value="-f pretty " />
+    <option name="additionalargs" value="-f pretty " />
+    <envs />
   </configuration>
 </configurations>

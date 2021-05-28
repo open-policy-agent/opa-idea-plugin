@@ -5,6 +5,7 @@
 
 package org.openpolicyagent.ideaplugin.ide.runconfig.ui
 
+import com.intellij.execution.configuration.EnvironmentVariablesComponent
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.fileChooser.FileTypeDescriptor
 import com.intellij.openapi.options.SettingsEditor
@@ -44,6 +45,7 @@ class OpaEvalRunCommandEditor(private val project: Project) : SettingsEditor<Opa
         )
     }
     private var additionalArgs = RawCommandLineEditor()
+    private val environmentVariables = EnvironmentVariablesComponent()
 
     override fun createEditor() = panel {
         row("Query:") {
@@ -61,6 +63,10 @@ class OpaEvalRunCommandEditor(private val project: Project) : SettingsEditor<Opa
         row("Additional Args:") {
             additionalArgs.apply { preferredSize = Dimension(1000, height) }()
         }
+
+        row(environmentVariables.label) {
+            environmentVariables()
+        }
     }
 
     /**
@@ -71,6 +77,7 @@ class OpaEvalRunCommandEditor(private val project: Project) : SettingsEditor<Opa
         s.input = input.text.toPath()
         s.bundleDir = bundle.text.toPath()
         s.additionalArgs = additionalArgs.text
+        s.env = environmentVariables.envData
     }
 
     /**
@@ -81,6 +88,7 @@ class OpaEvalRunCommandEditor(private val project: Project) : SettingsEditor<Opa
         input.text = s.input?.toString() ?: ""
         bundle.text = s.bundleDir?.toString() ?: ""
         additionalArgs.text = s.additionalArgs ?: ""
+        environmentVariables.envData = s.env
     }
 
     private fun String.toPath(): Path? {

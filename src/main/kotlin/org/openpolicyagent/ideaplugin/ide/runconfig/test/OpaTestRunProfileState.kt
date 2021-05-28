@@ -52,6 +52,7 @@ class OpaTestRunProfileState(
         }
 
         val cmd = GeneralCommandLine(OpaBaseTool.opaBinary)
+            .withEnvironment(runConfiguration.env.envs)
             .withParameters("test")
             .withParameters(args)
             .withCharset(StandardCharsets.UTF_8)

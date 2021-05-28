@@ -1,9 +1,11 @@
 <configurations>
   <configuration name="eval data.main" class="OpaEvalRunConfiguration">
     <option name="query" value="data.main" />
-    <option name="addtionalargs" value="-f pretty --metrics" />
+    <option name="additionalargs" value="-f pretty --metrics" />
+    <envs />
   </configuration>
   <configuration name="test package" class="OpaTestRunConfiguration">
-    <option name="addtionalargs" value="-f pretty  -r data.main" />
+    <option name="additionalargs" value="-f pretty  -r data.main" />
+    <envs />
   </configuration>
 </configurations>

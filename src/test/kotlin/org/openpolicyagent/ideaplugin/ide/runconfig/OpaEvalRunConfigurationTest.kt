@@ -5,6 +5,7 @@
 
 package org.openpolicyagent.ideaplugin.ide.runconfig
 
+import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.execution.configurations.RuntimeConfigurationError
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.runners.ExecutionEnvironment
@@ -92,13 +93,13 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
         runConfig.checkConfiguration()
     }
 
-    fun `test configuration must be check be call getState`(){
+    fun `test configuration must be check be call getState`() {
         val runConfig = buildProjectAndGetRunConfig("", validInput(), validBundleDir(), validAdditionalArgs())
 
         try {
             runConfig.getState(DefaultRunExecutor(), ExecutionEnvironment())
             failBecauseExceptionWasNotThrown<RuntimeConfigurationError>(RuntimeConfigurationError::class.java)
-        }catch (e: RuntimeConfigurationError){
+        } catch (e: RuntimeConfigurationError) {
             assertThat(e).hasMessage("Query can not be empty")
         }
     }
@@ -111,7 +112,8 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
         data.writeString("query", validQuery())
         data.writePath("input", validInput())
         data.writePath("bundledir", validBundleDir())
-        data.writeString("addtionalargs", validAdditionalArgs())
+        data.writeString("additionalargs", validAdditionalArgs())
+        runConfig.env.writeExternal(data)
 
         runConfig.readExternal(data)
 
@@ -119,6 +121,7 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
         assertThat(runConfig.input).isEqualTo(validInput())
         assertThat(runConfig.bundleDir).isEqualTo(validBundleDir())
         assertThat(runConfig.additionalArgs).isEqualTo(validAdditionalArgs())
+        assertThat(runConfig.env).isEqualTo(validEnvs())
     }
 
     fun `test write external`() {
@@ -128,6 +131,7 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
         runConfig.bundleDir = validBundleDir()
         runConfig.input = validInput()
         runConfig.additionalArgs = validAdditionalArgs()
+        runConfig.env = validEnvs()
 
         val elem = Element("root")
         runConfig.writeExternal(elem)
@@ -137,7 +141,8 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
         expected.writeString("query", runConfig.query)
         expected.writePath("input", runConfig.input)
         expected.writePath("bundledir", runConfig.bundleDir)
-        expected.writeString("addtionalargs", runConfig.additionalArgs)
+        expected.writeString("additionalargs", runConfig.additionalArgs)
+        runConfig.env.writeExternal(expected)
 
         assertThat(elem.toXmlString()).isEqualTo(expected.toXmlString())
 
@@ -147,6 +152,7 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
     private fun validInput(): Path = Paths.get("${myFixture.tempDirPath}/${bundleDirName}/${inputFileName}")
     private fun validBundleDir(): Path = Paths.get("${myFixture.tempDirPath}/${bundleDirName}")
     private fun validAdditionalArgs() = "-f pretty --fail-defined"
+    private fun validEnvs() = EnvironmentVariablesData.DEFAULT
 
     private fun doCheckConfigError(
         query: String?,
@@ -170,7 +176,8 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
         query: String?,
         input: Path?,
         bundleDir: Path?,
-        additionalsArgs: String?
+        additionalArgs: String?,
+        env: EnvironmentVariablesData = EnvironmentVariablesData.DEFAULT
     ): OpaEvalRunConfiguration {
         buildProject {
             dir(bundleDirName) {
@@ -188,7 +195,8 @@ class OpaEvalRunConfigurationTest : RunConfigurationTestBase() {
         runConfig.query = query
         runConfig.input = input
         runConfig.bundleDir = bundleDir
-        runConfig.additionalArgs = additionalsArgs
+        runConfig.additionalArgs = additionalArgs
+        runConfig.env = env
         return runConfig
     }
 
