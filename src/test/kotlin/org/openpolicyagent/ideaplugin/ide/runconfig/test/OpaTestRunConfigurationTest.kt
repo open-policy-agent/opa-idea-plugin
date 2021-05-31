@@ -5,7 +5,6 @@
 
 package org.openpolicyagent.ideaplugin.ide.runconfig.test
 
-import com.google.common.collect.ImmutableMap
 import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.execution.configurations.RuntimeConfigurationError
 import org.assertj.core.api.Assertions
@@ -143,7 +142,7 @@ class OpaTestRunConfigurationTest : OpaTestRunConfigurationBase() {
 
     private fun validBundleDir(): Path = Paths.get("${myFixture.tempDirPath}/${bundleDirName}")
     private fun validAdditionalArgs() = "-f pretty -v -t 12s"
-    private fun validEnvs() = EnvironmentVariablesData.DEFAULT.with(ImmutableMap.of("CUSTOM_ENV", "custom-value"))
+    private fun validEnvs() = EnvironmentVariablesData.DEFAULT.with(mapOf("CUSTOM_ENV" to "custom-value"))
 
     private companion object {
         const val bundleDirName = "src"
