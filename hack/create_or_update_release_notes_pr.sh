@@ -60,7 +60,9 @@ fi
 
 
 git add CHANGELOG.md
-git commit -m "update changelog with new version"
+
+# commit must be signed to pass DTO check
+git commit -s -m "update changelog with new version"
 echo "push new changelog on branch ${release_note_branch}"
 git push origin "${release_note_branch}" -f
 
