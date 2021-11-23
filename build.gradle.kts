@@ -130,8 +130,7 @@ allprojects {
 
         buildSearchableOptions {
             // buildSearchableOptions task doesn't make sense for non-root subprojects
-            val isRootProject = project.name == "plugin"
-            enabled = isRootProject
+            enabled = false
         }
     }
     afterEvaluate {
@@ -185,6 +184,10 @@ project(":plugin"){
         }
         runPluginVerifier {
             ideVersions(prop("pluginVerifierIdeVersions"))
+        }
+        buildSearchableOptions {
+            // buildSearchableOptions task doesn't make sense for non-root subprojects
+            enabled = prop("enableBuildSearchableOptions").toBoolean()
         }
     }
 }
