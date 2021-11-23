@@ -7,5 +7,10 @@ build/
 gen/
 deps
 
+# MacOS files
 .DS_Store
 
+# release-notes file
+next-release-notes.md
+tmp_changelog.md
+gh_release_description
