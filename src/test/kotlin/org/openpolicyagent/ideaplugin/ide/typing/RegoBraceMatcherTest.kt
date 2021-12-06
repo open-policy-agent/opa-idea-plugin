@@ -6,7 +6,6 @@
 package org.openpolicyagent.ideaplugin.ide.typing
 
 import com.intellij.codeInsight.highlighting.BraceMatchingUtil
-import org.openpolicyagent.ideaplugin.OpaTestBase
 import org.openpolicyagent.ideaplugin.lang.RegoFileType
 
 class RegoBraceMatcherTest: RegoTypingTestBase() {

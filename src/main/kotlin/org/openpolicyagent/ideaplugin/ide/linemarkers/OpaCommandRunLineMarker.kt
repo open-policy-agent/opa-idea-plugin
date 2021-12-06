@@ -61,12 +61,12 @@ class OpaCommandRunLineMarker : RunLineMarkerContributor() {
         if (element.elementType != RegoTypes.ASCII_LETTER) return null
 
         if (element.parent.parent.parent is RegoPackage) {
-            return Info(AllIcons.RunConfigurations.TestState.Run, { "eval or test package" }, ExecutorAction.getActions(1))
+            return Info(AllIcons.RunConfigurations.TestState.Run, { "eval or test package" }, *ExecutorAction.getActions(1))
         }
 
         if (element.parent.parent is RegoRuleHead) {
             val cmd =  if(element.text.startsWith(REGO_TEST_RULE_PREFIX)) "test"  else "eval"
-            return Info(AllIcons.RunConfigurations.TestState.Run, { "$cmd rule" }, ExecutorAction.getActions(1))
+            return Info(AllIcons.RunConfigurations.TestState.Run, { "$cmd rule" }, *ExecutorAction.getActions(1))
         }
 
         return null

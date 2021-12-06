@@ -23,8 +23,7 @@ abstract class AnnotatorTestBase(private val annotatorClass: KClass<out Annotato
         AnnotatorBase.enableAnnotator(annotatorClass.java, testRootDisposable)
 
         val testSeverityProvider = TestSeverityProvider(RegoColor.values().map(RegoColor::testSeverity))
-        // BACKCOMPAT: 2020.1
-        SeveritiesProvider.EP_NAME.getPoint(null).registerExtension(testSeverityProvider, testRootDisposable)
+        SeveritiesProvider.EP_NAME.point.registerExtension(testSeverityProvider, testRootDisposable)
     }
 
     /**
