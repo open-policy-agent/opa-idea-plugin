@@ -15,7 +15,7 @@ jobs:
     needs: [check-gradle-wrapper]
     strategy:
       matrix:
-        platform-version: [ 203, 211 ]
+        platform-version: [ 211, 212 ]
     env:
       ORG_GRADLE_PROJECT_platformVersion: ${{ matrix.platform-version }}
       ORG_GRADLE_PROJECT_publishChannel: stable
