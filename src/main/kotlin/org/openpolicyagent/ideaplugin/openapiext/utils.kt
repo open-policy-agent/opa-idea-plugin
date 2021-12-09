@@ -130,7 +130,7 @@ val Document.isOPAPluginApplicable: Boolean
 val VirtualFile.document: Document?
     get() = FileDocumentManager.getInstance().getDocument(this)
 
-inline fun <Key, reified Psi : PsiElement> getElements(
+inline fun <Key: Any, reified Psi : PsiElement> getElements(
     indexKey: StubIndexKey<Key, Psi>,
     key: Key, project: Project,
     scope: GlobalSearchScope?
@@ -197,14 +197,14 @@ inline fun testAssert(action: () -> Boolean, lazyMessage: () -> Any) {
 fun <T> runWithCheckCanceled(callable: () -> T): T =
     ApplicationUtil.runWithCheckCanceled(callable, ProgressManager.getInstance().progressIndicator)
 
-fun <T> Project.computeWithCancelableProgress(title: String, supplier: () -> T): T {
+fun <T: Any> Project.computeWithCancelableProgress(title: String, supplier: () -> T): T {
     if (isUnitTestMode) {
         return supplier()
     }
     return ProgressManager.getInstance().runProcessWithProgressSynchronously<T, Exception>(supplier, title, true, this)
 }
 
-inline fun <T> UserDataHolderEx.getOrPut(key: Key<T>, defaultValue: () -> T): T =
+inline fun <T: Any> UserDataHolderEx.getOrPut(key: Key<T>, defaultValue: () -> T): T =
     getUserData(key) ?: putUserDataIfAbsent(key, defaultValue())
 
 inline fun <T> UserDataHolderEx.getOrPutSoft(key: Key<SoftReference<T>>, defaultValue: () -> T): T =

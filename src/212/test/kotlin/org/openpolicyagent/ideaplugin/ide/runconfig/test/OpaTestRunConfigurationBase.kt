@@ -134,7 +134,7 @@ abstract class OpaTestRunConfigurationBase : RunConfigurationTestBase() {
         fun camelOrWordsToSnake(name: String): String {
             if (' ' in name) return name.trim().replace(" ", "_")
 
-            return name.split("(?=[A-Z])".toRegex()).joinToString("_", transform = String::toLowerCase)
+            return name.split("(?=[A-Z])".toRegex()).joinToString("_", transform = String::lowercase)
         }
 
         private val SMTestProxy.output: String
@@ -162,7 +162,7 @@ class ToStringPrinter : Printer {
         printable.printOn(this);
     }
 
-    override fun printHyperlink(text: String?, info: HyperlinkInfo?) {}
+    override fun printHyperlink(text: String, info: HyperlinkInfo?) {}
 
     override fun mark() {}
 

@@ -8,7 +8,7 @@ package org.openpolicyagent.ideaplugin.ide.typing
 import org.openpolicyagent.ideaplugin.OpaTestBase
 import org.openpolicyagent.ideaplugin.lang.RegoFileType
 
-abstract class RegoTypingTestBase :OpaTestBase() {
+abstract class RegoTypingTestBase : OpaTestBase() {
 
     protected fun doTest(before: String, type: Char, after: String) {
         myFixture.configureByText(RegoFileType, before)

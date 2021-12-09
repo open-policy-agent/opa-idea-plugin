@@ -3,13 +3,13 @@
  * found in the LICENSE file.
  */
 
-import org.gradle.api.JavaVersion.VERSION_1_8
+import org.gradle.api.JavaVersion.VERSION_11
 import org.gradle.api.internal.HasConvention
 import org.intellij.markdown.ast.getTextInNode
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.intellij.tasks.RunIdeTask
-import org.jetbrains.intellij.tasks.PublishTask
+import org.jetbrains.intellij.tasks.PublishPluginTask
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -40,15 +40,15 @@ buildscript {
 idea {
     module {
         // https://github.com/gradle/kotlin-dsl/issues/537/
-        excludeDirs = excludeDirs + file("testData") + file("deps")
+        excludeDirs = excludeDirs + file("testData")
     }
 }
 
 plugins {
     idea
-    kotlin("jvm") version "1.4.32"
-    id("org.jetbrains.intellij") version "0.7.3"
-    id("org.jetbrains.grammarkit") version "2021.1.2"
+    kotlin("jvm") version "1.6.0"
+    id("org.jetbrains.intellij") version "1.2.1"
+    id("org.jetbrains.grammarkit") version "2021.1.3"
     id("net.saliman.properties") version "1.5.1"
 }
 
@@ -63,7 +63,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        jcenter()
         maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
     }
 
@@ -87,8 +86,8 @@ allprojects {
     }
 
     intellij {
-        version = baseVersion
-        sandboxDirectory = "$buildDir/$baseIDE-sandbox-$platformVersion"
+        version.set(baseVersion)
+        sandboxDir.set("$buildDir/$baseIDE-sandbox-$platformVersion")
     }
 
     sourceSets {
@@ -103,25 +102,23 @@ allprojects {
         }
     }
 
-    configure<JavaPluginConvention> {
-        sourceCompatibility = VERSION_1_8
-        targetCompatibility = VERSION_1_8
+    configure<JavaPluginExtension> {
+        sourceCompatibility = VERSION_11
+        targetCompatibility = VERSION_11
     }
 
     tasks {
         withType<KotlinCompile> {
             kotlinOptions {
-                jvmTarget = "1.8"
-                languageVersion = "1.3"
-                apiVersion = "1.3"
+                jvmTarget = "11"
                 freeCompilerArgs = listOf("-Xjvm-default=enable")
             }
         }
 
         withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
-            sinceBuild(prop("sinceBuild"))
-            untilBuild(prop("untilBuild"))
-            changeNotes(getLastReleaseNotes())
+            sinceBuild.set(prop("sinceBuild"))
+            untilBuild.set(prop("untilBuild"))
+            changeNotes.set(provider {getLastReleaseNotes()}) // to check
         }
 
         withType<RunIdeTask> {
@@ -152,16 +149,16 @@ val pluginVersion = prop("pluginVersion")
 project(":plugin"){
     version = "$pluginVersion$versionSuffix"
     intellij {
-        pluginName = "opa-idea-plugin"
-        val plugins = mutableListOf(
+        pluginName.set("opa-idea-plugin")
+        val pluginList = mutableListOf(
             "PsiViewer:$psiViewerPluginVersion"
         )
         if (baseIDE == "idea") {
-            plugins += listOf(
+            pluginList += listOf(
                 "java"
             )
         }
-        setPlugins(*plugins.toTypedArray())
+        plugins.set(pluginList)
     }
 
     dependencies{
@@ -178,12 +175,12 @@ project(":plugin"){
         withType<RunIdeTask> {
             jvmArgs("--add-exports", "java.base/jdk.internal.vm=ALL-UNNAMED")
         }
-        withType<PublishTask> {
-            token(prop("publishToken"))
-            channels(channel)
+        withType<PublishPluginTask> {
+            token.set(prop("publishToken"))
+            channels.set(listOf(channel))
         }
         runPluginVerifier {
-            ideVersions(prop("pluginVerifierIdeVersions"))
+            ideVersions.set(prop("pluginVerifierIdeVersions").split(',').map(String::trim).filter(String::isNotEmpty))
         }
         buildSearchableOptions {
             // buildSearchableOptions task doesn't make sense for non-root subprojects
@@ -225,8 +222,8 @@ project(":") {
         doLast {
             rootProject.allprojects
                 .map { it.configurations }
-                .flatMap { listOf(it.compile, it.testCompile) }
-                .forEach { it.get().resolve() }
+                .flatMap { it.filter { c -> c.isCanBeResolved } }
+                .forEach { it.resolve() }
         }
     }
 }
