@@ -1,3 +1,15 @@
+# Release notes for NEXT_VERSION
+
+## Changes by Kind
+
+### Feature
+
+- Plugin compatibility with IDEA 2021.3 ([#119](https://github.com/open-policy-agent/opa-idea-plugin/pull/119), [@vgramer](https://github.com/vgramer))
+
+### Documentation
+
+- Automate release process, create CHANGLOG.md with update the previous releases notes ([#99](https://github.com/open-policy-agent/opa-idea-plugin/pull/99), [@vgramer](https://github.com/vgramer))
+
 # Release notes for v0.6.0
 
 ## Changes by Kind
