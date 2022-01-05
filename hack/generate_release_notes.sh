@@ -82,7 +82,9 @@ if [[ -z "${last_release_tag}" ]]; then
   echo "first commit sha is '${start_sha}'"
 else
   echo "last release found. it's tag '${last_release_tag}'"
-  start_sha=$(git rev-parse "${last_release_tag}")
+  # we use git rev-list to get the tagged commit's sha1 in order to handle annotated tag.
+  # git rev-parse on an annotated tag return the the sha1 of the "tag", not the one of the tagged commit
+  start_sha=$(git rev-list --max-count=1 "${last_release_tag}")
   echo "tag '${last_release_tag}' point on commit '${start_sha}'"
 fi
 
