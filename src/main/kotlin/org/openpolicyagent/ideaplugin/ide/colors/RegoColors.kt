@@ -29,6 +29,7 @@ enum class RegoColor(humanName: String, val default: TextAttributesKey? = null) 
     NUMBER("Literals//Number", DefaultLanguageHighlighterColors.NUMBER),
     BOOLEAN("Literals//Boolean", DefaultLanguageHighlighterColors.NUMBER),
     STRING("Literals//Strings//String", DefaultLanguageHighlighterColors.STRING),
+    RAW_STRING("Literals//Strings//Raw String", DefaultLanguageHighlighterColors.STRING),
     LINE_COMMENT("Comments//Line comment", DefaultLanguageHighlighterColors.LINE_COMMENT),
 
     BRACES("Braces and Operators//Braces", DefaultLanguageHighlighterColors.BRACES),

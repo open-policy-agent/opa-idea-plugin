@@ -30,8 +30,9 @@ class RegoHighlighter : SyntaxHighlighterBase() {
 
     init {
         fillMap(tokenToColorMap, LINE_COMMENT.textAttributesKey, RegoTypes.COMMENT)
-        // TODO Handle raw String ?
+
         fillMap(tokenToColorMap, STRING.textAttributesKey, RegoTypes.STRING_TOKEN)
+        fillMap(tokenToColorMap, RAW_STRING.textAttributesKey, RegoTypes.RAW_STRING)
 
         fillMap(tokenToColorMap, BRACES.textAttributesKey, RegoTypes.RBRACE)
         fillMap(tokenToColorMap, BRACES.textAttributesKey, RegoTypes.LBRACE)
