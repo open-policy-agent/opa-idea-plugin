@@ -27,7 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform-version: [ 211, 212 ]
+        platform-version: [ 212, 221 ]
     timeout-minutes: 60
     env:
       ORG_GRADLE_PROJECT_platformVersion: ${{ matrix.platform-version }}
@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform-version: [ 211, 212 ]
+        platform-version: [ 212, 221 ]
     timeout-minutes: 60
     env:
       ORG_GRADLE_PROJECT_platformVersion: ${{ matrix.platform-version }}
