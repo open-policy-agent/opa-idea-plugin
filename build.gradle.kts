@@ -6,8 +6,8 @@
 import org.gradle.api.JavaVersion.VERSION_11
 import org.gradle.api.internal.HasConvention
 import org.intellij.markdown.ast.getTextInNode
-import org.jetbrains.grammarkit.tasks.GenerateLexer
-import org.jetbrains.grammarkit.tasks.GenerateParser
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.intellij.tasks.PublishPluginTask
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
@@ -46,9 +46,9 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "1.6.0"
-    id("org.jetbrains.intellij") version "1.2.1"
-    id("org.jetbrains.grammarkit") version "2021.1.3"
+    kotlin("jvm") version "1.6.20"
+    id("org.jetbrains.intellij") version "1.5.2"
+    id("org.jetbrains.grammarkit") version "2021.2.2"
     id("net.saliman.properties") version "1.5.1"
 }
 
@@ -73,7 +73,7 @@ allprojects {
     }
 
     dependencies {
-        implementation("com.github.kittinunf.fuel", "fuel", "2.2.3"){
+        implementation("com.github.kittinunf.fuel", "fuel", "2.3.1"){
             exclude("org.jetbrains.kotlin")
         }
         testImplementation("org.assertj:assertj-core:3.16.1")
@@ -111,7 +111,7 @@ allprojects {
         withType<KotlinCompile> {
             kotlinOptions {
                 jvmTarget = "11"
-                freeCompilerArgs = listOf("-Xjvm-default=enable")
+                freeCompilerArgs = listOf("-Xjvm-default=all")
             }
         }
 
@@ -196,20 +196,20 @@ project(":") {
         testOutput(sourceSets.getByName("test").output.classesDirs)
     }
 
-    val generateRegoLexer = task<GenerateLexer>("generateRegoLexer") {
-        source = "src/main/grammar/RegoLexer.flex"
-        targetDir = "src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer"
-        targetClass = "_RegoLexer"
-        purgeOldFiles = true
+    val generateRegoLexer = task<GenerateLexerTask>("generateRegoLexer") {
+        source.set("src/main/grammar/RegoLexer.flex")
+        targetDir.set("src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer")
+        targetClass.set("_RegoLexer")
+        purgeOldFiles.set(true)
     }
 
 
-    val generateRegoParser = task<GenerateParser>("generateRegoParser") {
-        source = "src/main/grammar/Rego.bnf"
-        targetRoot = "src/main/gen"
-        pathToParser = "/org/openpolicyagent/ideaplugin/lang/parser/RegoParser.java"
-        pathToPsiRoot = "/org/openpolicyagent/ideaplugin/lang/psi"
-        purgeOldFiles = true
+    val generateRegoParser = task<GenerateParserTask>("generateRegoParser") {
+        source.set("src/main/grammar/Rego.bnf")
+        targetRoot.set("src/main/gen")
+        pathToParser.set("/org/openpolicyagent/ideaplugin/lang/parser/RegoParser.java")
+        pathToPsiRoot.set("/org/openpolicyagent/ideaplugin/lang/psi")
+        purgeOldFiles.set(true)
     }
 
     tasks.withType<KotlinCompile> {
