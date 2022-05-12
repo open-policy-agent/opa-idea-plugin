@@ -64,3 +64,31 @@ testing_complex_function_args{
     myset := {1, 2, 3}
     array.slice([1, 2, 3, 4 ], count({x | myset[x]; filterFunc(x)} & {2}), 3)
 }
+
+
+testing_trailling_coma{
+    print([1],)
+    print([1],[2],)
+    print([1],[3],)
+
+    # test with args on several lines
+     print(
+        [1],
+     )
+     print(
+        [1],
+        [2],
+     )
+     print(
+         [1],
+         [2],
+         [3],
+     )
+}
+
+testing_without_tailling_coma{
+     print()
+     print(1)
+     print(1,2)
+     print(1,2, 3)
+}

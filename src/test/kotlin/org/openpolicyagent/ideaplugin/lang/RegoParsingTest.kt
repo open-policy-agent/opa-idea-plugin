@@ -5,7 +5,7 @@
 
 package org.openpolicyagent.ideaplugin.lang
 
-class RegoParsingTestCase: RegoParsingTestCaseBase() {
+class RegoParsingTest: RegoParsingTestCaseBase() {
 
     fun `test array`() = doTestNoError()
     fun `test object`() = doTestNoError()
