@@ -37,9 +37,11 @@ class OpaEvalRunConfigurationProducer : LazyRunConfigurationProducer<OpaEvalRunC
         context: ConfigurationContext,
         sourceElement: Ref<PsiElement>
     ): Boolean {
+        val regFile = context.location?.virtualFile?.isRegoFile ?:false
+        if (!regFile) return false
 
         val element = sourceElement.get()
-        if (element.parent.parent is RegoRuleHead && element.text.startsWith(REGO_TEST_RULE_PREFIX)) return false
+        if (element.parent?.parent is RegoRuleHead && element.text.startsWith(REGO_TEST_RULE_PREFIX)) return false
         val regoPackage = element.getRegoPackage() ?: return false
 
 
