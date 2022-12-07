@@ -14,6 +14,7 @@ import org.openpolicyagent.ideaplugin.ide.actions.fileDirectChildOfRoot
 import org.openpolicyagent.ideaplugin.ide.actions.getImportsAsString
 import org.openpolicyagent.ideaplugin.ide.actions.getPackageAsString
 import org.openpolicyagent.ideaplugin.ide.extensions.OPAActionToolWindow
+import org.openpolicyagent.ideaplugin.opa.project.settings.OpaProjectSettings
 import org.openpolicyagent.ideaplugin.openapiext.execute
 import org.openpolicyagent.ideaplugin.openapiext.isUnitTestMode
 import org.openpolicyagent.ideaplugin.openapiext.virtualFile
@@ -41,15 +42,21 @@ class OpaActions : OpaBaseTool() {
     }
 
     /**
-     * Opens window running `opa test` on the current file
+     * Opens window running `opa check` on the current file
      * or displays popup if current file is not a rego file
      */
-
     fun checkDocument(project: Project, document: Document) {
         val file = document.virtualFile ?: return
-        // todo: get path to file relative to project path
-        val args = mutableListOf("check", file.name)
-        OPAActionToolWindow().runProcessInConsole(project, args, "Opa Check")
+
+        val checkArgs = OpaProjectSettings.getInstance(project).opaCheckOptions
+            .split(" ")
+            .filter { elem -> elem.trim().isNotEmpty() }
+
+        val opaArgs = mutableListOf("check")
+        opaArgs.addAll(checkArgs)
+        opaArgs.add(file.path)
+
+        OPAActionToolWindow().runProcessInConsole(project, opaArgs, "Opa Check")
     }
 
 
