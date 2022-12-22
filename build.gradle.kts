@@ -180,9 +180,6 @@ project(":plugin") {
             token.set(prop("publishToken"))
             channels.set(listOf(channel))
         }
-//        runPluginVerifier {
-//            ideVersions.set(prop("pluginVerifierIdeVersions").split(',').map(String::trim).filter(String::isNotEmpty))
-//        }
         buildSearchableOptions {
             // buildSearchableOptions task doesn't make sense for non-root subprojects
             enabled = prop("enableBuildSearchableOptions").toBoolean()
