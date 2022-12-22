@@ -3,7 +3,6 @@
  * found in the LICENSE file.
  */
 
-import org.gradle.api.JavaVersion.VERSION_11
 import org.gradle.api.internal.HasConvention
 import org.intellij.markdown.ast.getTextInNode
 import org.jetbrains.grammarkit.tasks.GenerateLexerTask
@@ -46,8 +45,8 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "1.6.20"
-    id("org.jetbrains.intellij") version "1.5.2"
+    kotlin("jvm") version "1.7.21"
+    id("org.jetbrains.intellij") version "1.11.0"
     id("org.jetbrains.grammarkit") version "2021.2.2"
     id("net.saliman.properties") version "1.5.1"
 }
@@ -73,7 +72,7 @@ allprojects {
     }
 
     dependencies {
-        implementation("com.github.kittinunf.fuel", "fuel", "2.3.1"){
+        implementation("com.github.kittinunf.fuel", "fuel", "2.3.1") {
             exclude("org.jetbrains.kotlin")
         }
         testImplementation("org.assertj:assertj-core:3.16.1")
@@ -90,6 +89,11 @@ allprojects {
         sandboxDir.set("$buildDir/$baseIDE-sandbox-$platformVersion")
     }
 
+    // Set the JVM language level used to build project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
+    kotlin {
+        jvmToolchain(11)
+    }
+
     sourceSets {
         main {
             java.srcDirs("src/main/gen")
@@ -102,11 +106,6 @@ allprojects {
         }
     }
 
-    configure<JavaPluginExtension> {
-        sourceCompatibility = VERSION_11
-        targetCompatibility = VERSION_11
-    }
-
     tasks {
         // There is a bug in gradle and tests are not detected. This is a workaround until gradle 7.5 is released.
         // More information at https://youtrack.jetbrains.com/issue/IDEA-278926#focus=Comments-27-5561012.0-0 and
@@ -117,17 +116,10 @@ allprojects {
             include("**/*Test.class")
         }
 
-        withType<KotlinCompile> {
-            kotlinOptions {
-                jvmTarget = "11"
-                freeCompilerArgs = listOf("-Xjvm-default=all")
-            }
-        }
-
         withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
             sinceBuild.set(prop("sinceBuild"))
             untilBuild.set(prop("untilBuild"))
-            changeNotes.set(provider {getLastReleaseNotes()}) // to check
+            changeNotes.set(provider { getLastReleaseNotes() })
         }
 
         withType<RunIdeTask> {
@@ -155,7 +147,7 @@ val pluginVersion = prop("pluginVersion")
 
 
 // module to build/run/publish opa-ida-plugin plugin
-project(":plugin"){
+project(":plugin") {
     version = "$pluginVersion$versionSuffix"
     intellij {
         pluginName.set("opa-idea-plugin")
@@ -170,7 +162,7 @@ project(":plugin"){
         plugins.set(pluginList)
     }
 
-    dependencies{
+    dependencies {
         implementation(project(":"))
         implementation(project(":idea"))
     }
@@ -188,9 +180,9 @@ project(":plugin"){
             token.set(prop("publishToken"))
             channels.set(listOf(channel))
         }
-        runPluginVerifier {
-            ideVersions.set(prop("pluginVerifierIdeVersions").split(',').map(String::trim).filter(String::isNotEmpty))
-        }
+//        runPluginVerifier {
+//            ideVersions.set(prop("pluginVerifierIdeVersions").split(',').map(String::trim).filter(String::isNotEmpty))
+//        }
         buildSearchableOptions {
             // buildSearchableOptions task doesn't make sense for non-root subprojects
             enabled = prop("enableBuildSearchableOptions").toBoolean()
