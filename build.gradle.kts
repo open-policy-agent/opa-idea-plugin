@@ -13,7 +13,6 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
-val platformVersion = prop("platformVersion").toInt()
 val baseIDE = prop("baseIDE")
 val ideaVersion = prop("ideaVersion")
 val pycharmCommunityVersion = prop("pycharmCommunityVersion")
@@ -48,7 +47,6 @@ plugins {
     kotlin("jvm") version "1.7.21"
     id("org.jetbrains.intellij") version "1.11.0"
     id("org.jetbrains.grammarkit") version "2021.2.2"
-    id("net.saliman.properties") version "1.5.1"
 }
 
 allprojects {
@@ -86,7 +84,7 @@ allprojects {
 
     intellij {
         version.set(baseVersion)
-        sandboxDir.set("$buildDir/$baseIDE-sandbox-$platformVersion")
+        sandboxDir.set("$buildDir/$baseIDE-sandbox-$baseVersion")
     }
 
     // Set the JVM language level used to build project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
@@ -97,12 +95,6 @@ allprojects {
     sourceSets {
         main {
             java.srcDirs("src/main/gen")
-            kotlin.srcDirs("src/$platformVersion/main/kotlin")
-            resources.srcDirs("src/$platformVersion/main/resources")
-        }
-        test {
-            kotlin.srcDirs("src/$platformVersion/test/kotlin")
-            resources.srcDirs("src/$platformVersion/test/resources")
         }
     }
 
@@ -142,13 +134,12 @@ allprojects {
 }
 
 val channelSuffix = if (channel.isBlank() || channel == "stable") "" else "-$channel"
-val versionSuffix = "-$platformVersion$channelSuffix"
 val pluginVersion = prop("pluginVersion")
 
 
 // module to build/run/publish opa-ida-plugin plugin
 project(":plugin") {
-    version = "$pluginVersion$versionSuffix"
+    version = "$pluginVersion$channelSuffix"
     intellij {
         pluginName.set("opa-idea-plugin")
         val pluginList = mutableListOf(
