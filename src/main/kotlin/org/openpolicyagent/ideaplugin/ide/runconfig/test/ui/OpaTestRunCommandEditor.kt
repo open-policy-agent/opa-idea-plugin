@@ -11,7 +11,6 @@
 package org.openpolicyagent.ideaplugin.ide.runconfig.test.ui
 
 import com.intellij.execution.configuration.EnvironmentVariablesComponent
-import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
@@ -19,10 +18,10 @@ import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.ui.TextBrowseFolderListener
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.ui.RawCommandLineEditor
-import com.intellij.ui.layout.panel
+import com.intellij.ui.dsl.builder.panel
+import com.intellij.ui.dsl.gridLayout.HorizontalAlign
 import com.intellij.util.text.nullize
 import org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfiguration
-import java.awt.Dimension
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -43,15 +42,15 @@ class OpaTestRunCommandEditor(private val project: Project) : SettingsEditor<Opa
 
     override fun createEditor() = panel {
         row("Bundle:") {
-            bundle()
+            cell(bundle).horizontalAlign(HorizontalAlign.FILL)
         }
 
         row("Additional Args:") {
-            additionalArgs.apply { preferredSize = Dimension(1000, height) }()
+            cell(additionalArgs).horizontalAlign(HorizontalAlign.FILL)
         }
 
         row(environmentVariables.label) {
-            environmentVariables()
+            cell(environmentVariables).horizontalAlign(HorizontalAlign.FILL)
         }
     }
 

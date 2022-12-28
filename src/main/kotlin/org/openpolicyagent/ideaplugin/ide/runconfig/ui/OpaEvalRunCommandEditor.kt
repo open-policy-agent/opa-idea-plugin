@@ -15,10 +15,10 @@ import com.intellij.openapi.ui.TextBrowseFolderListener
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.ui.RawCommandLineEditor
 import com.intellij.ui.components.JBTextField
-import com.intellij.ui.layout.panel
+import com.intellij.ui.dsl.gridLayout.HorizontalAlign
+import com.intellij.ui.dsl.builder.panel
 import com.intellij.util.text.nullize
 import org.openpolicyagent.ideaplugin.ide.runconfig.OpaEvalRunConfiguration
-import java.awt.Dimension
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -49,23 +49,23 @@ class OpaEvalRunCommandEditor(private val project: Project) : SettingsEditor<Opa
 
     override fun createEditor() = panel {
         row("Query:") {
-            query()
+            cell(query).horizontalAlign(HorizontalAlign.FILL)
         }
 
         row("Input:") {
-            input()
+            cell(input).horizontalAlign(HorizontalAlign.FILL)
         }
 
         row("Bundle:") {
-            bundle()
+            cell(bundle).horizontalAlign(HorizontalAlign.FILL)
         }
 
         row("Additional Args:") {
-            additionalArgs.apply { preferredSize = Dimension(1000, height) }()
+            cell(additionalArgs).horizontalAlign(HorizontalAlign.FILL)
         }
 
         row(environmentVariables.label) {
-            environmentVariables()
+            cell(environmentVariables).horizontalAlign(HorizontalAlign.FILL)
         }
     }
 
