@@ -18,6 +18,7 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.util.Disposer
+import com.intellij.util.IncorrectOperationException
 import com.intellij.util.io.systemIndependentPath
 import java.nio.file.Path
 
@@ -61,11 +62,11 @@ fun GeneralCommandLine.execute(
     }
 
     val alreadyDisposed = runReadAction {
-        if (Disposer.isDisposed(owner)) {
-            true
-        } else {
+        try {
             Disposer.register(owner, cargoKiller)
             false
+        } catch (e: IncorrectOperationException) {
+            true
         }
     }
 
