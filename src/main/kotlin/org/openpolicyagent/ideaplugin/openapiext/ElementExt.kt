@@ -3,14 +3,13 @@
  * found in the LICENSE file.
  */
 
-// Important NOTE: Theses methods been borrowed from IntelliJ rust plugin
+// Important NOTE: These methods been borrowed from IntelliJ rust plugin
 
 package org.openpolicyagent.ideaplugin.openapiext
 
 import com.intellij.execution.ExternalizablePath
 import com.intellij.openapi.util.JDOMUtil
 import org.jdom.Element
-import org.jdom.input.SAXBuilder
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -43,4 +42,3 @@ fun Element.readPath(name: String): Path? {
 
 fun Element.toXmlString() = JDOMUtil.writeElement(this)
 
-fun elementFromXmlString(xml: String): Element =    SAXBuilder().build(xml.byteInputStream()).rootElement
