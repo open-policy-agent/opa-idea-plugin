@@ -1,3 +1,18 @@
+# Release notes for NEXT_VERSION
+
+## Changes by Kind
+
+### Feature
+
+- Add project settings under `Preference -> Languages & Framworks -> Opa` to configure `opa check` options.
+  the `--strict` options is enable by default ([#133](https://github.com/open-policy-agent/opa-idea-plugin/pull/133), [@vgramer](https://github.com/vgramer))
+- Add support for IDEA 2022.3 ([#139](https://github.com/open-policy-agent/opa-idea-plugin/pull/139), [@vgramer](https://github.com/vgramer))
+
+### Bug or Regression
+
+- Fix NPE when  loading project ([#138](https://github.com/open-policy-agent/opa-idea-plugin/pull/138), [@vgramer](https://github.com/vgramer))
+- Grammar: allow trailing comma in function arg list ([#132](https://github.com/open-policy-agent/opa-idea-plugin/pull/132), [@vgramer](https://github.com/vgramer))
+
 # Release notes for v0.8.0
 
 ## Changes by Kind
