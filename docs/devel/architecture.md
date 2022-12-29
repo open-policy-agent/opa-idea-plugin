@@ -2,7 +2,6 @@
 <!-- toc -->
 - [Project structure](#project-structure)
   - [IDE specific features](#ide-specific-features)
-  - [Platform version](#platform-version)
 - [Lexer](#lexer)
 - [Parser](#parser)
 - [Useful methods](#useful-methods)
@@ -22,10 +21,7 @@
 .
 ├── build.gradle.kts
 ├── settings.gradle.kts
-├── gradle.properties # main properties file
-├── gradle-201.properties # properties file for platform version 201 (see platform versioning chapter for more info)
-├── gradle-202.properties  # properties file for platform version 202 
-├── deps
+├── gradle.properties # gradle properties file
 ├── docs
 │   ├── devel # technical documentation of the project
 │   └── user
@@ -51,10 +47,6 @@
 │                   ├── plugin.xml
 │                   └── pluginIcon.svg
 └── src # source code common to all Ide 
-    ├── 201 # source code specific to platform version 201
-    |   ├── main
-    |   └── test
-    ├── 202 # source code specific to platform version 202
     ├── main 
     │   ├── gen # lexer and parser generated code
     │   ├── grammar # grammar and lexer definition
@@ -108,29 +100,6 @@ the other modules as optional dependencies. To avoid name conflict the other plu
 be installed on any IDE, only the feature compatible with the IDE will be loaded.
 
 *note: If you want to implement integration with another plugin/IDE, you should create a new Gradle module for that.*
-
-## Platform version
-The code may be incompatible from one major version to another (eg deprecated or removed methods). To avoid parallel vsc branches. We have separate folders for each version to keep platform-dependent code.
-
-For example, current platform version is 193, next version is 200 and `org.openpolicyagent.ideaplugin.ide.highlight.RegoHighlighterAnnotator`
-should have separate implementations for each version. Then project source code structure will be:
-
-```
- +-- src
- |   +-- 200/kotlin
- |       +-- org/openpolicyagent/ideaplugin/ide/highlight
- |           +-- RegoHighlighterAnnotator.kt
- |   +-- 193/kotlin
- |       +-- org/openpolicyagent/ideaplugin/ide/highlight
- |           +-- RegoHighlighterAnnotator.kt
- |   +-- main/kotlin
- |       +-- other platform independent code`
- ```
-
-Of course, only one batch of platform-dependent code will be used in compilation.
-
-You can choose which platform version to use by setting the `platformVersion` property in `gradle.properties`.
-
 
 # Lexer
 The lexer is defined by the [RegoLexer.flex](../../src/main/grammar/RegoLexer.flex) file written in [JFlex](https://www.jflex.de/)

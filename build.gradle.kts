@@ -3,7 +3,6 @@
  * found in the LICENSE file.
  */
 
-import org.gradle.api.JavaVersion.VERSION_11
 import org.gradle.api.internal.HasConvention
 import org.intellij.markdown.ast.getTextInNode
 import org.jetbrains.grammarkit.tasks.GenerateLexerTask
@@ -14,7 +13,6 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
-val platformVersion = prop("platformVersion").toInt()
 val baseIDE = prop("baseIDE")
 val ideaVersion = prop("ideaVersion")
 val pycharmCommunityVersion = prop("pycharmCommunityVersion")
@@ -46,10 +44,9 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "1.6.20"
-    id("org.jetbrains.intellij") version "1.5.2"
+    kotlin("jvm") version "1.7.21"
+    id("org.jetbrains.intellij") version "1.11.0"
     id("org.jetbrains.grammarkit") version "2021.2.2"
-    id("net.saliman.properties") version "1.5.1"
 }
 
 allprojects {
@@ -73,7 +70,7 @@ allprojects {
     }
 
     dependencies {
-        implementation("com.github.kittinunf.fuel", "fuel", "2.3.1"){
+        implementation("com.github.kittinunf.fuel", "fuel", "2.3.1") {
             exclude("org.jetbrains.kotlin")
         }
         testImplementation("org.assertj:assertj-core:3.16.1")
@@ -87,24 +84,18 @@ allprojects {
 
     intellij {
         version.set(baseVersion)
-        sandboxDir.set("$buildDir/$baseIDE-sandbox-$platformVersion")
+        sandboxDir.set("$buildDir/$baseIDE-sandbox-$baseVersion")
+    }
+
+    // Set the JVM language level used to build project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
+    kotlin {
+        jvmToolchain(11)
     }
 
     sourceSets {
         main {
             java.srcDirs("src/main/gen")
-            kotlin.srcDirs("src/$platformVersion/main/kotlin")
-            resources.srcDirs("src/$platformVersion/main/resources")
         }
-        test {
-            kotlin.srcDirs("src/$platformVersion/test/kotlin")
-            resources.srcDirs("src/$platformVersion/test/resources")
-        }
-    }
-
-    configure<JavaPluginExtension> {
-        sourceCompatibility = VERSION_11
-        targetCompatibility = VERSION_11
     }
 
     tasks {
@@ -117,17 +108,10 @@ allprojects {
             include("**/*Test.class")
         }
 
-        withType<KotlinCompile> {
-            kotlinOptions {
-                jvmTarget = "11"
-                freeCompilerArgs = listOf("-Xjvm-default=all")
-            }
-        }
-
         withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
             sinceBuild.set(prop("sinceBuild"))
             untilBuild.set(prop("untilBuild"))
-            changeNotes.set(provider {getLastReleaseNotes()}) // to check
+            changeNotes.set(provider { getLastReleaseNotes() })
         }
 
         withType<RunIdeTask> {
@@ -150,13 +134,12 @@ allprojects {
 }
 
 val channelSuffix = if (channel.isBlank() || channel == "stable") "" else "-$channel"
-val versionSuffix = "-$platformVersion$channelSuffix"
 val pluginVersion = prop("pluginVersion")
 
 
 // module to build/run/publish opa-ida-plugin plugin
-project(":plugin"){
-    version = "$pluginVersion$versionSuffix"
+project(":plugin") {
+    version = "$pluginVersion$channelSuffix"
     intellij {
         pluginName.set("opa-idea-plugin")
         val pluginList = mutableListOf(
@@ -170,7 +153,7 @@ project(":plugin"){
         plugins.set(pluginList)
     }
 
-    dependencies{
+    dependencies {
         implementation(project(":"))
         implementation(project(":idea"))
     }
@@ -187,9 +170,6 @@ project(":plugin"){
         withType<PublishPluginTask> {
             token.set(prop("publishToken"))
             channels.set(listOf(channel))
-        }
-        runPluginVerifier {
-            ideVersions.set(prop("pluginVerifierIdeVersions").split(',').map(String::trim).filter(String::isNotEmpty))
         }
         buildSearchableOptions {
             // buildSearchableOptions task doesn't make sense for non-root subprojects

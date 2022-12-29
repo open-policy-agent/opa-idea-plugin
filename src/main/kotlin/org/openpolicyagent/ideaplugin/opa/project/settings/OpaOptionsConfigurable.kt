@@ -8,8 +8,10 @@ package org.openpolicyagent.ideaplugin.opa.project.settings
 import com.intellij.openapi.options.BoundSearchableConfigurable
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
+import com.intellij.ui.dsl.builder.bindText
+import com.intellij.ui.dsl.gridLayout.HorizontalAlign
 
-import com.intellij.ui.layout.panel
+import com.intellij.ui.dsl.builder.panel
 
 /**
  * UI for the opa setting options.
@@ -23,7 +25,9 @@ class OpaOptionsConfigurable(private val project: Project) :
     override fun createPanel(): DialogPanel {
         return panel {
             row("OPA check options:") {
-                textField(settings::opaCheckOptions)
+               textField()
+                    .bindText(settings::opaCheckOptions)
+                   .horizontalAlign(HorizontalAlign.FILL)
             }
         }
     }
