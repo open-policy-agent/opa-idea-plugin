@@ -7,9 +7,7 @@ as_array(x) = [x] {
 	not is_array(x)
 }
 
-else = x {
-	true
-}
+else = x
 
 arr := [1, 2]
 
