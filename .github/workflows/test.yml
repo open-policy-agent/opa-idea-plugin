@@ -51,8 +51,9 @@ jobs:
 
     - name: Download OPA
       run: |
+        OPA_VERSION=v0.47.4
         mkdir -p /tmp/opa_bin
-        curl -L -o /tmp/opa_bin/opa https://github.com/open-policy-agent/opa/releases/download/v0.40.0/opa_linux_amd64
+        curl -L -o /tmp/opa_bin/opa https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
         chmod +x /tmp/opa_bin/opa
 
     - name: Build and test
