@@ -99,15 +99,6 @@ allprojects {
     }
 
     tasks {
-        // There is a bug in gradle and tests are not detected. This is a workaround until gradle 7.5 is released.
-        // More information at https://youtrack.jetbrains.com/issue/IDEA-278926#focus=Comments-27-5561012.0-0 and
-        // https://github.com/gradle/gradle/pull/20123
-        val test by getting(Test::class) {
-            setScanForTestClasses(false)
-            // Only run tests from classes that end with "Test"
-            include("**/*Test.class")
-        }
-
         withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
             sinceBuild.set(prop("sinceBuild"))
             untilBuild.set(prop("untilBuild"))
