@@ -7,6 +7,7 @@
 - Add project settings under `Preference -> Languages & Framworks -> Opa` to configure `opa check` options.
   the `--strict` options is enable by default ([#133](https://github.com/open-policy-agent/opa-idea-plugin/pull/133), [@vgramer](https://github.com/vgramer))
 - Add support for IDEA 2022.3 ([#139](https://github.com/open-policy-agent/opa-idea-plugin/pull/139), [@vgramer](https://github.com/vgramer))
+- Add support for IDEA 2023.1 ([#143](https://github.com/open-policy-agent/opa-idea-plugin/pull/143), [@SilverSilence](https://github.com/SilverSilence))
 
 ### Bug or Regression
 
