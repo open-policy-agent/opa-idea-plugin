@@ -44,8 +44,8 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "1.7.21"
-    id("org.jetbrains.intellij") version "1.11.0"
+    kotlin("jvm") version "1.8.10"
+    id("org.jetbrains.intellij") version "1.13.3"
     id("org.jetbrains.grammarkit") version "2021.2.2"
 }
 
@@ -89,7 +89,7 @@ allprojects {
 
     // Set the JVM language level used to build project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
     kotlin {
-        jvmToolchain(11)
+        jvmToolchain(17)
     }
 
     sourceSets {
@@ -99,15 +99,6 @@ allprojects {
     }
 
     tasks {
-        // There is a bug in gradle and tests are not detected. This is a workaround until gradle 7.5 is released.
-        // More information at https://youtrack.jetbrains.com/issue/IDEA-278926#focus=Comments-27-5561012.0-0 and
-        // https://github.com/gradle/gradle/pull/20123
-        val test by getting(Test::class) {
-            setScanForTestClasses(false)
-            // Only run tests from classes that end with "Test"
-            include("**/*Test.class")
-        }
-
         withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
             sinceBuild.set(prop("sinceBuild"))
             untilBuild.set(prop("untilBuild"))
