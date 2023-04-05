@@ -1,3 +1,12 @@
+# Release notes for NEXT_VERSION
+
+## Changes by Kind
+
+### Uncategorized
+
+- Add support for IDEA 2023.1 ([#144](https://github.com/open-policy-agent/opa-idea-plugin/pull/144), [@SilverSilence](https://github.com/SilverSilence))
+- CI: update opa to version 0.47.4 ([#141](https://github.com/open-policy-agent/opa-idea-plugin/pull/141), [@charlieegan3](https://github.com/charlieegan3))
+
 # Release notes for v0.9.0
 
 ## Changes by Kind
