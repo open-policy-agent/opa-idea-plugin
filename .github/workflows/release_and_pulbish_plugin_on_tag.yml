@@ -17,15 +17,15 @@ jobs:
       ORG_GRADLE_PROJECT_publishChannel: stable
       ORG_GRADLE_PROJECT_publishToken: ${{ secrets.PUBLISH_TOKEN }}
     steps:
-      # Cache gradle dependencies
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+#      # Cache gradle dependencies
+#      - uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
 
       - uses: actions/checkout@v2
       - name: Grant execute permission for gradlew
