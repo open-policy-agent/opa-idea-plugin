@@ -1,11 +1,3 @@
-# Release notes for NEXT_VERSION
-
-## Changes by Kind
-
-### Uncategorized
-
-- Compatibility with IDEA base ide 2023.2 ([#153](https://github.com/open-policy-agent/opa-idea-plugin/pull/153), [@sandhose](https://github.com/sandhose))
-
 # Release notes for v0.11.0
 
 ## Changes by Kind
