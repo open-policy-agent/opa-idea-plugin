@@ -3,7 +3,6 @@
  * found in the LICENSE file.
  */
 
-import org.gradle.api.internal.HasConvention
 import org.intellij.markdown.ast.getTextInNode
 import org.jetbrains.grammarkit.tasks.GenerateLexerTask
 import org.jetbrains.grammarkit.tasks.GenerateParserTask
@@ -44,9 +43,9 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "1.8.10"
-    id("org.jetbrains.intellij") version "1.13.3"
-    id("org.jetbrains.grammarkit") version "2021.2.2"
+    kotlin("jvm") version "1.9.0"
+    id("org.jetbrains.intellij") version "1.15.0"
+    id("org.jetbrains.grammarkit") version "2022.3.1"
 }
 
 allprojects {
@@ -73,7 +72,7 @@ allprojects {
         implementation("com.github.kittinunf.fuel", "fuel", "2.3.1") {
             exclude("org.jetbrains.kotlin")
         }
-        testImplementation("org.assertj:assertj-core:3.16.1")
+        testImplementation("org.assertj:assertj-core:3.24.2")
     }
 
     idea {
@@ -177,7 +176,7 @@ project(":") {
     }
 
     val generateRegoLexer = task<GenerateLexerTask>("generateRegoLexer") {
-        source.set("src/main/grammar/RegoLexer.flex")
+        sourceFile.set(file("src/main/grammar/RegoLexer.flex"))
         targetDir.set("src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer")
         targetClass.set("_RegoLexer")
         purgeOldFiles.set(true)
@@ -185,7 +184,7 @@ project(":") {
 
 
     val generateRegoParser = task<GenerateParserTask>("generateRegoParser") {
-        source.set("src/main/grammar/Rego.bnf")
+        sourceFile.set(file("src/main/grammar/Rego.bnf"))
         targetRoot.set("src/main/gen")
         pathToParser.set("/org/openpolicyagent/ideaplugin/lang/parser/RegoParser.java")
         pathToPsiRoot.set("/org/openpolicyagent/ideaplugin/lang/psi")
@@ -220,18 +219,13 @@ fun prop(name: String): String =
         ?: error("Property `$name` is not defined in gradle.properties")
 
 val SourceSet.kotlin: SourceDirectorySet
-    get() =
-        (this as HasConvention)
-            .convention
-            .getPlugin(KotlinSourceSet::class.java)
-            .kotlin
-
+    get() = this.extensions.getByName<KotlinSourceSet>("kotlin").kotlin
 
 fun SourceSet.kotlin(action: SourceDirectorySet.() -> Unit) =
     kotlin.action()
 
 fun getLastReleaseNotes(changLogPath: String = "CHANGELOG.md"): String {
-    val src = File(changLogPath).readText()
+    val src = File(project.projectDir, changLogPath).readText()
     val flavour = org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor()
     val parsedTree = org.intellij.markdown.parser.MarkdownParser(flavour).buildMarkdownTreeFromString(src)
 
