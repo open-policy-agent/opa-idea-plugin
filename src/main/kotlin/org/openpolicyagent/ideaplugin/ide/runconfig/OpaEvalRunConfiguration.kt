@@ -11,7 +11,6 @@ import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
 import com.intellij.util.execution.ParametersListUtil
-import com.intellij.util.io.isFile
 import org.jdom.Element
 import org.openpolicyagent.ideaplugin.ide.runconfig.ui.OpaEvalRunCommandEditor
 import org.openpolicyagent.ideaplugin.openapiext.readPath
@@ -19,12 +18,13 @@ import org.openpolicyagent.ideaplugin.openapiext.readString
 import org.openpolicyagent.ideaplugin.openapiext.writePath
 import org.openpolicyagent.ideaplugin.openapiext.writeString
 import java.nio.file.Path
+import kotlin.io.path.isRegularFile
 
 /**
  * the opa eval configuration
  *
- * we don't use the options mechanism to persist configuration like in tutorial because its create another class a bit
- * painful to maintain and we had some problems on the restore of parameters
+ * we don't use the options mechanism to persist configuration like in tutorial because it creates another class a bit
+ * painful to maintain, and we had some problems on the restore of parameters
  *
  * @link https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations.html
  */
@@ -75,7 +75,7 @@ class OpaEvalRunConfiguration(
             throw RuntimeConfigurationError("Query can not be empty")
         }
 
-        if (input == null || !input!!.isFile()) {
+        if (input == null || !input!!.isRegularFile()) {
             throw RuntimeConfigurationError("Input must be a path to a file")
         }
 
@@ -90,7 +90,7 @@ class OpaEvalRunConfiguration(
         }
 
         bundleDir?.let {
-            if (it.isFile()) {
+            if (it.isRegularFile()) {
                 throw RuntimeConfigurationError("Bundle directory must be a directory")
             }
         }

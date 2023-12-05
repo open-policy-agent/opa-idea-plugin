@@ -11,7 +11,7 @@ import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
 import com.intellij.util.execution.ParametersListUtil
-import com.intellij.util.io.isFile
+import kotlin.io.path.isRegularFile
 import org.jdom.Element
 import org.openpolicyagent.ideaplugin.ide.runconfig.test.ui.OpaTestRunCommandEditor
 import org.openpolicyagent.ideaplugin.openapiext.readPath
@@ -23,8 +23,8 @@ import java.nio.file.Path
 /**
  * the opa test configuration
  *
- * we don't use the options mechanism to persist configuration like in tutorial because its create another class a bit
- * painful to maintain and we had some problems on the restore of parameters
+ * we don't use the options mechanism to persist configuration like in tutorial because it creates another class a bit
+ * painful to maintain, and we had some problems on the restore of parameters
  *
  * @link https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations.html
  */
@@ -63,7 +63,7 @@ class OpaTestRunConfiguration(
             throw RuntimeConfigurationError("Only format option (-f or --format) = pretty is handle by plugin")
         }
 
-        if (bundleDir == null || bundleDir!!.isFile()) {
+        if (bundleDir == null || bundleDir!!.isRegularFile()) {
             throw RuntimeConfigurationError("Bundle directory must be a directory")
         }
     }
