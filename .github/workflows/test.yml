@@ -52,7 +52,7 @@ jobs:
 
     - name: Download OPA
       run: |
-        OPA_VERSION=v0.47.4
+        OPA_VERSION=v0.59.0
         mkdir -p /tmp/opa_bin
         curl -L -o /tmp/opa_bin/opa https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
         chmod +x /tmp/opa_bin/opa
@@ -96,10 +96,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Verify plugin binany compatibility
+      - name: Verify plugin binary compatibility
         run: ./gradlew :plugin:runPluginVerifier
 
-  # This job is successful if all depend jobs are successful. To be able to merge the PR, this job must be successful
+  # This job is successful if all dependent jobs are successful. To be able to merge the PR, this job must be successful
   all-checks:
     needs: [build, check-license, check-gradle-wrapper, verify]
     runs-on: ubuntu-latest

@@ -35,8 +35,8 @@ import com.intellij.psi.*
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.stubs.StubIndex
 import com.intellij.psi.stubs.StubIndexKey
-import com.intellij.reference.SoftReference
 import org.openpolicyagent.ideaplugin.lang.psi.isNotRegoFile
+import java.lang.ref.SoftReference
 import java.lang.reflect.Field
 import java.nio.file.Path
 import java.nio.file.Paths

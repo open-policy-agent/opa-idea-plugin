@@ -43,9 +43,9 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "1.9.0"
-    id("org.jetbrains.intellij") version "1.15.0"
-    id("org.jetbrains.grammarkit") version "2021.2.2"
+    kotlin("jvm") version "1.9.21"
+    id("org.jetbrains.intellij") version "1.16.1"
+    id("org.jetbrains.grammarkit") version "2022.3.1"
 }
 
 allprojects {
@@ -176,7 +176,7 @@ project(":") {
     }
 
     val generateRegoLexer = task<GenerateLexerTask>("generateRegoLexer") {
-        source.set("src/main/grammar/RegoLexer.flex")
+        sourceFile.set(file("src/main/grammar/RegoLexer.flex"))
         targetDir.set("src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer")
         targetClass.set("_RegoLexer")
         purgeOldFiles.set(true)
@@ -184,7 +184,7 @@ project(":") {
 
 
     val generateRegoParser = task<GenerateParserTask>("generateRegoParser") {
-        source.set("src/main/grammar/Rego.bnf")
+        sourceFile.set(file("src/main/grammar/Rego.bnf"))
         targetRoot.set("src/main/gen")
         pathToParser.set("/org/openpolicyagent/ideaplugin/lang/parser/RegoParser.java")
         pathToPsiRoot.set("/org/openpolicyagent/ideaplugin/lang/psi")

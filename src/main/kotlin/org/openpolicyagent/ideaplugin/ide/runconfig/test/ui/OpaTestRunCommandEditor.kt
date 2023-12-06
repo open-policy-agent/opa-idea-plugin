@@ -18,8 +18,8 @@ import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.ui.TextBrowseFolderListener
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.ui.RawCommandLineEditor
+import com.intellij.ui.dsl.builder.AlignX
 import com.intellij.ui.dsl.builder.panel
-import com.intellij.ui.dsl.gridLayout.HorizontalAlign
 import com.intellij.util.text.nullize
 import org.openpolicyagent.ideaplugin.ide.runconfig.test.OpaTestRunConfiguration
 import java.nio.file.Path
@@ -42,15 +42,15 @@ class OpaTestRunCommandEditor(private val project: Project) : SettingsEditor<Opa
 
     override fun createEditor() = panel {
         row("Bundle:") {
-            cell(bundle).horizontalAlign(HorizontalAlign.FILL)
+            cell(bundle).align(AlignX.FILL)
         }
 
         row("Additional Args:") {
-            cell(additionalArgs).horizontalAlign(HorizontalAlign.FILL)
+            cell(additionalArgs).align(AlignX.FILL)
         }
 
         row(environmentVariables.label) {
-            cell(environmentVariables).horizontalAlign(HorizontalAlign.FILL)
+            cell(environmentVariables).align(AlignX.FILL)
         }
     }
 
