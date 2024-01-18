@@ -58,15 +58,11 @@ jobs:
 
       - name: create or update release note PR
         env:
-          # Required for the `hub` CLI
+          # Required for the `gh` CLI
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION="${GITHUB_REF/refs\/tags\//}"
           echo -e "${VERSION}\n" > gh_release_description.md
           sed -e '0,/Release notes for v/d' -e '/Release notes for v/,$d' CHANGELOG.md >> gh_release_description.md
 
-          assets=''
-          for file in $(ls ./artifacts/); do assets="${assets} -a ./artifacts/${file}"; done
-          echo "assets=${assets}"
-
-          hub release create -F gh_release_description.md ${assets} "${VERSION}"
+          gh release create -F gh_release_description.md "${VERSION}" ./artifacts/.*

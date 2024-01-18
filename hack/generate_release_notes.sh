@@ -9,7 +9,7 @@
 # This script is intended to be run in github action but can run in local.
 #
 # The following tools must be installed and be in the PATH
-#  * hub: the github cli (https://hub.github.com/)
+#  * gh: the github cli (https://cli.github.com/)
 #  * release-notes: the k8s release-notes-generator tools (https://github.com/kubernetes/release#release-notes)
 #                   can be install thanks to go get command:
 #                   GO111MODULE=on go get k8s.io/release/cmd/release-notes@<version>
@@ -51,7 +51,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 source "${ROOT}/hack/util.sh"
 
 function check_environment() {
-  util::require-hub
+  util::require-gh
   util::command_exists "release-notes" || util::fatal 'release-notes not found in path. Please install it before running script. "GO111MODULE=on go get k8s.io/release/cmd/release-notes@<version>"'
 
   set +o nounset
@@ -74,7 +74,7 @@ check_environment
 echo "org=${org} repo=${repo}"
 
 # format '%pI %T%n' -> "publish_date_ISO_8601 tag\n". eg:2 021-03-24T20:10:00Z v3.0.0
-last_release_tag="$(hub release -f '%pI %T%n' | sort -nr | head -1 | cut -d ' ' -f 2)"
+last_release_tag="$(gh api -t '{{.tag_name}}' -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "/repos/${org}/${repo}/releases/latest")"
 
 if [[ -z "${last_release_tag}" ]]; then
   echo "no release found on repository. fallback to first commit"
