@@ -14,13 +14,13 @@ jobs:
   check-license:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - run: ./hack/check-license.sh
 
   check-gradle-wrapper:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: gradle/wrapper-validation-action@v1
 
   build:
@@ -31,7 +31,7 @@ jobs:
     needs: check-gradle-wrapper
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
@@ -71,7 +71,7 @@ jobs:
     needs: [check-gradle-wrapper, build ]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
