@@ -17,19 +17,17 @@ jobs:
       ORG_GRADLE_PROJECT_publishChannel: stable
       ORG_GRADLE_PROJECT_publishToken: ${{ secrets.PUBLISH_TOKEN }}
     steps:
-#      # Cache gradle dependencies
-#      - uses: actions/cache@v2
-#        with:
-#          path: |
-#            ~/.gradle/caches
-#            ~/.gradle/wrapper
-#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-#          restore-keys: |
-#            ${{ runner.os }}-gradle-
-
       - uses: actions/checkout@v4
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: corretto
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-home-cache-cleanup: true
 
       - name: publish plugin
         run: |
