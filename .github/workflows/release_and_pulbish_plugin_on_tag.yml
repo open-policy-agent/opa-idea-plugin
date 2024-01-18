@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [check-gradle-wrapper]
     env:
-      ORG_GRADLE_PROJECT_publishChannel: stable
+      ORG_GRADLE_PROJECT_publishChannel: ${{ secrets.PUBLISH_CHANNEL }}
       ORG_GRADLE_PROJECT_publishToken: ${{ secrets.PUBLISH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
