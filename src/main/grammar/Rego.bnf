@@ -67,10 +67,10 @@ module              ::= package (import|  rule)*
 package             ::= "package" ref
 import              ::= "import" ref ( "as" var )?
 rule                ::= "default"?  rule-head  rule-body*
-rule-head           ::= var ( "(" rule-args? ")" )? ("[" term "]" )? ( ( ":=" | "=" ) expr )?
+rule-head           ::= var ( "(" rule-args? ")" )? ("[" term "]" )* ( ( ":=" | "=" ) expr )?
 rule-args           ::= term ( "," term )*
 rule-body           ::= else-expr  | query-block
-else-expr           ::= else "=" expr  query-block? | else "="? query-block
+else-expr           ::= else (':=' | '=') expr  query-block? | else (':=' | '=')? query-block
 query-block         ::= "{" query "}"
 query               ::= ( literal |';' )+
 literal             ::= ( some-decl | literal-expr | "not" literal-expr )  with-modifier*

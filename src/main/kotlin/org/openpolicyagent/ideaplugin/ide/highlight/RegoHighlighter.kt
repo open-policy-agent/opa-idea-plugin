@@ -26,7 +26,7 @@ class RegoHighlighter : SyntaxHighlighterBase() {
 
     override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> = pack(tokenToColorMap[tokenType])
 
-    val tokenToColorMap: Map<IElementType, TextAttributesKey> = HashMap()
+    val tokenToColorMap: MutableMap<IElementType, TextAttributesKey> = HashMap()
 
     init {
         fillMap(tokenToColorMap, LINE_COMMENT.textAttributesKey, RegoTypes.COMMENT)

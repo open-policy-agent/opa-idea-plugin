@@ -56,6 +56,12 @@ check_only_equal_querry_for_else = true {
     true
 }
 
+check_else_with_colon_assignment_op {
+    input.x < input.y
+} else := true {
+    input.y < input.x
+} else := false
+
 # issue 84
 check_empty_query_else = true {
     input.x < input.y

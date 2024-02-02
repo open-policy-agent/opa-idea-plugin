@@ -16,3 +16,6 @@ c := a1 & a2 | a3 - b
 
 d := 1+2 - array.concat(array1, array2)[2]
 e := array.concat(array1, array2)[0] + array.concat(array1, array2)[1]
+
+# multidimensional array
+f["first"]["second"] := "some value"
