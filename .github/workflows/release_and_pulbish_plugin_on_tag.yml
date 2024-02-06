@@ -32,7 +32,7 @@ jobs:
       - name: publish plugin
         run: |
           export ORG_GRADLE_PROJECT_pluginVersion="${GITHUB_REF/refs\/tags\//}"
-          ./gradlew clean :test :plugin:publishPlugin
+          ./gradlew clean :plugin:publishPlugin
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2.2.2
