@@ -40,7 +40,7 @@ function util::fatal() {
 	exit 1
 }
 
-# Check "hub" command exist and exit with error message if does not.
-function util::require-hub() {
-  util::command_exists "hub" || util::fatal 'hub not found in path. please install it before running script. see instruction at https://hub.github.com/'
+# Check "gh" command exist and exit with error message if does not.
+function util::require-gh() {
+  util::command_exists "gh" || util::fatal 'gh not found in path. please install it before running script. see instruction at https://cli.github.com/'
 }
