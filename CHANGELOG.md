@@ -1,3 +1,19 @@
+# Release notes for NEXT_VERSION
+
+## Changes by Kind
+
+### Feature
+
+- Compatibility for ide 2023.3. ([#164](https://github.com/open-policy-agent/opa-idea-plugin/pull/164), [@vgramer](https://github.com/vgramer))
+- Support for idea 2024.1
+  Grammar: rules with multidimensional array heads support
+  Grammar: else expressions no longer consider ':=' invalid ([#166](https://github.com/open-policy-agent/opa-idea-plugin/pull/166), [@spoage](https://github.com/spoage))
+
+### Uncategorized
+
+- CI: fix release-note and publish pipeline ([#169](https://github.com/open-policy-agent/opa-idea-plugin/pull/169), [@vgramer](https://github.com/vgramer))
+- Compatibility with IDEA base ide 2023.2 ([#153](https://github.com/open-policy-agent/opa-idea-plugin/pull/153), [@sandhose](https://github.com/sandhose))
+
 # Release notes for v0.11.0
 
 ## Changes by Kind
