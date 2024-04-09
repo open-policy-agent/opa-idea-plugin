@@ -53,7 +53,10 @@
                              displayName="Open Policy Agent"
                              instance="org.openpolicyagent.ideaplugin.opa.project.settings.OpaOptionsConfigurable"/>
 
-</extensions>
+        <!-- LSP -->
+        <platform.lsp.serverSupportProvider implementation="org.openpolicyagent.ideaplugin.ide.lsp.RegalLspServerSupportProvider"/>
+
+    </extensions>
 
     <actions>
 
