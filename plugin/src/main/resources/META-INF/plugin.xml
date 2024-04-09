@@ -24,6 +24,7 @@
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.ultimate</depends>
 
     <xi:include href="/META-INF/opa-core.xml" xpointer="xpointer(/idea-plugin/*)"/>
 
