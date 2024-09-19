@@ -35,7 +35,7 @@ jobs:
           ./gradlew :plugin:publishPlugin
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2.2.2
+        uses: actions/upload-artifact@v4
         with:
           name: plugin-artifact
           path: ./plugin/build/distributions/*.zip
@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Download Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         id: download
         with:
           name: plugin-artifact
