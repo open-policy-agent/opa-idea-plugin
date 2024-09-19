@@ -1,3 +1,11 @@
+# Release notes for v0.13.0
+
+## Changes by Kind
+
+### Uncategorized
+
+- Compatibility for ide 2024.2 ([#173](https://github.com/open-policy-agent/opa-idea-plugin/pull/173), [@steffann](https://github.com/steffann))
+
 # Release notes for v0.12.0
 
 ## Changes by Kind
