@@ -4,6 +4,7 @@
 
 ### Uncategorized
 
+- Compatibility for IDE 2024.3 (#179, [@saschpe](https://github.com/saschpe))
 - Ci release pipeline ([#176](https://github.com/open-policy-agent/opa-idea-plugin/pull/176), [@vgramer](https://github.com/vgramer))
 - Compatibility for ide 2024.2 ([#173](https://github.com/open-policy-agent/opa-idea-plugin/pull/173), [@steffann](https://github.com/steffann))
 
