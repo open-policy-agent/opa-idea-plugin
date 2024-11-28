@@ -1,3 +1,16 @@
+# Release notes for v0.14.0
+
+## Changes by Kind
+
+### Feature
+
+- Compatibity 2024.3  
+  move `new rego file` action to lower division ([#181](https://github.com/open-policy-agent/opa-idea-plugin/pull/181), [@vgramer](https://github.com/vgramer))
+
+### Uncategorized
+
+- Ci release pipeline ([#176](https://github.com/open-policy-agent/opa-idea-plugin/pull/176), [@vgramer](https://github.com/vgramer))
+
 # Release notes for v0.13.0
 
 ## Changes by Kind
