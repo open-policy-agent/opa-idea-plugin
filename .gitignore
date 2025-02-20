@@ -6,6 +6,7 @@ out/
 build/
 gen/
 deps
+.intellijPlatform
 
 # MacOS files
 .DS_Store
