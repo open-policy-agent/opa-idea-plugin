@@ -120,7 +120,7 @@ regex_rule {
 	delimiter_end:=""
 	delimiter_start:=""
 
-    re_match(pattern, value)
+    regex.match(pattern, value)
     output := regex.split(pattern, string)
     regex.globs_match(glob1, glob2)
     output2 := regex.template_match(pattern, string, delimiter_start, delimiter_end)

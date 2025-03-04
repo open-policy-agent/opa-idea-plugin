@@ -74,7 +74,7 @@ abstract class RegoParsingTestCaseBase : ParsingTestCase(
     private fun checkRegoFileForErrorsWithLocalOpaClient() {
         val fileToCheck = "${super.myFullDataPath}/$testName.$myFileExt"
 
-        val pb = ProcessBuilder(opaBinary, "check", fileToCheck)
+        val pb = ProcessBuilder(opaBinary, "check", fileToCheck, "--v0-compatible")
         val env = pb.environment()
         env.clear()
         env.putAll(EnvironmentUtil.getEnvironmentMap())
