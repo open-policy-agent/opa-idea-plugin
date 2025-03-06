@@ -1,3 +1,11 @@
+# Release notes for NEXT_VERSION
+
+## Changes by Kind
+
+### Uncategorized
+
+- Update CI and tests to use OPA 1.2.0. Use `--v0-compatible` where available in OPA commands. ([#184](https://github.com/open-policy-agent/opa-idea-plugin/pull/184), [@charlieegan3](https://github.com/charlieegan3))
+
 # Release notes for v0.14.0
 
 ## Changes by Kind
