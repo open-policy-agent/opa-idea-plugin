@@ -16,7 +16,7 @@ class OpaEvalRunConfigurationExecutionTest : RunConfigurationTestBase() {
             "data.main.allow",
             Paths.get("${myFixture.tempDirPath}/src/input.json"),
             Paths.get("${myFixture.tempDirPath}/src"),
-            ""
+            "--v0-compatible"
         )
         val out = executeAndGetOutput(config)
         assertThat(out.stdout).contains(
@@ -50,7 +50,7 @@ class OpaEvalRunConfigurationExecutionTest : RunConfigurationTestBase() {
             "data.main.allow",
             Paths.get("${myFixture.tempDirPath}/src/input.json"),
             Paths.get("${myFixture.tempDirPath}/src"),
-            "-f pretty"
+            "-f pretty --v0-compatible"
         )
         val out = executeAndGetOutput(config)
         assertThat(out.stdout).contains(
@@ -69,7 +69,7 @@ class OpaEvalRunConfigurationExecutionTest : RunConfigurationTestBase() {
                 rego(
                     "all.rego", """
                         package main
-                        
+
                         allow[msg] {
                             msg:= "allowed by sec"
                         }
@@ -78,7 +78,7 @@ class OpaEvalRunConfigurationExecutionTest : RunConfigurationTestBase() {
                 rego(
                     "sec.rego", """
                         # we create an invalid file (create a parsing error, to be sure its not load (ie to be sure that bundle is disable
-                        package 
+                        package
                     """.trimIndent()
                 )
 
@@ -96,7 +96,7 @@ class OpaEvalRunConfigurationExecutionTest : RunConfigurationTestBase() {
             "data.main.allow",
             Paths.get("${myFixture.tempDirPath}/src/input.json"),
             null,
-            "-d ${myFixture.tempDirPath}/src/all.rego"
+            "-d ${myFixture.tempDirPath}/src/all.rego --v0-compatible"
         )
         val out = executeAndGetOutput(config)
         assertThat(out.stdout).contains(
@@ -131,7 +131,7 @@ class OpaEvalRunConfigurationExecutionTest : RunConfigurationTestBase() {
                     "all.rego", """
                         package main
                         import data.sec
-                        
+
                         allow[msg] {
                             # using a rule define din another package in order to be sure that bundle has load file
                             sec.allow
@@ -142,7 +142,7 @@ class OpaEvalRunConfigurationExecutionTest : RunConfigurationTestBase() {
                 rego(
                     "sec.rego", """
                         package sec
-    
+
                         allow {
                             input.sec == true
                         }

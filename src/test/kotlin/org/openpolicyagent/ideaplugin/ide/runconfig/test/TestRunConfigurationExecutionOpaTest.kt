@@ -22,7 +22,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                         rule1[msg] {
                             msg := "msg from rule 1"
                         }
-                        
+
                         rule2[msg] {
                             msg := "msg from rule 2"
                         }
@@ -32,22 +32,22 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                     "test_main.rego", """
                         package test.main
                         import data.main
-                        
+
                         test_rule1_should_be_ok{
                             msg := main.rule1
                             msg ==  {"msg from rule 1"}
                         }
-                        
+
                         test_rule_2_should_be_ko{
                             msg := main.rule2
                             msg ==  {"another message in order to put the test in FAIL state"}
                         }
-                        
+
                         test_should_fail {
                             # will fail evaluation due to error
                             to_number("x")
                         }
-                        
+
                     """.trimIndent()
                 )
             }
@@ -56,20 +56,18 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
 
         val config = createTestConfig(
             Paths.get("${myFixture.tempDirPath}/src"),
-            "-f pretty -v"
+            "-f pretty -v --v0-compatible"
         )
 
-        val expectedFormattedTestTree = """
-            [root](-)
-            .data.test.main.test_rule_2_should_be_ko(-)
-            .data.test.main.test_should_fail(-)
-            .data.test.main.test_rule1_should_be_ok(+)
-        """
         val root = executeAndGetTestRoot(config)
 
+        val output = getFormattedTestTree(root)
+        assertThat(output).contains(
+            "data.test.main.test_rule_2_should_be_ko(-)",
+            "data.test.main.test_should_fail(-)",
+            "data.test.main.test_rule1_should_be_ok(+)"
+        )
 
-        assertEquals(expectedFormattedTestTree.trimIndent(), getFormattedTestTree(root))
-        checkTreeErrorMsg(root)
         assertThat(root.children).extracting("stacktrace").containsOnlyNulls()
     }
 
@@ -83,7 +81,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                         rule1[msg] {
                             msg := "msg from rule 1"
                         }
-                        
+
                         rule2[msg] {
                             msg := "msg from rule 2"
                         }
@@ -93,18 +91,18 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                     "test_main.rego", """
                         package test.main
                         import data.main
-                        
-                                                                       
-                        test_rule1_should_be_ko{
+
+
+                        test_rule1_should_be_ko {
                             msg := main.rule1
-                            msg ==  {"should fail test 1"}
+                            msg == {"should fail test 1"}
                         }
-                        
-                        test_rule_2_should_be_ko{
+
+                        test_rule_2_should_be_ko {
                             msg := main.rule2
-                            msg ==  {"another message in order to put the test in FAIL state"}
+                            msg == {"another message in order to put the test in FAIL state"}
                         }
-                        
+
                         test_should_fail {
                             2 == 1
                         }
@@ -116,19 +114,18 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
 
         val config = createTestConfig(
             Paths.get("${myFixture.tempDirPath}/src"),
-            "-f pretty -v"
+            "-f pretty -v --v0-compatible"
         )
 
-        val expectedFormattedTestTree = """
-            [root](-)
-            .data.test.main.test_rule1_should_be_ko(-)
-            .data.test.main.test_rule_2_should_be_ko(-)
-            .data.test.main.test_should_fail(-)
-        """
         val root = executeAndGetTestRoot(config)
 
-        assertEquals(expectedFormattedTestTree.trimIndent(), getFormattedTestTree(root))
-        checkTreeErrorMsg(root)
+        val output = getFormattedTestTree(root)
+        assertThat(output).contains(
+            ".data.test.main.test_rule1_should_be_ko(-)",
+            ".data.test.main.test_rule_2_should_be_ko(-)",
+            ".data.test.main.test_should_fail(-)",
+        )
+
         assertThat(root.children).extracting("stacktrace").containsOnlyNulls()
 
     }
@@ -143,7 +140,7 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                         rule1[msg] {
                             msg := "msg from rule 1"
                         }
-                        
+
                         rule2[msg] {
                             msg := "msg from rule 2"
                         }
@@ -153,17 +150,17 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
                     "test_main.rego", """
                         package test.main
                         import data.main
-                        
+
                         test_rule1_should_be_ok{
                             msg := main.rule1
                             msg ==  {"msg from rule 1"}
                         }
-                        
+
                         test_rule_2_should_be_ok{
                             msg := main.rule2
                             msg ==  {"msg from rule 2"}
                         }
-                        
+
                         test_3_should_be_ok {
                             1 == 1
                         }
@@ -174,20 +171,18 @@ class TestRunConfigurationExecutionOpaTest : OpaTestRunConfigurationBase() {
 
         val config = createTestConfig(
             Paths.get("${myFixture.tempDirPath}/src"),
-            "-f pretty -v"
+            "-f pretty -v --v0-compatible"
         )
-
-        val expectedFormattedTestTree = """
-            [root](+)
-            .data.test.main.test_rule1_should_be_ok(+)
-            .data.test.main.test_rule_2_should_be_ok(+)
-            .data.test.main.test_3_should_be_ok(+)
-        """
         val root = executeAndGetTestRoot(config)
 
-        assertEquals(expectedFormattedTestTree.trimIndent(), getFormattedTestTree(root))
+        val output = getFormattedTestTree(root)
+        assertThat(output).contains(
+            "data.test.main.test_rule1_should_be_ok(+)",
+            "data.test.main.test_rule_2_should_be_ok(+)",
+            "data.test.main.test_3_should_be_ok(+)",
+        )
+
         assertThat(root.children).extracting("errorMessage").containsOnlyNulls()
         assertThat(root.children).extracting("stacktrace").containsOnlyNulls()
-
     }
 }

@@ -42,12 +42,10 @@ jobs:
       with:
         gradle-home-cache-cleanup: true
 
-    - name: Download OPA
-      run: |
-        OPA_VERSION=v0.61.0
-        mkdir -p /tmp/opa_bin
-        curl -L -o /tmp/opa_bin/opa https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
-        chmod +x /tmp/opa_bin/opa
+    - name: Setup OPA
+      uses: open-policy-agent/setup-opa@809942e54078e1ba613b824622cc61575dc9f1a4
+      with:
+        version: 1.2.0
 
     - name: Build and test
       run: |
@@ -76,7 +74,7 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           path: ~/.pluginVerifier/ides
           key: ${{ runner.os }}-plugin-verifier-ides

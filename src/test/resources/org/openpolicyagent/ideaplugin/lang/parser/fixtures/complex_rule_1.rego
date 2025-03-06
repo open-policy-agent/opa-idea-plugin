@@ -22,12 +22,12 @@ invalid_label {
 
 has_contact_product_owner_label {
 	value := input.request.object.metadata["labels"]["contact.productowner"]
-	re_match("^.+_at_domain\\.com$", value)
+	regex.match("^.+_at_domain\\.com$", value)
 }
 
 has_contact_product_dl_label {
 	value := input.request.object.metadata["labels"]["contact.dl"]
-	re_match("^.+_at_domain\\.com$", value)
+	regex.match("^.+_at_domain\\.com$", value)
 }
 
 
