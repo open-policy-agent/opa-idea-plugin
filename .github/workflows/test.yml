@@ -53,7 +53,7 @@ jobs:
         ./gradlew :test
 
     - name: Verify plugin.xml
-      run: ./gradlew :plugin:verifyPlugin
+      run: ./gradlew :plugin:check
 
   verify:
     timeout-minutes: 60
@@ -80,7 +80,7 @@ jobs:
           key: ${{ runner.os }}-plugin-verifier-ides
 
       - name: Verify plugin binary compatibility
-        run: ./gradlew :plugin:runPluginVerifier
+        run: ./gradlew :plugin:verifyPlugin
 
   # This job is successful if all dependent jobs are successful. To be able to merge the PR, this job must be successful
   all-checks:
