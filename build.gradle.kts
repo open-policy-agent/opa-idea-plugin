@@ -46,8 +46,8 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "1.9.21"
-    id("org.jetbrains.intellij.platform.module") version "2.1.0"
+    kotlin("jvm") version "2.1.20"
+    id("org.jetbrains.intellij.platform.module") version "2.5.0"
     id("org.jetbrains.grammarkit") version "2022.3.2.2"
 
 }
@@ -75,6 +75,7 @@ allprojects {
 
     dependencies {
         testImplementation("junit", "junit", "4.13.2")
+        testImplementation("org.opentest4j", "opentest4j", "1.3.0")
         implementation("com.github.kittinunf.fuel", "fuel", "2.3.1") {
             exclude("org.jetbrains.kotlin")
         }
@@ -90,7 +91,6 @@ allprojects {
             if (baseIDE == "idea") {
                 bundledPlugin("com.intellij.java")
             }
-            instrumentationTools()
             pluginVerifier()
             testFramework(TestFrameworkType.Platform)
         }
@@ -110,9 +110,8 @@ allprojects {
         instrumentCode = true
     }
 
-    // Set the JVM language level used to build project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(21)
     }
 
     sourceSets {
