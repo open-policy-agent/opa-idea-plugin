@@ -6,18 +6,21 @@
 import org.intellij.markdown.ast.getTextInNode
 import org.jetbrains.grammarkit.tasks.GenerateLexerTask
 import org.jetbrains.grammarkit.tasks.GenerateParserTask
-import org.jetbrains.intellij.tasks.RunIdeTask
-import org.jetbrains.intellij.tasks.PublishPluginTask
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 
 val baseIDE = prop("baseIDE")
-val ideaVersion = prop("ideaVersion")
-val pycharmCommunityVersion = prop("pycharmCommunityVersion")
-val baseVersion = when (baseIDE) {
-    "idea" -> ideaVersion
-    "pycharmCommunity" -> pycharmCommunityVersion
+
+val ideType = when (baseIDE) {
+    "idea" -> "IC"
+    "pycharmCommunity" -> "PC"
+    else -> error("Unexpected IDE name: `$baseIDE`")
+}
+val ideVersion = when (baseIDE) {
+    "idea" -> prop("ideaVersion")
+    "pycharmCommunity" -> prop("pycharmCommunityVersion")
     else -> error("Unexpected IDE name: `$baseIDE`")
 }
 
@@ -44,8 +47,9 @@ idea {
 plugins {
     idea
     kotlin("jvm") version "1.9.21"
-    id("org.jetbrains.intellij") version "1.17.0"
+    id("org.jetbrains.intellij.platform.module") version "2.1.0"
     id("org.jetbrains.grammarkit") version "2022.3.2.2"
+
 }
 
 allprojects {
@@ -53,13 +57,14 @@ allprojects {
         plugin("idea")
         plugin("kotlin")
         plugin("org.jetbrains.grammarkit")
-        plugin("org.jetbrains.intellij")
-
+        plugin("org.jetbrains.intellij.platform.module")
     }
 
     repositories {
         mavenCentral()
-        maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
+        intellijPlatform {
+            defaultRepositories()
+        }
     }
 
     configurations {
@@ -69,10 +74,26 @@ allprojects {
     }
 
     dependencies {
+        testImplementation("junit", "junit", "4.13.2")
         implementation("com.github.kittinunf.fuel", "fuel", "2.3.1") {
             exclude("org.jetbrains.kotlin")
         }
         testImplementation("org.assertj:assertj-core:3.24.2")
+
+        intellijPlatform {
+            create(ideType, ideVersion)
+            val pluginList = mutableListOf(
+                "PsiViewer:$psiViewerPluginVersion"
+            )
+            plugins(pluginList)
+
+            if (baseIDE == "idea") {
+                bundledPlugin("com.intellij.java")
+            }
+            instrumentationTools()
+            pluginVerifier()
+            testFramework(TestFrameworkType.Platform)
+        }
     }
 
     idea {
@@ -81,9 +102,12 @@ allprojects {
         }
     }
 
-    intellij {
-        version.set(baseVersion)
-        sandboxDir.set("$buildDir/$baseIDE-sandbox-$baseVersion")
+//    intellijPlatform {
+//        sandboxContainer = file("$buildDir/$baseIDE-sandbox-$baseVersion")
+//    }
+    intellijPlatform {
+        buildSearchableOptions = false
+        instrumentCode = true
     }
 
     // Set the JVM language level used to build project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
@@ -97,22 +121,6 @@ allprojects {
         }
     }
 
-    tasks {
-        withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
-            sinceBuild.set(prop("sinceBuild"))
-            untilBuild.set(prop("untilBuild"))
-            changeNotes.set(provider { getLastReleaseNotes() })
-        }
-
-        withType<RunIdeTask> {
-            jvmArgs("--add-exports", "java.base/jdk.internal.vm=ALL-UNNAMED")
-        }
-
-        buildSearchableOptions {
-            // buildSearchableOptions task doesn't make sense for non-root subprojects
-            enabled = false
-        }
-    }
     afterEvaluate {
         tasks.withType<Test>().configureEach {
             // We need to prevent the platform-specific shared JNA library to loading from the system library paths,
@@ -129,46 +137,53 @@ val pluginVersion = prop("pluginVersion")
 
 // module to build/run/publish opa-ida-plugin plugin
 project(":plugin") {
-    version = "$pluginVersion$channelSuffix"
-    intellij {
-        pluginName.set("opa-idea-plugin")
-        val pluginList = mutableListOf(
-            "PsiViewer:$psiViewerPluginVersion"
-        )
-        if (baseIDE == "idea") {
-            pluginList += listOf(
-                "java"
-            )
+    apply {
+        plugin("org.jetbrains.intellij.platform")
+    }
+
+    intellijPlatform {
+        instrumentCode = true
+        buildSearchableOptions = false
+        projectName.set("opa-idea-plugin")
+        pluginConfiguration {
+            name = "Open Policy Agent"
+            version = "$pluginVersion$channelSuffix"
+
+            ideaVersion {
+                sinceBuild = providers.gradleProperty("sinceBuild")
+                untilBuild = providers.gradleProperty("untilBuild")
+            }
+            changeNotes = getLastReleaseNotes()
         }
-        plugins.set(pluginList)
+        pluginVerification {
+            ides {
+                recommended()
+            }
+        }
+        publishing {
+            token = prop("publishToken")
+            channels = listOf(channel)
+        }
+    }
+
+    tasks.withType<Zip>().configureEach {
+        if (name == "buildPlugin") {
+            archiveVersion.set(pluginVersion + channelSuffix)
+        }
     }
 
     dependencies {
-        implementation(project(":"))
-        implementation(project(":idea"))
-    }
-
-    tasks {
-        buildPlugin {
-            // Set proper name for final plugin zip.
-            // Otherwise, base name is the same as gradle module name
-            archiveBaseName.set("opa-idea-plugin")
-        }
-        withType<RunIdeTask> {
-            jvmArgs("--add-exports", "java.base/jdk.internal.vm=ALL-UNNAMED")
-        }
-        withType<PublishPluginTask> {
-            token.set(prop("publishToken"))
-            channels.set(listOf(channel))
-        }
-        buildSearchableOptions {
-            // buildSearchableOptions task doesn't make sense for non-root subprojects
-            enabled = prop("enableBuildSearchableOptions").toBoolean()
+        intellijPlatform {
+            pluginModule(implementation(project(":")))
+            pluginModule(implementation(project(":idea")))
         }
     }
 }
 
 project(":") {
+    apply {
+        plugin("org.jetbrains.intellij.platform.module")
+    }
     val testOutput = configurations.create("testOutput")
 
     dependencies {
@@ -177,14 +192,14 @@ project(":") {
 
     val generateRegoLexer = task<GenerateLexerTask>("generateRegoLexer") {
         sourceFile.set(file("src/main/grammar/RegoLexer.flex"))
-        targetOutputDir.set(file("src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer"))
+        targetOutputDir.set(project.layout.projectDirectory.dir("src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer"))
         purgeOldFiles.set(true)
     }
 
 
     val generateRegoParser = task<GenerateParserTask>("generateRegoParser") {
         sourceFile.set(file("src/main/grammar/Rego.bnf"))
-        targetRootOutputDir.set(file("src/main/gen"))
+        targetRootOutputDir.set(project.layout.projectDirectory.dir("src/main/gen"))
         pathToParser.set("/org/openpolicyagent/ideaplugin/lang/parser/RegoParser.java")
         pathToPsiRoot.set("/org/openpolicyagent/ideaplugin/lang/psi")
         purgeOldFiles.set(true)
@@ -196,20 +211,18 @@ project(":") {
             generateRegoParser
         )
     }
-    task("resolveDependencies") {
-        doLast {
-            rootProject.allprojects
-                .map { it.configurations }
-                .flatMap { it.filter { c -> c.isCanBeResolved } }
-                .forEach { it.resolve() }
-        }
-    }
 }
 
 project(":idea") {
+    apply {
+        plugin("org.jetbrains.intellij.platform.module")
+    }
     dependencies {
-        implementation(project(":"))
-        testImplementation(project(":", "testOutput"))
+        intellijPlatform {
+            pluginModule(implementation(project(":")))
+            testImplementation(project(":", "testOutput"))
+        }
+
     }
 }
 
