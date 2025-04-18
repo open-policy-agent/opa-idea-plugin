@@ -1,3 +1,15 @@
+# Release notes for v0.15.0
+
+## Changes by Kind
+
+### Feature
+
+- Add support for IDEA 2025 based IDE. ([#187](https://github.com/open-policy-agent/opa-idea-plugin/pull/187), [@vgramer](https://github.com/vgramer))
+
+### Uncategorized
+
+- Update CI and tests to use OPA 1.2.0. Use `--v0-compatible` where available in OPA commands. ([#184](https://github.com/open-policy-agent/opa-idea-plugin/pull/184), [@charlieegan3](https://github.com/charlieegan3))
+
 # Release notes for v0.14.0
 
 ## Changes by Kind
