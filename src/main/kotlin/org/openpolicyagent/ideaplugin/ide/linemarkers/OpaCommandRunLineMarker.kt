@@ -36,10 +36,10 @@ class OpaCommandRunLineMarker : RunLineMarkerContributor() {
      * Implementation note:
      *
      * Marker must be placed on leaf (in our case ASCII_LETTER) so be careful if use PsiTreeUtil.getParentOfType() because
-     * a node may contains several ASCII_LETTER leaf. Consequently marker will be created for each leaf.
+     * a node may contain several ASCII_LETTER leaf. Consequently marker will be created for each leaf.
      *
      * Example:
-     * Package node may contains many ASCII_LETTER leafs.
+     * Package node may contain many ASCII_LETTER leafs.
      *
      * for "package test.main" we have the following psi tree
      *
@@ -61,12 +61,15 @@ class OpaCommandRunLineMarker : RunLineMarkerContributor() {
         if (element.elementType != RegoTypes.ASCII_LETTER) return null
 
         if (element.parent.parent.parent is RegoPackage) {
-            return Info(AllIcons.RunConfigurations.TestState.Run, { "eval or test package" }, *ExecutorAction.getActions(1))
+            return Info(
+                AllIcons.RunConfigurations.TestState.Run,
+                ExecutorAction.getActions(1),
+                { "eval or test package" })
         }
 
         if (element.parent.parent is RegoRuleHead) {
-            val cmd =  if(element.text.startsWith(REGO_TEST_RULE_PREFIX)) "test"  else "eval"
-            return Info(AllIcons.RunConfigurations.TestState.Run, { "$cmd rule" }, *ExecutorAction.getActions(1))
+            val cmd = if (element.text.startsWith(REGO_TEST_RULE_PREFIX)) "test" else "eval"
+            return Info(AllIcons.RunConfigurations.TestState.Run, ExecutorAction.getActions(1), { "$cmd rule" })
         }
 
         return null
