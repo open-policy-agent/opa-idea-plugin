@@ -12,6 +12,7 @@ import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import com.redhat.devtools.lsp4ij.server.OSProcessStreamConnectionProvider
 import org.openpolicyagent.ideaplugin.opa.project.settings.OpaProjectSettings
 
@@ -81,5 +82,10 @@ class RegalStreamConnectionProvider(private val project: Project) : OSProcessStr
 
             notification.notify(project)
         }
+    }
+
+    override fun getInitializationOptions(rootUri: VirtualFile?): Any? {
+        val initOptions = mapOf("enableDebugCodelens" to true)
+        return initOptions
     }
 }
