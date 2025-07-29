@@ -66,6 +66,13 @@
             <description>Regal Language Server for Open Policy Agent Rego files</description>
         </server>
         <languageMapping language="rego" serverId="regal"/>
+        
+        <!-- DAP Debug Adapter Integration -->
+        <debugAdapterServer id="regal-debug"
+                           name="Regal Debug Adapter"
+                           factoryClass="org.openpolicyagent.ideaplugin.dap.RegalDebugAdapterDescriptorFactory">
+            <description>Regal Debug Adapter for debugging Rego policies</description>
+        </debugAdapterServer>
     </extensions>
 
     <actions>

@@ -85,7 +85,6 @@ class RegalStreamConnectionProvider(private val project: Project) : OSProcessStr
     }
 
     override fun getInitializationOptions(rootUri: VirtualFile?): Any? {
-        val initOptions = mapOf("enableDebugCodelens" to true)
-        return initOptions
+        return emptyMap<String, Any>()
     }
 }

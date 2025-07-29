@@ -11,11 +11,16 @@ package org.openpolicyagent.ideaplugin.lsp
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.diagnostic.Logger
 import com.redhat.devtools.lsp4ij.LanguageServerFactory
+import com.redhat.devtools.lsp4ij.client.LanguageClientImpl
 import com.redhat.devtools.lsp4ij.server.StreamConnectionProvider
 import org.jetbrains.annotations.NotNull
 
 class RegalLanguageServerFactory : LanguageServerFactory {
     override fun createConnectionProvider(@NotNull project: Project): StreamConnectionProvider {
         return RegalStreamConnectionProvider(project)
+    }
+
+    override fun createLanguageClient(@NotNull project: Project): LanguageClientImpl {
+        return RegalLanguageClient(project)
     }
 }
