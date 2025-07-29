@@ -25,6 +25,7 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.json</depends>
+    <depends>com.redhat.devtools.lsp4ij</depends>
 
     <xi:include href="/META-INF/opa-core.xml" xpointer="xpointer(/idea-plugin/*)"/>
 

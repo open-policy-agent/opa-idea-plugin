@@ -12,6 +12,7 @@ import com.intellij.ui.dsl.builder.AlignX
 import com.intellij.ui.dsl.builder.bindText
 
 import com.intellij.ui.dsl.builder.panel
+import com.intellij.ui.dsl.builder.bindSelected
 
 /**
  * UI for the opa setting options.
@@ -28,6 +29,16 @@ class OpaOptionsConfigurable(private val project: Project) :
                textField()
                     .bindText(settings::opaCheckOptions)
                    .align(AlignX.FILL)
+            }
+            row("Regal path:") {
+                textField()
+                    .bindText(settings::regalPath)
+                    .align(AlignX.FILL)
+                    .comment("Path to Regal binary (leave empty to use PATH)")
+            }
+            row {
+                checkBox("Enable Regal verbose logging")
+                    .bindSelected(settings::regalVerboseLogging)
             }
         }
     }

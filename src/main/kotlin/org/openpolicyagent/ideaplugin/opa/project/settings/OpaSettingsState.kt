@@ -9,4 +9,6 @@ import com.intellij.openapi.components.BaseState
 
 class OpaSettingsState:  BaseState() {
     var opaCheckOptions = OpaProjectSettings.defaultOpaCheckOptions
+    var regalPath = ""
+    var regalVerboseLogging = false
 }

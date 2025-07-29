@@ -20,6 +20,18 @@ class OpaProjectSettings(val project: Project) : SimplePersistentStateComponent<
             state.opaCheckOptions = value
         }
 
+    var regalPath
+        get() = state.regalPath
+        set(value) {
+            state.regalPath = value
+        }
+
+    var regalVerboseLogging
+        get() = state.regalVerboseLogging
+        set(value) {
+            state.regalVerboseLogging = value
+        }
+
     companion object {
         @JvmStatic
         val defaultOpaCheckOptions = "--strict"

@@ -53,7 +53,20 @@
                              displayName="Open Policy Agent"
                              instance="org.openpolicyagent.ideaplugin.opa.project.settings.OpaOptionsConfigurable"/>
 
-</extensions>
+        <!-- Notifications -->
+        <notificationGroup id="OPA Plugin" displayType="BALLOON" key="notification.group.opa"/>
+
+    </extensions>
+
+    <!-- LSP4IJ Language Server Integration -->
+    <extensions defaultExtensionNs="com.redhat.devtools.lsp4ij">
+        <server id="regal"
+                name="Regal Language Server"
+                factoryClass="org.openpolicyagent.ideaplugin.lsp.RegalLanguageServerFactory">
+            <description>Regal Language Server for Open Policy Agent Rego files</description>
+        </server>
+        <languageMapping language="rego" serverId="regal"/>
+    </extensions>
 
     <actions>
 

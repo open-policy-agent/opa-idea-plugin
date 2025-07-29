@@ -78,7 +78,8 @@ allprojects {
         intellijPlatform {
             create(platformType, platformVersion)
             val pluginList = mutableListOf(
-                "PsiViewer:$psiViewerPluginVersion"
+                "PsiViewer:$psiViewerPluginVersion",
+                "com.redhat.devtools.lsp4ij:0.14.2"
             )
             plugins(pluginList)
 
