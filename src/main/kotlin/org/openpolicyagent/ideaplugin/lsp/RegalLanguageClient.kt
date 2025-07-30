@@ -5,34 +5,31 @@
 
 package org.openpolicyagent.ideaplugin.lsp
 
-import com.google.gson.JsonObject
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.redhat.devtools.lsp4ij.client.LanguageClientImpl
-import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
-import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import java.util.concurrent.CompletableFuture
 
-@JsonSegment("regal")
-interface RegalLanguageClientExtensions {
-    @JsonRequest("startDebugging")
-    fun startDebugging(params: JsonObject): CompletableFuture<JsonObject>
-}
-
-class RegalLanguageClient(project: Project) : LanguageClientImpl(project), RegalLanguageClientExtensions {
+class RegalLanguageClient(project: Project) : LanguageClientImpl(project) {
     companion object {
         private val LOG = Logger.getInstance(RegalLanguageClient::class.java)
     }
 
-    override fun startDebugging(params: JsonObject): CompletableFuture<JsonObject> {
-        LOG.info("RegalLanguageClient: startDebugging called with params: $params")
-
-        // Debugging is now handled via DAP integration
-        // This LSP method is kept for compatibility but redirects to DAP
-        val response = JsonObject()
-        response.addProperty("status", "redirected")
-        response.addProperty("message", "Debug requests are now handled via DAP. Use IntelliJ's Debug menu to start debugging.")
-
-        return CompletableFuture.completedFuture(response)
-    }
+    /**
+     * Custom client message handling can be added here for future Regal-specific features.
+     *
+     * To add custom message handling:
+     * 1. Create an interface extending JsonSegment:
+     *    @JsonSegment("regal")
+     *    interface RegalLanguageClientExtensions {
+     *        @JsonRequest("customMessage")
+     *        fun customMessage(params: JsonObject): CompletableFuture<JsonObject>
+     *    }
+     * 2. Make this class implement the interface:
+     *    class RegalLanguageClient(project: Project) : LanguageClientImpl(project), RegalLanguageClientExtensions
+     * 3. Implement the custom message handler methods:
+     *    override fun customMessage(params: JsonObject): CompletableFuture<JsonObject> {
+     *        // Handle custom message
+     *        return CompletableFuture.completedFuture(JsonObject())
+     *    }
+     */
 }
