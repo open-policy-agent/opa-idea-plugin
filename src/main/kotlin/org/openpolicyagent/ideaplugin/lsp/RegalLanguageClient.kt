@@ -26,13 +26,13 @@ class RegalLanguageClient(project: Project) : LanguageClientImpl(project), Regal
 
     override fun startDebugging(params: JsonObject): CompletableFuture<JsonObject> {
         LOG.info("RegalLanguageClient: startDebugging called with params: $params")
-        
+
         // Debugging is now handled via DAP integration
         // This LSP method is kept for compatibility but redirects to DAP
         val response = JsonObject()
         response.addProperty("status", "redirected")
         response.addProperty("message", "Debug requests are now handled via DAP. Use IntelliJ's Debug menu to start debugging.")
-        
+
         return CompletableFuture.completedFuture(response)
     }
 }

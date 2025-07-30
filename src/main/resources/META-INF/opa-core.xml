@@ -42,7 +42,7 @@
 
         <!-- LSP Features -->
         <!-- Code Folding (LSP textDocument/foldingRange) -->
-        <lang.foldingBuilder 
+        <lang.foldingBuilder
             id="LSPFoldingBuilderForRego"
             language="rego"
             implementationClass="com.redhat.devtools.lsp4ij.features.foldingRange.LSPFoldingRangeBuilder"
@@ -92,7 +92,7 @@
             <description>Regal Language Server for Open Policy Agent Rego files</description>
         </server>
         <languageMapping language="rego" serverId="regal"/>
-        
+
         <!-- DAP Debug Adapter Integration -->
         <debugAdapterServer id="regal-debug"
                            name="Regal Debug Adapter"

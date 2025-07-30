@@ -85,6 +85,7 @@ class RegalStreamConnectionProvider(private val project: Project) : OSProcessStr
     }
 
     override fun getInitializationOptions(rootUri: VirtualFile?): Any? {
+        // Placeholder for future client feature customization (e.g. inline eval, etc.)
         return emptyMap<String, Any>()
     }
 }
