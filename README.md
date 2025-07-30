@@ -1,10 +1,11 @@
-# Opa IntelliJ plugin
-A plugin for [IntelliJ](https://www.jetbrains.com/idea/) that provides support for [Open Policy Agent](https://www.openpolicyagent.org/)
+# OPA IntelliJ Plugin
+A plugin for [IntelliJ](https://www.jetbrains.com/idea/) that provides support for [Open Policy Agent](https://www.openpolicyagent.org/).
 
 Main features are:
-* highlighting
+* Highlighting
 * `opa eval` run configuration
 * `opa test` run configuration
+* Regal linter and language server support (diagnostics, code completions, code folding, signature help, document symbols, debugging)
 
 # Compatibility
 
@@ -17,18 +18,21 @@ The plugin is compatible with all IntelliJ-based IDEs starting from the version 
 | Other features         | + | + |
 
 
-Plugin has been tested against OPA `0.28.0`, but should work with more recent versions.
+Plugin has been tested against OPA `1.6.0`, but should work with more recent versions.
 
 
 # Installation 
 OPA binary must be in the path.
 Installation instructions for OPA can be found [here](https://www.openpolicyagent.org/docs/latest/#running-opa).
 
-## from Jetbrains repository
+For enhanced IDE features (diagnostics, code completions, etc.), Regal must also be installed.
+Regal releases are available [here](https://github.com/StyraInc/regal/releases).
+
+## From JetBrains Repository
 Go to `Settings / Preferences / Plugins` menu. Then, search `opa` in the `Marketplace` tab and install the plugin.
 
 ![Step 3](docs/user/img/3_install_opa_plugin.png)
-## from source
+## From Source
 You can build the project from source and then install it. Build instructions are available [here](docs/devel/setup_development_env.md).
 
 # Documentation 
