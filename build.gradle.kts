@@ -9,20 +9,11 @@ import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 
 
-val baseIDE = prop("baseIDE")
-
-val ideType = when (baseIDE) {
-    "idea" -> "IC"
-    "pycharmCommunity" -> "PC"
-    else -> error("Unexpected IDE name: `$baseIDE`")
-}
-val ideVersion = when (baseIDE) {
-    "idea" -> prop("ideaVersion")
-    "pycharmCommunity" -> prop("pycharmCommunityVersion")
-    else -> error("Unexpected IDE name: `$baseIDE`")
-}
+val platformType = prop("platformType")
+val platformVersion = prop("platformVersion")
 
 val psiViewerPluginVersion = prop("psiViewerPluginVersion")
 val channel = prop("publishChannel")
@@ -34,6 +25,8 @@ buildscript {
     dependencies {
         // needed to extract the last release notes
         classpath("org.jetbrains:markdown:0.2.0")
+        // needed for grammar-kit parser generation on newer IntelliJ versions
+        classpath("it.unimi.dsi:fastutil:8.5.12")
     }
 }
 
@@ -80,17 +73,19 @@ allprojects {
             exclude("org.jetbrains.kotlin")
         }
         testImplementation("org.assertj:assertj-core:3.24.2")
+        implementation("it.unimi.dsi:fastutil:8.5.12")
 
         intellijPlatform {
-            create(ideType, ideVersion)
+            create(platformType, platformVersion)
             val pluginList = mutableListOf(
                 "PsiViewer:$psiViewerPluginVersion"
             )
             plugins(pluginList)
 
-            if (baseIDE == "idea") {
+            if (platformType == "IU") {
                 bundledPlugin("com.intellij.java")
             }
+            bundledPlugin("com.intellij.modules.json")
             pluginVerifier()
             testFramework(TestFrameworkType.Platform)
         }
@@ -202,6 +197,11 @@ project(":") {
         pathToParser.set("/org/openpolicyagent/ideaplugin/lang/parser/RegoParser.java")
         pathToPsiRoot.set("/org/openpolicyagent/ideaplugin/lang/psi")
         purgeOldFiles.set(true)
+    }
+
+    // Ensure fastutil is available for grammar-kit tasks
+    tasks.withType<GenerateParserTask> {
+        classpath = configurations.compileClasspath.get()
     }
 
     tasks.withType<KotlinCompile> {
