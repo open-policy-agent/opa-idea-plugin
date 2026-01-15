@@ -11,7 +11,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.redhat.devtools.lsp4ij.dap.descriptors.DebugAdapterDescriptor
 import com.redhat.devtools.lsp4ij.dap.descriptors.DebugAdapterDescriptorFactory
 import com.redhat.devtools.lsp4ij.dap.definitions.DebugAdapterServerDefinition
-import com.redhat.devtools.lsp4ij.dap.configurations.DAPRunConfigurationOptions
+import com.intellij.execution.configurations.RunConfigurationOptions
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
@@ -28,7 +28,7 @@ class RegalDebugAdapterDescriptorFactory : DebugAdapterDescriptorFactory() {
     }
 
     override fun createDebugAdapterDescriptor(
-        @NotNull options: DAPRunConfigurationOptions,
+        @NotNull options: RunConfigurationOptions,
         @NotNull environment: ExecutionEnvironment
     ): DebugAdapterDescriptor {
         return RegalDebugAdapterDescriptor(options, environment, getServerDefinition())
