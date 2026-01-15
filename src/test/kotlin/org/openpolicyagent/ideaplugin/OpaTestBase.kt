@@ -6,8 +6,21 @@
 package org.openpolicyagent.ideaplugin
 
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.redhat.devtools.lsp4ij.LanguageServerManager
+import com.redhat.devtools.lsp4ij.dap.DebugAdapterManager
 
 abstract class OpaTestBase : BasePlatformTestCase(), OpaTestCase {
+
+    override fun setUp() {
+        super.setUp()
+
+        // Light tests use tempFS which is not compatible with LSP/DAP. Disable them for tests.
+        LanguageServerManager.getInstance(myFixture.project).stop("regal")
+
+        val debugAdapterManager = DebugAdapterManager.getInstance()
+        debugAdapterManager.getDebugAdapterServerById("regal-debug")
+            ?.let { debugAdapterManager.removeDebugAdapterServer(it) }
+    }
 
     open val dataPath: String = ""
 
