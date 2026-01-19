@@ -1,3 +1,11 @@
+# Release notes for NEXT_VERSION
+
+## Changes by Kind
+
+### Uncategorized
+
+- Support for IDE 2025.3 releases ([#192](https://github.com/open-policy-agent/opa-idea-plugin/pull/192), [@charlieegan3](https://github.com/charlieegan3))
+
 # Release notes for v0.15.0
 
 ## Changes by Kind
