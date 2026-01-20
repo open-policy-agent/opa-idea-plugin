@@ -14,6 +14,7 @@ import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 
 val platformType = prop("platformType")
 val platformVersion = prop("platformVersion")
+val verifierIdeVersion = platformVersion
 
 val psiViewerPluginVersion = prop("psiViewerPluginVersion")
 val channel = prop("publishChannel")
@@ -158,6 +159,20 @@ project(":plugin") {
         publishing {
             token = prop("publishToken")
             channels = listOf(channel)
+        }
+    }
+
+    tasks.register("verifyPluginCI") {
+        group = "verification"
+        description = "Verify plugin compatibility with a single IDE version (for CI to reduce disk usage)"
+        dependsOn("buildPlugin")
+
+        doLast {
+            intellijPlatform.verifyPlugin {
+                ides {
+                    ide(IntelliJPlatformType.IntellijIdeaUltimate, verifierIdeVersion)
+                }
+            }
         }
     }
 
