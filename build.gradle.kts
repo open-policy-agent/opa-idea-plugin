@@ -153,26 +153,17 @@ project(":plugin") {
         }
         pluginVerification {
             ides {
-                recommended()
+                // Use single IDE version on CI to reduce risk of running out of disk space on GHA runner
+                if (System.getenv("CI") != null) {
+                    ide(IntelliJPlatformType.IntellijIdeaUltimate, verifierIdeVersion)
+                } else {
+                    recommended()
+                }
             }
         }
         publishing {
             token = prop("publishToken")
             channels = listOf(channel)
-        }
-    }
-
-    tasks.register("verifyPluginCI") {
-        group = "verification"
-        description = "Verify plugin compatibility with a single IDE version (for CI to reduce disk usage)"
-        dependsOn("buildPlugin")
-
-        doLast {
-            intellijPlatform.verifyPlugin {
-                ides {
-                    ide(IntelliJPlatformType.IntellijIdeaUltimate, verifierIdeVersion)
-                }
-            }
         }
     }
 
