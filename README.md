@@ -18,7 +18,7 @@ The plugin is compatible with all IntelliJ-based IDEs starting from the version 
 | Other features         | + | + |
 
 
-Plugin has been tested against OPA `1.6.0`, but should work with more recent versions.
+Plugin has been tested against OPA `1.12.3`, but should work with more recent versions.
 
 
 # Installation 
