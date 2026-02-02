@@ -5,11 +5,15 @@
 
 package org.openpolicyagent.ideaplugin.util
 
+import com.intellij.execution.configurations.PathEnvironmentVariableUtil
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.SystemInfo
 import org.openpolicyagent.ideaplugin.opa.project.settings.OpaProjectSettings
 import java.io.File
 
 object RegalExecutableUtil {
+
+    val regalBinary = if (SystemInfo.isWindows) "regal.exe" else "regal"
 
     fun findRegalExecutable(project: Project): String? {
         val settings = OpaProjectSettings.getInstance(project)
@@ -23,25 +27,6 @@ object RegalExecutableUtil {
         }
 
         // Try to find regal in PATH
-        val pathExecutable = findExecutableInPath("regal")
-        if (pathExecutable != null) {
-            return pathExecutable
-        }
-
-        return null
-    }
-
-    private fun findExecutableInPath(executable: String): String? {
-        val pathEnv = System.getenv("PATH") ?: return null
-        val pathSeparator = System.getProperty("path.separator")
-
-        for (dir in pathEnv.split(pathSeparator)) {
-            val file = File(dir, executable)
-            if (file.exists() && file.canExecute()) {
-                return file.absolutePath
-            }
-        }
-
-        return null
+        return PathEnvironmentVariableUtil.findInPath(regalBinary)?.absolutePath
     }
 }

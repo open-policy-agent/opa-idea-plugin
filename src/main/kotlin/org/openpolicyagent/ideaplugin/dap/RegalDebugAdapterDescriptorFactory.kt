@@ -14,6 +14,7 @@ import com.redhat.devtools.lsp4ij.dap.definitions.DebugAdapterServerDefinition
 import com.intellij.execution.configurations.RunConfigurationOptions
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
+import org.openpolicyagent.ideaplugin.lang.psi.isRegoFile
 
 class RegalDebugAdapterDescriptorFactory : DebugAdapterDescriptorFactory() {
 
@@ -24,7 +25,7 @@ class RegalDebugAdapterDescriptorFactory : DebugAdapterDescriptorFactory() {
 
     override fun isDebuggableFile(file: VirtualFile, project: Project): Boolean {
         // Check if file is a Rego file that can be debugged
-        return file.extension == "rego"
+        return file.isRegoFile
     }
 
     override fun createDebugAdapterDescriptor(

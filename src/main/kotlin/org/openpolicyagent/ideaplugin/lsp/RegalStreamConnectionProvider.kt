@@ -15,14 +15,15 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.redhat.devtools.lsp4ij.server.OSProcessStreamConnectionProvider
 import org.openpolicyagent.ideaplugin.opa.project.settings.OpaProjectSettings
+import org.openpolicyagent.ideaplugin.util.RegalExecutableUtil
 
 class RegalStreamConnectionProvider(private val project: Project) : OSProcessStreamConnectionProvider() {
     init {
         val commandLine = GeneralCommandLine()
-        val regalPath = findRegalExecutable()
+        val regalPath = RegalExecutableUtil.findRegalExecutable(project)
         if (regalPath == null) {
             showRegalNotFoundNotification()
-            commandLine.exePath = "regal"
+            commandLine.exePath = RegalExecutableUtil.regalBinary
         } else {
             commandLine.exePath = regalPath
         }
@@ -34,38 +35,6 @@ class RegalStreamConnectionProvider(private val project: Project) : OSProcessStr
         commandLine.workDirectory = project.basePath?.let { java.io.File(it) }
 
         super.setCommandLine(commandLine)
-    }
-
-    private fun findRegalExecutable(): String? {
-        val settings = OpaProjectSettings.getInstance(project)
-        val configuredPath = settings.regalPath.trim()
-        if (configuredPath.isNotEmpty()) {
-            val file = java.io.File(configuredPath)
-            if (file.exists() && file.canExecute()) {
-                return configuredPath
-            }
-        }
-
-        val pathExecutable = findExecutableInPath("regal")
-        if (pathExecutable != null) {
-            return pathExecutable
-        }
-
-        return null
-    }
-
-    private fun findExecutableInPath(executable: String): String? {
-        val pathEnv = System.getenv("PATH") ?: return null
-        val pathSeparator = System.getProperty("path.separator")
-
-        for (dir in pathEnv.split(pathSeparator)) {
-            val file = java.io.File(dir, executable)
-            if (file.exists() && file.canExecute()) {
-                return file.absolutePath
-            }
-        }
-
-        return null
     }
 
     private fun showRegalNotFoundNotification() {
