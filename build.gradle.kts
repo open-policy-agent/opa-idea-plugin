@@ -41,7 +41,7 @@ idea {
 plugins {
     idea
     kotlin("jvm") version "2.1.20"
-    id("org.jetbrains.intellij.platform.module") version "2.9.0" // 2.10.0+ requires Gradle 8.13, 2.12.0+ requires Gradle 9.0
+    id("org.jetbrains.intellij.platform.module") version "2.16.0"
     id("org.jetbrains.grammarkit") version "2022.3.2.2"
 
 }
@@ -155,7 +155,7 @@ project(":plugin") {
             ides {
                 // Use single IDE version on CI to reduce risk of running out of disk space on GHA runner
                 if (System.getenv("CI") != null) {
-                    ide(IntelliJPlatformType.IntellijIdeaUltimate, verifierIdeVersion)
+                    create(IntelliJPlatformType.IntellijIdeaUltimate, verifierIdeVersion)
                 } else {
                     recommended()
                 }
@@ -175,8 +175,8 @@ project(":plugin") {
 
     dependencies {
         intellijPlatform {
-            pluginModule(implementation(project(":")))
-            pluginModule(implementation(project(":idea")))
+            pluginComposedModule(implementation(project(":")))
+            pluginComposedModule(implementation(project(":idea")))
         }
     }
 }
@@ -191,14 +191,14 @@ project(":") {
         testOutput(sourceSets.getByName("test").output.classesDirs)
     }
 
-    val generateRegoLexer = task<GenerateLexerTask>("generateRegoLexer") {
+    val generateRegoLexer = tasks.register<GenerateLexerTask>("generateRegoLexer") {
         sourceFile.set(file("src/main/grammar/RegoLexer.flex"))
         targetOutputDir.set(project.layout.projectDirectory.dir("src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer"))
         purgeOldFiles.set(true)
     }
 
 
-    val generateRegoParser = task<GenerateParserTask>("generateRegoParser") {
+    val generateRegoParser = tasks.register<GenerateParserTask>("generateRegoParser") {
         sourceFile.set(file("src/main/grammar/Rego.bnf"))
         targetRootOutputDir.set(project.layout.projectDirectory.dir("src/main/gen"))
         pathToParser.set("/org/openpolicyagent/ideaplugin/lang/parser/RegoParser.java")
