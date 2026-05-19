@@ -41,7 +41,7 @@ idea {
 plugins {
     idea
     kotlin("jvm") version "2.1.20"
-    id("org.jetbrains.intellij.platform.module") version "2.5.0"
+    id("org.jetbrains.intellij.platform.module") version "2.9.0" // 2.10.0+ requires Gradle 8.13, 2.12.0+ requires Gradle 9.0
     id("org.jetbrains.grammarkit") version "2022.3.2.2"
 
 }
