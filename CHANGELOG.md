@@ -1,6 +1,15 @@
-# Release notes for NEXT_VERSION
+# Release notes for v0.18.0
 
-# Release notes for NEXT_VERSION
+## Changes by Kind
+
+### Feature
+
+- Grammar: Add support for `if` and `contains` keywords in rule heads ([#203](https://github.com/open-policy-agent/opa-idea-plugin/pull/203), [@SeanLedford](https://github.com/SeanLedford))
+- Support for IDE 2026.1 releases ([#207](https://github.com/open-policy-agent/opa-idea-plugin/pull/207), [@idexter](https://github.com/idexter), [@charlieegan3](https://github.com/charlieegan3))
+
+### Dependencies
+
+- Update lsp4ij to 0.19.3 and plugin wrapper ([#205](https://github.com/open-policy-agent/opa-idea-plugin/pull/205), [@charlieegan3](https://github.com/charlieegan3))
 
 # Release notes for v0.17.0
 
