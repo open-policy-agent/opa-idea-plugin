@@ -81,7 +81,7 @@ allprojects {
             create(platformType, platformVersion)
             val pluginList = mutableListOf(
                 "PsiViewer:$psiViewerPluginVersion",
-                "com.redhat.devtools.lsp4ij:0.19.3"
+                "com.redhat.devtools.lsp4ij:0.19.4"
             )
             plugins(pluginList)
 
