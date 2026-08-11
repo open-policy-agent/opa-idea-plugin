@@ -60,6 +60,8 @@ COMMENT=[ \t]*#[^\r\n]*
   "some"              { return SOME; }
   "every"             { return EVERY; }
   "in"                { return IN; }
+  "and"               { return AND; }
+  "or"                { return OR; }
   "contains"          { return CONTAINS; }
   ","                 { return COMMA; }
   "."                 { return DOT; }

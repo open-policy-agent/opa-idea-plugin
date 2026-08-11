@@ -31,8 +31,9 @@ class RegoHighlighterAnnotator : AnnotatorBase() {
             is RegoEmptySet -> Pair(RegoColor.CALL, element.textRange)
 
             is RegoExprCall -> {
-                val varlist = element.refArgDotList
-                val textRange = if (varlist.size >= 1) varlist[varlist.size - 1].`var`.textRange else element.`var`.textRange
+                // a ref-arg-dot holds no var when it is a keyword, as in `data.foo.not`,
+                // in which case the call name falls back to the root var
+                val textRange = element.refArgDotList.lastOrNull()?.`var`?.textRange ?: element.`var`.textRange
                 Pair(RegoColor.CALL, textRange)
             }
 

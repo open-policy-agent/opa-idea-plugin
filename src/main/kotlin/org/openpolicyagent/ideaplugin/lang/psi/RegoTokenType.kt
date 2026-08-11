@@ -26,7 +26,9 @@ val REGO_KEYWORDS = tokenSetOf(
     RegoTypes.IF,
     RegoTypes.CONTAINS,
     RegoTypes.EVERY,
-    RegoTypes.IN
+    RegoTypes.IN,
+    RegoTypes.AND,
+    RegoTypes.OR
 )
 
 val REGO_OPERATOR = tokenSetOf(

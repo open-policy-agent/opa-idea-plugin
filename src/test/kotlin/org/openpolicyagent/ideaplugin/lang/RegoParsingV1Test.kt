@@ -53,4 +53,6 @@ class RegoParsingV1Test : ParsingTestCase(
     fun `test in operator`() = doTestNoError()
     fun `test some in`() = doTestNoError()
     fun `test keywords as identifiers`() = doTestNoError()
+    fun `test logical and or`() = doTestNoError()
+    fun `test logical grouping`() = doTestNoError()
 }
