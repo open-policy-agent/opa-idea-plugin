@@ -58,6 +58,8 @@ COMMENT=[ \t]*#[^\r\n]*
   "}"                 { return RBRACE; }
   ";"                 { return SEMICOLON; }
   "some"              { return SOME; }
+  "every"             { return EVERY; }
+  "in"                { return IN; }
   "contains"          { return CONTAINS; }
   ","                 { return COMMA; }
   "."                 { return DOT; }

@@ -33,6 +33,8 @@
         ELSE                = 'else'
         IF                  = 'if'
         CONTAINS            = 'contains'
+        EVERY               = 'every'
+        IN                  = 'in'
         LBRACE              = '{'
         RBRACE              = '}'
         SEMICOLON           = ';'
@@ -77,9 +79,11 @@ rule-body           ::= else-expr  | query-block
 else-expr           ::= else (':=' | '=') expr "if"? query-block? | else (':=' | '=')? "if"? query-block
 query-block         ::= "{" query "}"
 query               ::= ( literal |';' )+
-literal             ::= ( some-decl | literal-expr | "not" literal-expr )  with-modifier*
+literal             ::= ( every-decl | some-in-decl | some-decl | literal-expr | "not" literal-expr )  with-modifier*
 with-modifier       ::= "with" term "as" term
+some-in-decl        ::= "some" var ( "," var )? "in" expr
 some-decl           ::= "some" var ( "," var )*
+every-decl          ::= "every" var ( "," var )? "in" expr query-block
 literal-expr        ::= expr  ((':=' | '=') expr)?
 expr                ::= expr-infix | (expr-call ref-arg*)  | term
 expr-call           ::= var ref-arg-dot* "(" ( expr ( "," expr )* ","? )? ")"
@@ -90,7 +94,7 @@ array-compr         ::= "[" term "|" query "]"
 set-compr           ::= "{" term "|" query "}"
 object-compr        ::= "{" term-pair "|" query "}"
 term-pair           ::= term  ":"  term
-infix-operator      ::= bool-operator | arith-operator | bin-operator
+infix-operator      ::= bool-operator | arith-operator | bin-operator | "in"
 bool-operator       ::= "==" | "!=" | "<" | ">" | ">=" | "<="
 arith-operator      ::= "+" | "-" | "*" | "/" | "%"
 bin-operator        ::= "&" | "|"
@@ -98,7 +102,7 @@ ref                 ::= ( expr-call  | array | object | set | array-compr | obje
 ref-arg             ::= ref-arg-dot | ref-arg-brack
 ref-arg-brack       ::= "[" ( expr | "_" ) "]"
 ref-arg-dot         ::= "." var
-var                 ::= ASCII_LETTER | "contains"
+var                 ::= ASCII_LETTER | "contains" | "in" | "every" | "if"
 scalar              ::= string | NUMBER | TRUE | FALSE | NULL
 string              ::= STRING_TOKEN| RAW_STRING
 array               ::= '[' expr? ( ',' expr )* ','? ']'
