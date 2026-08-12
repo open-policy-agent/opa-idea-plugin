@@ -35,6 +35,8 @@
         CONTAINS            = 'contains'
         EVERY               = 'every'
         IN                  = 'in'
+        AND                 = 'and'
+        OR                  = 'or'
         LBRACE              = '{'
         RBRACE              = '}'
         SEMICOLON           = ';'
@@ -79,7 +81,19 @@ rule-body           ::= else-expr  | query-block
 else-expr           ::= else (':=' | '=') expr "if"? query-block? | else (':=' | '=')? "if"? query-block
 query-block         ::= "{" query "}"
 query               ::= ( literal |';' )+
-literal             ::= ( every-decl | some-in-decl | some-decl | literal-expr | "not" literal-expr )  with-modifier*
+literal             ::= or-expr with-modifier*
+// `and` binds tighter than `or`, and both bind looser than `not`.
+// Operands are either a single expression (`a or b`) or an explicit body (`{ a } or { b; c }`).
+private or-expr     ::= and-expr ( "or" and-rhs )*
+private and-expr    ::= operand ( "and" rhs-operand )*
+private and-rhs     ::= rhs-operand ( "and" rhs-operand )*
+private operand     ::= every-decl | some-in-decl | some-decl | lhs-body | literal-expr | "not" not-operand | paren-group
+private rhs-operand ::= query-block | literal-expr | "not" not-operand | paren-group
+// `{...}` only opens a body here when an `and`/`or` follows it, otherwise it is a set or an object,
+// and a rule body must stay available to `rule-body`.
+private lhs-body    ::= &( query-block ( "and" | "or" ) ) query-block
+private not-operand ::= literal-expr | paren-group
+private paren-group ::= "(" or-expr with-modifier* ")"
 with-modifier       ::= "with" term "as" term
 some-in-decl        ::= "some" var ( "," var )? "in" expr
 some-decl           ::= "some" var ( "," var )*
@@ -101,8 +115,8 @@ bin-operator        ::= "&" | "|"
 ref                 ::= ( expr-call  | array | object | set | array-compr | object-compr | set-compr |var  )  ref-arg*
 ref-arg             ::= ref-arg-dot | ref-arg-brack
 ref-arg-brack       ::= "[" ( expr | "_" ) "]"
-ref-arg-dot         ::= "." var
-var                 ::= ASCII_LETTER | "contains" | "in" | "every" | "if"
+ref-arg-dot         ::= "." ( var | "not" )
+var                 ::= ASCII_LETTER | "contains" | "in" | "every" | "if" | "and" | "or"
 scalar              ::= string | NUMBER | TRUE | FALSE | NULL
 string              ::= STRING_TOKEN| RAW_STRING
 array               ::= '[' expr? ( ',' expr )* ','? ']'
