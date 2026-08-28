@@ -1,4 +1,19 @@
-# Release notes for NEXT_VERSION
+# Release notes for v0.19.0
+
+## Changes by Kind
+
+### Feature
+
+- Grammar: Add support for `every` and `in` keywords in rule bodies ([#210](https://github.com/open-policy-agent/opa-idea-plugin/pull/210), [@SeanLedford](https://github.com/SeanLedford))
+- Grammar: Add support for the `and` and `or` logical keywords ([#212](https://github.com/open-policy-agent/opa-idea-plugin/pull/212), [@sspaink](https://github.com/sspaink))
+
+### Dependencies
+
+- Update lsp4ij to 0.19.4 ([#209](https://github.com/open-policy-agent/opa-idea-plugin/pull/209), [@charlieegan3](https://github.com/charlieegan3))
+
+### Uncategorized
+
+- Pin all GitHub Actions to commit SHAs ([#211](https://github.com/open-policy-agent/opa-idea-plugin/pull/211), [@srenatus](https://github.com/srenatus))
 
 # Release notes for v0.18.0
 
