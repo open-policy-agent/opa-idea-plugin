@@ -1,3 +1,5 @@
+# Release notes for NEXT_VERSION
+
 # Release notes for v0.19.0
 
 ## Changes by Kind
