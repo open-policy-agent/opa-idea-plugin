@@ -32,11 +32,11 @@ import java.nio.file.Paths
  * them at the local Rego source root instead.
  *
  * `not_covered` means the plan's `unplanned_rules`, rules the planner never compiled. It does not
- * mean dead statements inside rules that were compiled; the SDK has no way to check that.
+ * mean dead statements inside rules that were compiled. The SDK has no way to check that.
  *
  * Each forked test JVM writes its own report. We combine all rows from all reports, and a row
  * counts as covered if any report says so. We only decide this once every report has been read,
- * so the order we read them in doesn't matter.
+ * so the order we read them in does not matter.
  */
 class OpaIrCoverageReportParser {
 
@@ -74,7 +74,7 @@ class OpaIrCoverageReportParser {
 
         for (localPath in coveredByFile.keys) {
             val covered = coveredByFile.getValue(localPath)
-            // A row is covered if it ran in even one JVM, even if another JVM says it's unplanned.
+            // A row is covered if it ran in even one JVM, even if another JVM says the row is unplanned.
             val notCovered = notCoveredByFile.getValue(localPath) - covered
             if (covered.isEmpty() && notCovered.isEmpty()) continue
 
@@ -143,7 +143,7 @@ class OpaIrCoverageReportParser {
 
 /**
  * `File.canonicalPath`, but falls back to [path] unchanged if that fails (for example, a
- * permissions error while checking a parent directory). Safe to call on a path that doesn't
+ * permissions error while checking a parent directory). Safe to call on a path that does not
  * exist, since canonicalization only resolves the parts that do.
  */
 internal fun canonicalize(path: String): String =
