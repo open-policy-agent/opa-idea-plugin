@@ -1,0 +1,20 @@
+{
+  "files": {
+    "src/test/resources/org/openpolicyagent/ideaplugin/ide/coverage/fixtures/rego/policy.rego": {
+      "covered": [
+        { "start": { "row": 12, "col": 1 }, "end": { "row": 12, "col": 1 } },
+        { "start": { "row": 13, "col": 2 }, "end": { "row": 13, "col": 2 } },
+        { "start": { "row": 14, "col": 2 }, "end": { "row": 14, "col": 2 } }
+      ],
+      "not_covered": [
+        { "start": { "row": 19, "col": 1 }, "end": { "row": 21, "col": 2 } }
+      ]
+    },
+    "src/test/resources/org/openpolicyagent/ideaplugin/ide/coverage/fixtures/rego/subpkg/helpers.rego": {
+      "covered": [
+        { "start": { "row": 5, "col": 1 }, "end": { "row": 5, "col": 1 } },
+        { "start": { "row": 6, "col": 2 }, "end": { "row": 6, "col": 2 } }
+      ]
+    }
+  }
+}

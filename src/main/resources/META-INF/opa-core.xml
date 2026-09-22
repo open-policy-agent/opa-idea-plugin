@@ -72,6 +72,8 @@
                         factoryClass="org.openpolicyagent.ideaplugin.ide.extensions.OPAActionToolWindowFactory"
                         canCloseContents="true" />
 
+        <!-- IR coverage extensions live in the optional opa-coverage*.xml config files -->
+
         <!-- Project configuration -->
         <projectService serviceImplementation="org.openpolicyagent.ideaplugin.opa.project.settings.OpaProjectSettings"/>
         <projectConfigurable groupId="language"

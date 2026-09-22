@@ -29,6 +29,9 @@
 
     <xi:include href="/META-INF/opa-core.xml" xpointer="xpointer(/idea-plugin/*)"/>
 
+    <!-- Optional: must still load without the Coverage plugin installed. -->
+    <depends optional="true" config-file="opa-coverage.xml">Coverage</depends>
+
     <depends optional="true" config-file="opa-idea-only.xml">com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
