@@ -25,9 +25,9 @@ buildscript {
     }
     dependencies {
         // needed to extract the last release notes
-        classpath("org.jetbrains:markdown:0.2.0")
+        classpath("org.jetbrains:markdown:0.7.13")
         // needed for grammar-kit parser generation on newer IntelliJ versions
-        classpath("it.unimi.dsi:fastutil:8.5.12")
+        classpath("it.unimi.dsi:fastutil:8.5.19")
     }
 }
 
@@ -40,9 +40,9 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "2.3.20"
-    id("org.jetbrains.intellij.platform.module") version "2.16.0"
-    id("org.jetbrains.grammarkit") version "2022.3.2.2"
+    kotlin("jvm") version "2.4.20"
+    id("org.jetbrains.intellij.platform.module") version "2.19.0"
+    id("org.jetbrains.grammarkit") version "2023.3.0.4"
 
 }
 
@@ -74,8 +74,8 @@ allprojects {
         implementation("com.github.kittinunf.fuel", "fuel", "2.3.1") {
             exclude("org.jetbrains.kotlin")
         }
-        testImplementation("org.assertj:assertj-core:3.24.2")
-        "grammarKitClasspath"("it.unimi.dsi:fastutil:8.5.12")
+        testImplementation("org.assertj:assertj-core:3.27.7")
+        "grammarKitClasspath"("it.unimi.dsi:fastutil:8.5.19")
 
         intellijPlatform {
             create(platformType, platformVersion)
