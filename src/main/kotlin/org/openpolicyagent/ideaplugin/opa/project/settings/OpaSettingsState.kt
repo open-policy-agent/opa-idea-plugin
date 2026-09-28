@@ -11,4 +11,5 @@ class OpaSettingsState:  BaseState() {
     var opaCheckOptions = OpaProjectSettings.defaultOpaCheckOptions
     var regalPath = ""
     var regalVerboseLogging = false // Applies to both Language Server and DAP server
+    var regoBundleSourceRoot = OpaProjectSettings.defaultRegoBundleSourceRoot
 }

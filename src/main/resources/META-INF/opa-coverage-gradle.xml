@@ -1,0 +1,26 @@
+<!--
+  ~ Use of this source code is governed by the MIT license that can be
+  ~ found in the LICENSE file.
+  -->
+
+<!--
+  ~ The parts of Rego IR coverage that touch org.jetbrains.plugins.gradle.*. Included from
+  ~ opa-coverage.xml, so it loads only when both Coverage and Gradle are present.
+  -->
+<idea-plugin>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <externalSystemTaskNotificationListener implementation="org.openpolicyagent.ideaplugin.ide.coverage.ir.OpaIrCoverageTaskNotificationListener"/>
+    </extensions>
+
+    <!-- Injects the opa.coverage.output system property into the Gradle test JVM via an init script. -->
+    <extensions defaultExtensionNs="org.jetbrains.plugins.gradle">
+        <taskManager implementation="org.openpolicyagent.ideaplugin.ide.coverage.ir.OpaIrCoverageGradleTaskManager"/>
+    </extensions>
+
+    <projectListeners>
+        <listener class="org.openpolicyagent.ideaplugin.ide.coverage.ir.OpaIrCoverageExecutionListener"
+                  topic="com.intellij.execution.ExecutionListener"/>
+    </projectListeners>
+
+</idea-plugin>

@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask.FailureLevel
 
 
 val platformType = prop("platformType")
@@ -85,10 +86,12 @@ allprojects {
             )
             plugins(pluginList)
 
+            bundledPlugin("Coverage")
             if (platformType == "IU") {
                 bundledPlugin("com.intellij.java")
             }
             bundledPlugin("com.intellij.modules.json")
+            bundledPlugin("com.intellij.gradle")
             pluginVerifier()
             testFramework(TestFrameworkType.Platform)
         }
@@ -153,6 +156,20 @@ project(":plugin") {
             changeNotes = getLastReleaseNotes()
         }
         pluginVerification {
+            // Default failure levels, but with INTERNAL_API_USAGES disabled. Our Rego IR coverage
+            // engine subclasses the public com.intellij.coverage.CoverageEngine extension point,
+            // but some of its hook points (recompileProjectAndRerunAction,
+            // getCorrespondingOutputFiles) and CoverageEditorAnnotatorImpl are marked
+            // @ApiStatus.Internal, so we can't implement it without them. JetBrains' own language
+            // plugins use these same internal APIs. failureLevel is per-category, not per-usage,
+            // so we relax the whole category. flutter-intellij does the same for its coverage
+            // engine:
+            // https://github.com/flutter/flutter-intellij/blob/5ffe9823914f17daf20b012ca4f231cc667b1c7c/build.gradle.kts#L311
+            failureLevel = listOf(
+                FailureLevel.COMPATIBILITY_PROBLEMS,
+                // FailureLevel.INTERNAL_API_USAGES,
+                FailureLevel.OVERRIDE_ONLY_API_USAGES,
+            )
             ides {
                 // Use single IDE version on CI to reduce risk of running out of disk space on GHA runner
                 if (System.getenv("CI") != null) {

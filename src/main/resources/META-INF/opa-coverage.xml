@@ -1,0 +1,21 @@
+<!--
+  ~ Use of this source code is governed by the MIT license that can be
+  ~ found in the LICENSE file.
+  -->
+
+<!--
+  ~ Rego IR coverage. Optional so the plugin still loads in IDEs without the Coverage plugin.
+  -->
+<idea-plugin>
+
+    <!-- Nested so the Gradle half loads only when both Coverage and Gradle are present. -->
+    <depends optional="true" config-file="opa-coverage-gradle.xml">com.intellij.gradle</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <coverageRunner implementation="org.openpolicyagent.ideaplugin.ide.coverage.ir.OpaIrCoverageRunner"/>
+        <coverageEngine implementation="org.openpolicyagent.ideaplugin.ide.coverage.ir.OpaIrCoverageEngine"/>
+        <projectService serviceImplementation="org.openpolicyagent.ideaplugin.ide.coverage.ir.OpaIrCoverageAnnotator"/>
+        <projectService serviceImplementation="org.openpolicyagent.ideaplugin.ide.coverage.ir.OpaIrCoverageGradleSession"/>
+    </extensions>
+
+</idea-plugin>

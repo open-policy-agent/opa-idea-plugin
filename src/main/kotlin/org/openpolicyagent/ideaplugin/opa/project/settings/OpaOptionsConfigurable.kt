@@ -40,6 +40,12 @@ class OpaOptionsConfigurable(private val project: Project) :
                 checkBox("Enable Regal verbose logging")
                     .bindSelected(settings::regalVerboseLogging)
             }
+            row("Rego bundle source root:") {
+                textField()
+                    .bindText(settings::regoBundleSourceRoot)
+                    .align(AlignX.FILL)
+                    .comment("Directory (relative to project root) holding the Rego source compiled into the IR bundle. Used to map file paths in IR coverage reports back onto local files.")
+            }
         }
     }
 }

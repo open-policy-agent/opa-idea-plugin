@@ -32,9 +32,18 @@ class OpaProjectSettings(val project: Project) : SimplePersistentStateComponent<
             state.regalVerboseLogging = value
         }
 
+    var regoBundleSourceRoot
+        get() = state.regoBundleSourceRoot
+        set(value) {
+            state.regoBundleSourceRoot = value
+        }
+
     companion object {
         @JvmStatic
         val defaultOpaCheckOptions = "--strict"
+
+        @JvmStatic
+        val defaultRegoBundleSourceRoot = "rego"
 
         @JvmStatic
         fun getInstance(project: Project): OpaProjectSettings {
