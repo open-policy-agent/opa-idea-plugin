@@ -250,9 +250,8 @@ project(":idea") {
     dependencies {
         intellijPlatform {
             pluginModule(implementation(project(":")))
-            testImplementation(project(":", "testOutput"))
         }
-
+        testImplementation(files((rootProject.extensions.getByName("sourceSets") as SourceSetContainer).getByName("test").output.classesDirs))
     }
 }
 
