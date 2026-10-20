@@ -203,12 +203,6 @@ project(":") {
     apply {
         plugin("org.jetbrains.intellij.platform.module")
     }
-    val testOutput = configurations.create("testOutput")
-
-    dependencies {
-        testOutput(sourceSets.getByName("test").output.classesDirs)
-    }
-
     val generateRegoLexer = tasks.register<GenerateLexerTask>("generateRegoLexer") {
         sourceFile.set(file("src/main/grammar/RegoLexer.flex"))
         targetOutputDir.set(project.layout.projectDirectory.dir("src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer"))
