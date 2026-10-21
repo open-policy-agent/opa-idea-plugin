@@ -36,6 +36,7 @@ class RegoParsingTest: RegoParsingTestCaseBase() {
     fun `test rule head`() = doTestNoError()
     fun `test self joins`() = doTestNoError()
     fun `test with keyword 2`() = doTestNoError()
+    fun `test with comparison`() = doTestNoError()
 
 
     fun `test composite keys`() = doTestNoError()
