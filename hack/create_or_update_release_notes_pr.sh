@@ -21,7 +21,7 @@ source "${ROOT}/hack/util.sh"
 util::require-gh
 
 release_note_branch='update-release-notes'
-base_branch='master'
+base_branch='main'
 pr_number="$(gh pr list -H update-release-notes --limit 1 --json number --jq '.[].number')"
 
 if [[ -z "${pr_number}" ]]; then
@@ -68,5 +68,5 @@ git push origin "${release_note_branch}" -f
 
 if [[ "${pr_exist}" == false ]]; then
 echo "create release note PR"
-  gh pr create --base master --head "${release_note_branch}" --title "Update changelog" --body-file "${ROOT}/.github/release-notes-pr-description.md"
+  gh pr create --base main --head "${release_note_branch}" --title "Update changelog" --body-file "${ROOT}/.github/release-notes-pr-description.md"
 fi
