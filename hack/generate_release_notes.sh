@@ -2,7 +2,7 @@
 
 ########################################################################################################################
 # This script generate the release-notes for next version in ${NEXT_RELEASE_NOTES_FILE} ie
-# repository_root/next-release-notes.md". It collect release notes from PR description merged into 'master' between the
+# repository_root/next-release-notes.md". It collect release notes from PR description merged into 'main' between the
 # last github release and HEAD.
 # For more information about the collection please read the documentation: docs/devel/releasing/release-notes-generation.md
 #
@@ -91,12 +91,12 @@ fi
 end_sha=$(git rev-parse HEAD)
 
 # generate release notes:
-#  * for pr merged in master by any users (--required-author='').
+#  * for pr merged in main by any users (--required-author='').
 #  * without go dependencies report (--dependencies=false)
 release-notes --start-sha "${start_sha}" \
   --end-sha "${end_sha}" \
   --required-author='' \
-  --branch master \
+  --branch main \
   --org "${org}" \
   --repo "${repo}" \
   --go-template=go-template:"${ROOT}/.github/release-notes.tmpl" \
