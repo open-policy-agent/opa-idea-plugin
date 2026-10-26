@@ -1,3 +1,23 @@
+# Release notes for v0.20.0
+
+## Changes by Kind
+
+### Feature
+
+- Add support for IR-based Rego coverage in Java tests ([#220](https://github.com/open-policy-agent/opa-idea-plugin/pull/220), [@charlieegan3](https://github.com/charlieegan3))
+- Allow expressions as `with`-modifier values ([#226](https://github.com/open-policy-agent/opa-idea-plugin/pull/226), [@sspaink](https://github.com/sspaink))
+- Support IDE 2026.2 builds (untilBuild 262.*) ([#224](https://github.com/open-policy-agent/opa-idea-plugin/pull/224), [@sspaink](https://github.com/sspaink))
+
+### Bug or Regression
+
+- Fix NPE in OpaEvalRunConfigurationProducer ([#225](https://github.com/open-policy-agent/opa-idea-plugin/pull/225), [@sspaink](https://github.com/sspaink))
+- Save the document before running `opa check` ([#228](https://github.com/open-policy-agent/opa-idea-plugin/pull/228), [@sspaink](https://github.com/sspaink))
+
+### Dependencies
+
+- Bump GitHub Actions dependencies ([#221](https://github.com/open-policy-agent/opa-idea-plugin/pull/221), [@dependabot](https://github.com/apps/dependabot))
+- Bump Gradle dependencies ([#222](https://github.com/open-policy-agent/opa-idea-plugin/pull/222), [@dependabot](https://github.com/apps/dependabot))
+
 # Release notes for v0.19.0
 
 ## Changes by Kind
