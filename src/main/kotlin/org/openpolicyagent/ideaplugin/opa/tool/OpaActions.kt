@@ -9,6 +9,7 @@ import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import org.openpolicyagent.ideaplugin.ide.actions.fileDirectChildOfRoot
 import org.openpolicyagent.ideaplugin.ide.actions.getImportsAsString
@@ -47,6 +48,9 @@ class OpaActions : OpaBaseTool() {
      */
     fun checkDocument(project: Project, document: Document) {
         val file = document.virtualFile ?: return
+
+        // opa check reads from disk, so make sure it sees the latest edits
+        FileDocumentManager.getInstance().saveDocument(document)
 
         val checkArgs = OpaProjectSettings.getInstance(project).opaCheckOptions
             .split(" ")
