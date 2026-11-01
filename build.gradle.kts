@@ -26,7 +26,7 @@ buildscript {
     }
     dependencies {
         // needed to extract the last release notes
-        classpath("org.jetbrains:markdown:0.7.13")
+        classpath("org.jetbrains:markdown:0.7.18")
         // needed for grammar-kit parser generation on newer IntelliJ versions
         classpath("it.unimi.dsi:fastutil:8.5.19")
     }
@@ -41,7 +41,7 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "2.4.20"
+    kotlin("jvm") version "2.4.21"
     id("org.jetbrains.intellij.platform.module") version "2.19.0"
     id("org.jetbrains.grammarkit") version "2023.3.0.4"
 
