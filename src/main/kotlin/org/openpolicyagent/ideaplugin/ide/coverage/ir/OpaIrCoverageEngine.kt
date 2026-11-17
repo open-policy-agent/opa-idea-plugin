@@ -113,6 +113,7 @@ class OpaIrCoverageRunner : CoverageRunner() {
     override fun getDataFileExtension() = "json"
     override fun acceptsCoverageEngine(engine: CoverageEngine) = engine is OpaIrCoverageEngine
 
+    // TODO: override the Path overload instead once sinceBuild >= 262
     override fun loadCoverageData(
         sessionDataFile: File,
         baseCoverageSuite: CoverageSuite?,

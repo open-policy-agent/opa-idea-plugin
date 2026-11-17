@@ -6,6 +6,7 @@
 package org.openpolicyagent.ideaplugin.openapiext
 
 import com.intellij.concurrency.SensitiveProgressWrapper
+import com.intellij.execution.configurations.PathEnvironmentVariableUtil
 import com.intellij.ide.plugins.IdeaPluginDescriptor
 import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.application.ApplicationManager
@@ -36,6 +37,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.stubs.StubIndex
 import com.intellij.psi.stubs.StubIndexKey
 import org.openpolicyagent.ideaplugin.lang.psi.isNotRegoFile
+import java.io.File
 import java.lang.ref.SoftReference
 import java.lang.reflect.Field
 import java.nio.file.Path
@@ -216,3 +218,18 @@ inline fun <T> UserDataHolderEx.getOrPutSoft(key: Key<SoftReference<T>>, default
 const val PLUGIN_ID: String = "org.openpolicyagent.opa-idea-plugin"
 
 fun plugin(): IdeaPluginDescriptor = PluginManagerCore.getPlugin(PluginId.getId(PLUGIN_ID))!!
+
+/**
+ * Returns the first executable file named [fileName] found in the PATH directories, or null.
+ * Same lookup as the deprecated [PathEnvironmentVariableUtil.findInPath], whose replacement
+ * (`PathEnvironmentVariableUtil.findFirst`) only exists since 2026.3.
+ */
+fun findExecutableInPath(fileName: String): File? {
+    val pathValue = PathEnvironmentVariableUtil.getPathVariableValue() ?: return null
+    return PathEnvironmentVariableUtil.getPathDirs(pathValue)
+        .asSequence()
+        .map { File(it) }
+        .filter { it.isAbsolute && it.isDirectory }
+        .map { File(it, fileName) }
+        .firstOrNull { it.isFile && it.canExecute() }
+}
