@@ -4,8 +4,6 @@
  */
 
 import org.intellij.markdown.ast.getTextInNode
-import org.jetbrains.grammarkit.tasks.GenerateLexerTask
-import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
@@ -27,8 +25,6 @@ buildscript {
     dependencies {
         // needed to extract the last release notes
         classpath("org.jetbrains:markdown:0.7.13")
-        // needed for grammar-kit parser generation on newer IntelliJ versions
-        classpath("it.unimi.dsi:fastutil:8.5.19")
     }
 }
 
@@ -43,7 +39,7 @@ plugins {
     idea
     kotlin("jvm") version "2.4.20"
     id("org.jetbrains.intellij.platform.module") version "2.19.0"
-    id("org.jetbrains.grammarkit") version "2023.3.0.4"
+    id("org.jetbrains.intellij.platform.grammarkit") version "2.19.0"
 
 }
 
@@ -51,7 +47,7 @@ allprojects {
     apply {
         plugin("idea")
         plugin("kotlin")
-        plugin("org.jetbrains.grammarkit")
+        plugin("org.jetbrains.intellij.platform.grammarkit")
         plugin("org.jetbrains.intellij.platform.module")
     }
 
@@ -66,17 +62,15 @@ allprojects {
         all {
             resolutionStrategy.sortArtifacts(ResolutionStrategy.SortOrder.DEPENDENCY_FIRST)
         }
-        create("grammarKitClasspath")
     }
 
     dependencies {
-        testImplementation("junit", "junit", "4.13.2")
-        testImplementation("org.opentest4j", "opentest4j", "1.3.0")
-        implementation("com.github.kittinunf.fuel", "fuel", "2.3.1") {
+        testImplementation("junit:junit:4.13.2")
+        testImplementation("org.opentest4j:opentest4j:1.3.0")
+        implementation("com.github.kittinunf.fuel:fuel:2.3.1") {
             exclude("org.jetbrains.kotlin")
         }
         testImplementation("org.assertj:assertj-core:3.27.7")
-        "grammarKitClasspath"("it.unimi.dsi:fastutil:8.5.19")
 
         intellijPlatform {
             create(platformType, platformVersion)
@@ -203,32 +197,32 @@ project(":") {
     apply {
         plugin("org.jetbrains.intellij.platform.module")
     }
-    val generateRegoLexer = tasks.register<GenerateLexerTask>("generateRegoLexer") {
-        sourceFile.set(file("src/main/grammar/RegoLexer.flex"))
-        targetOutputDir.set(project.layout.projectDirectory.dir("src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer"))
-        purgeOldFiles.set(true)
+
+    tasks {
+        generateLexer {
+            sourceFile = file("src/main/grammar/RegoLexer.flex")
+            targetRootOutputDir = project.layout.projectDirectory.dir("src/main/gen/org/openpolicyagent/ideaplugin/lang/lexer")
+            purgeOldFiles = true
+        }
+
+        generateParser {
+            sourceFile = file("src/main/grammar/Rego.bnf")
+            targetRootOutputDir = project.layout.projectDirectory.dir("src/main/gen")
+            pathToParser = "org/openpolicyagent/ideaplugin/lang/parser/RegoParser.java"
+            pathToPsiRoot = "org/openpolicyagent/ideaplugin/lang/psi"
+            purgeOldFiles = true
+        }
     }
 
-
-    val generateRegoParser = tasks.register<GenerateParserTask>("generateRegoParser") {
-        sourceFile.set(file("src/main/grammar/Rego.bnf"))
-        targetRootOutputDir.set(project.layout.projectDirectory.dir("src/main/gen"))
-        pathToParser.set("/org/openpolicyagent/ideaplugin/lang/parser/RegoParser.java")
-        pathToPsiRoot.set("/org/openpolicyagent/ideaplugin/lang/psi")
-        purgeOldFiles.set(true)
-    }
-
-    // fastutil is needed by GrammarKit but must not be in implementation — it conflicts with the
-    // platform's bundled version at test runtime, causing NoSuchMethodError in every test.
-    tasks.withType<GenerateParserTask> {
-        classpath = configurations.compileClasspath.get() + configurations["grammarKitClasspath"]
+    sourceSets {
+        main {
+            java {
+                srcDir(project.layout.projectDirectory.dir("src/main/gen"))
+            }
+        }
     }
 
     tasks.withType<KotlinCompile> {
-        dependsOn(
-            generateRegoLexer,
-            generateRegoParser
-        )
         compilerOptions {
             // prevents Kotlin from generating bridge stubs for interface default methods,
             // which the plugin verifier flags as deprecated API overrides
