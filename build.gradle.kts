@@ -38,8 +38,8 @@ idea {
 plugins {
     idea
     kotlin("jvm") version "2.4.20"
-    id("org.jetbrains.intellij.platform.module") version "2.19.0"
-    id("org.jetbrains.intellij.platform.grammarkit") version "2.19.0"
+    id("org.jetbrains.intellij.platform.module") version "2.20.1"
+    id("org.jetbrains.intellij.platform.grammarkit") version "2.20.1"
 
 }
 
@@ -76,7 +76,7 @@ allprojects {
             create(platformType, platformVersion)
             val pluginList = mutableListOf(
                 "PsiViewer:$psiViewerPluginVersion",
-                "com.redhat.devtools.lsp4ij:0.19.4"
+                "com.redhat.devtools.lsp4ij:0.21.0"
             )
             plugins(pluginList)
 
