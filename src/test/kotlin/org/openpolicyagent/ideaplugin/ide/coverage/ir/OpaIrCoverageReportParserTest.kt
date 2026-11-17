@@ -85,9 +85,9 @@ class OpaIrCoverageReportParserTest {
         val cd = data.getClassData(Paths.get("/proj/rego/policy.rego").toString())
 
         assertThat(cd).isNotNull
-        assertThat(cd.getLineData(3).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
-        assertThat(cd.getLineData(5).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
-        assertThat(cd.getLineData(11).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(cd.getLineData(3).status).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(cd.getLineData(5).status).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(cd.getLineData(11).status).isEqualTo(LineCoverage.FULL.toInt())
         assertThat(cd.getLineData(4)).isNull()
     }
 
@@ -107,9 +107,9 @@ class OpaIrCoverageReportParserTest {
         val cd = parser.parse(json, "rego", localRoot)
             .getClassData(Paths.get("/proj/rego/p.rego").toString())
 
-        assertThat(cd.getLineData(3).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
-        assertThat(cd.getLineData(7).status.toInt()).isEqualTo(LineCoverage.NONE.toInt())
-        assertThat(cd.getLineData(9).status.toInt()).isEqualTo(LineCoverage.NONE.toInt())
+        assertThat(cd.getLineData(3).status).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(cd.getLineData(7).status).isEqualTo(LineCoverage.NONE.toInt())
+        assertThat(cd.getLineData(9).status).isEqualTo(LineCoverage.NONE.toInt())
         // Non-statement rows stay null and are not counted at all.
         assertThat(cd.getLineData(8)).isNull()
     }
@@ -124,7 +124,7 @@ class OpaIrCoverageReportParserTest {
             .getClassData(Paths.get("/proj/rego/p.rego").toString())
 
         for (row in 10..13) {
-            assertThat(cd.getLineData(row).status.toInt())
+            assertThat(cd.getLineData(row).status)
                 .describedAs("row $row").isEqualTo(LineCoverage.NONE.toInt())
         }
         assertThat(cd.getLineData(9)).isNull()
@@ -140,7 +140,7 @@ class OpaIrCoverageReportParserTest {
         val data = parser.parse(json, "rego", localRoot)
         val cd = data.getClassData(Paths.get("/proj/rego/p.rego").toString())
         assertThat(cd.getLineData(0)).isNull()
-        assertThat(cd.getLineData(1).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(cd.getLineData(1).status).isEqualTo(LineCoverage.FULL.toInt())
     }
 
     @Test
@@ -155,12 +155,12 @@ class OpaIrCoverageReportParserTest {
         val helpers = data.getClassData(Paths.get("/proj/rego/subpkg/helpers.rego").toString())
         assertThat(policy).isNotNull
         assertThat(helpers).isNotNull
-        assertThat(policy.getLineData(13).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(policy.getLineData(13).status).isEqualTo(LineCoverage.FULL.toInt())
         for (row in 19..21) {
-            assertThat(policy.getLineData(row).status.toInt())
+            assertThat(policy.getLineData(row).status)
                 .describedAs("row $row").isEqualTo(LineCoverage.NONE.toInt())
         }
-        assertThat(helpers.getLineData(6).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(helpers.getLineData(6).status).isEqualTo(LineCoverage.FULL.toInt())
     }
 
     @Test
@@ -182,7 +182,7 @@ class OpaIrCoverageReportParserTest {
         assertThat(cd.getLineData(3)).isNotSameAs(lower.getLineData(3))
 
         cd.getLineData(3).setStatus(LineCoverage.NONE)
-        assertThat(lower.getLineData(3).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(lower.getLineData(3).status).isEqualTo(LineCoverage.FULL.toInt())
     }
 
     @Test
@@ -199,10 +199,10 @@ class OpaIrCoverageReportParserTest {
         for (reports in listOf(listOf(a, b), listOf(b, a))) {
             val cd = parser.parseAll(reports, "rego", localRoot)
                 .getClassData(Paths.get("/proj/rego/p.rego").toString())
-            assertThat(cd.getLineData(4).status.toInt())
+            assertThat(cd.getLineData(4).status)
                 .describedAs("row 4 covered in one report wins")
                 .isEqualTo(LineCoverage.FULL.toInt())
-            assertThat(cd.getLineData(6).status.toInt())
+            assertThat(cd.getLineData(6).status)
                 .describedAs("row 6 uncovered everywhere")
                 .isEqualTo(LineCoverage.NONE.toInt())
         }
@@ -220,8 +220,8 @@ class OpaIrCoverageReportParserTest {
         val data = parser.parseAll(listOf(a, b), "rego", localRoot)
         val onlyA = data.getClassData(Paths.get("/proj/rego/only_a.rego").toString())
         val onlyB = data.getClassData(Paths.get("/proj/rego/only_b.rego").toString())
-        assertThat(onlyA.getLineData(2).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
-        assertThat(onlyB.getLineData(9).status.toInt()).isEqualTo(LineCoverage.NONE.toInt())
+        assertThat(onlyA.getLineData(2).status).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(onlyB.getLineData(9).status).isEqualTo(LineCoverage.NONE.toInt())
     }
 
     @Test
@@ -235,9 +235,9 @@ class OpaIrCoverageReportParserTest {
 
         val cd = parser.parseAll(listOf(a, b), "rego", localRoot)
             .getClassData(Paths.get("/proj/rego/p.rego").toString())
-        assertThat(cd.getLineData(2).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
-        assertThat(cd.getLineData(40).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
-        assertThat(cd.getLineData(41).status.toInt()).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(cd.getLineData(2).status).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(cd.getLineData(40).status).isEqualTo(LineCoverage.FULL.toInt())
+        assertThat(cd.getLineData(41).status).isEqualTo(LineCoverage.FULL.toInt())
     }
 
     @Test

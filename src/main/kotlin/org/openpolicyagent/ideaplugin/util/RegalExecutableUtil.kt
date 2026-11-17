@@ -5,9 +5,9 @@
 
 package org.openpolicyagent.ideaplugin.util
 
-import com.intellij.execution.configurations.PathEnvironmentVariableUtil
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.SystemInfo
+import org.openpolicyagent.ideaplugin.openapiext.findExecutableInPath
 import org.openpolicyagent.ideaplugin.opa.project.settings.OpaProjectSettings
 import java.io.File
 
@@ -27,6 +27,6 @@ object RegalExecutableUtil {
         }
 
         // Try to find regal in PATH
-        return PathEnvironmentVariableUtil.findInPath(regalBinary)?.absolutePath
+        return findExecutableInPath(regalBinary)?.absolutePath
     }
 }

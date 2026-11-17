@@ -14,6 +14,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAwareAction
 import org.openpolicyagent.ideaplugin.ide.extensions.OPAActionToolWindow
 import org.openpolicyagent.ideaplugin.opa.tool.OpaBaseTool
+import org.openpolicyagent.ideaplugin.openapiext.findExecutableInPath
 import com.intellij.openapi.util.SystemInfo
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.github.kittinunf.fuel.Fuel
@@ -24,7 +25,7 @@ import java.io.File
 class InstallOPA : DumbAwareAction(){
     override fun actionPerformed(e: AnActionEvent) {
         //make sure opa binary doesn't already exist
-        if(PathEnvironmentVariableUtil.findInPath(OpaBaseTool.opaBinary) != null){
+        if(findExecutableInPath(OpaBaseTool.opaBinary) != null){
             if(e.project != null) {
                 Notification("ActionNotPerformed", "Install OPA", "OPA binary already exists", NotificationType.WARNING).notify(e.project)
             }
