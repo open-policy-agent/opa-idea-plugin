@@ -44,6 +44,7 @@ class OpaEvalRunCommandEditor(private val project: Project) : SettingsEditor<Opa
         )
     }
     private var additionalArgs = RawCommandLineEditor()
+    // TODO: use EnvironmentVariablesComponent(project) once sinceBuild >= 262
     private val environmentVariables = EnvironmentVariablesComponent()
 
     override fun createEditor() = panel {
