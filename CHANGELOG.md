@@ -1,3 +1,11 @@
+# Release notes for v0.21.0
+
+## Changes by Kind
+
+### Uncategorized
+
+- Add support for IDEA 2026.3 based IDE. ([#232](https://github.com/open-policy-agent/opa-idea-plugin/pull/232), [@vgramer](https://github.com/vgramer))
+
 # Release notes for v0.20.0
 
 ## Changes by Kind
