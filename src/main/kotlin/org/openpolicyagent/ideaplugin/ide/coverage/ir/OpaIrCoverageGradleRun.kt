@@ -36,6 +36,7 @@ import org.openpolicyagent.ideaplugin.opa.project.settings.OpaProjectSettings
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
+import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 
 /*
@@ -181,6 +182,7 @@ class OpaIrCoverageExecutionListener(private val project: Project) : ExecutionLi
 
 class OpaIrCoverageGradleTaskManager : GradleTaskManagerExtension {
 
+    // TODO: override configureTasks(GradleExecutionSettings, GradleTaskExecutionContext) once sinceBuild >= 263
     override fun configureTasks(
         projectPath: String,
         id: ExternalSystemTaskId,
@@ -247,7 +249,7 @@ class OpaIrCoverageTaskNotificationListener : ExternalSystemTaskNotificationList
                 thisLogger().warn("OPA IR coverage: OpaIrCoverageEngine not found")
                 return@invokeLater
             }
-            val provider = DefaultCoverageFileProvider(pending.outputDir.toFile())
+            val provider = DefaultCoverageFileProvider(pending.outputDir.toString())
             val suite = engine.createCoverageSuite(
                 "Rego IR — ${pending.runConfigName}",
                 project,
@@ -286,7 +288,7 @@ class OpaIrCoverageTaskNotificationListener : ExternalSystemTaskNotificationList
                 toAnnotate.add(psiFile to fileEditor.editor)
             }
         }
-        ReadAction.nonBlocking(Runnable {
+        ReadAction.nonBlocking(Callable {
             for ((psiFile, editor) in toAnnotate) {
                 if (!psiFile.isValid || editor.isDisposed) continue
                 CoverageEditorAnnotatorImpl(psiFile, editor).showCoverage(bundle)
